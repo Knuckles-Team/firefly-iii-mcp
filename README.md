@@ -56,6 +56,39 @@ domains can be toggled on or off with the listed environment variable. The table
 (`python -m agent_utilities.mcp.readme_tools`) — do not edit it by hand.
 
 <!-- MCP-TOOLS-TABLE:START -->
+
+| MCP Tool | Toggle Env Var | Description |
+|----------|----------------|-------------|
+| `about_operations` | `ABOUTTOOL` | Manage Firefly III `about` operations. CONCEPT:FF-001 |
+| `accounts_operations` | `ACCOUNTSTOOL` | Manage Firefly III `accounts` operations. CONCEPT:FF-001 |
+| `attachments_operations` | `ATTACHMENTSTOOL` | Manage Firefly III `attachments` operations. CONCEPT:FF-001 |
+| `autocomplete_operations` | `AUTOCOMPLETETOOL` | Manage Firefly III `autocomplete` operations. CONCEPT:FF-001 |
+| `available_budgets_operations` | `AVAILABLE_BUDGETSTOOL` | Manage Firefly III `available_budgets` operations. CONCEPT:FF-001 |
+| `bills_operations` | `BILLSTOOL` | Manage Firefly III `bills` operations. CONCEPT:FF-001 |
+| `budgets_operations` | `BUDGETSTOOL` | Manage Firefly III `budgets` operations. CONCEPT:FF-001 |
+| `categories_operations` | `CATEGORIESTOOL` | Manage Firefly III `categories` operations. CONCEPT:FF-001 |
+| `charts_operations` | `CHARTSTOOL` | Manage Firefly III `charts` operations. CONCEPT:FF-001 |
+| `configuration_operations` | `CONFIGURATIONTOOL` | Manage Firefly III `configuration` operations. CONCEPT:FF-001 |
+| `currencies_operations` | `CURRENCIESTOOL` | Manage Firefly III `currencies` operations. CONCEPT:FF-001 |
+| `currency_exchange_rates_operations` | `CURRENCY_EXCHANGE_RATESTOOL` | Manage Firefly III `currency_exchange_rates` operations. CONCEPT:FF-001 |
+| `data_operations` | `DATATOOL` | Manage Firefly III `data` operations. CONCEPT:FF-001 |
+| `insight_operations` | `INSIGHTTOOL` | Manage Firefly III `insight` operations. CONCEPT:FF-001 |
+| `links_operations` | `LINKSTOOL` | Manage Firefly III `links` operations. CONCEPT:FF-001 |
+| `object_groups_operations` | `OBJECT_GROUPSTOOL` | Manage Firefly III `object_groups` operations. CONCEPT:FF-001 |
+| `piggy_banks_operations` | `PIGGY_BANKSTOOL` | Manage Firefly III `piggy_banks` operations. CONCEPT:FF-001 |
+| `preferences_operations` | `PREFERENCESTOOL` | Manage Firefly III `preferences` operations. CONCEPT:FF-001 |
+| `recurrences_operations` | `RECURRENCESTOOL` | Manage Firefly III `recurrences` operations. CONCEPT:FF-001 |
+| `rule_groups_operations` | `RULE_GROUPSTOOL` | Manage Firefly III `rule_groups` operations. CONCEPT:FF-001 |
+| `rules_operations` | `RULESTOOL` | Manage Firefly III `rules` operations. CONCEPT:FF-001 |
+| `search_operations` | `SEARCHTOOL` | Manage Firefly III `search` operations. CONCEPT:FF-001 |
+| `summary_operations` | `SUMMARYTOOL` | Manage Firefly III `summary` operations. CONCEPT:FF-001 |
+| `tags_operations` | `TAGSTOOL` | Manage Firefly III `tags` operations. CONCEPT:FF-001 |
+| `transactions_operations` | `TRANSACTIONSTOOL` | Manage Firefly III `transactions` operations. CONCEPT:FF-001 |
+| `user_groups_operations` | `USER_GROUPSTOOL` | Manage Firefly III `user_groups` operations. CONCEPT:FF-001 |
+| `users_operations` | `USERSTOOL` | Manage Firefly III `users` operations. CONCEPT:FF-001 |
+| `webhooks_operations` | `WEBHOOKSTOOL` | Manage Firefly III `webhooks` operations. CONCEPT:FF-001 |
+
+_28 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
 ## Installation
