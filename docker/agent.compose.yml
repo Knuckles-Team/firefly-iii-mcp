@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  firefly-iii-mcp-mcp:
+    image: knucklessg1/firefly-iii-mcp:latest
+    container_name: firefly-iii-mcp-mcp
+    hostname: firefly-iii-mcp-mcp
+    restart: always
+    env_file:
+      - ../.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
+      - PORT=8000
+      - TRANSPORT=streamable-http
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  firefly-iii-mcp-agent:
+    image: knucklessg1/firefly-iii-mcp:latest
+    container_name: firefly-iii-mcp-agent
+    hostname: firefly-iii-mcp-agent
+    restart: always
+    depends_on:
+      - firefly-iii-mcp-mcp
+    env_file:
+      - ../.env
+    command: [ "firefly-iii-agent" ]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
+      - PORT=9000
+      - MCP_URL=http://firefly-iii-mcp-mcp:8000/mcp
+      - PROVIDER=${PROVIDER:-openai}
+      - MODEL_ID=${MODEL_ID:-gpt-4o}
+      - ENABLE_WEB_UI=True
+      - ENABLE_OTEL=True
+    ports:
+      - "9000:9000"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

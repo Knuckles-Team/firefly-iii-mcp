@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "firefly-iii-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "firefly-iii-mcp"
+      ],
+      "env": {
+        "FIREFLY_III_URL": "<YOUR_FIREFLY_III_URL>",
+        "FIREFLY_III_TOKEN": "<YOUR_FIREFLY_III_TOKEN>",
+        "FIREFLY_III_SSL_VERIFY": "True",
+        "MCP_TOOL_MODE": "both",
+        "ABOUTTOOL": "True",
+        "ACCOUNTSTOOL": "True",
+        "ATTACHMENTSTOOL": "True",
+        "AUTOCOMPLETETOOL": "True",
+        "AVAILABLE_BUDGETSTOOL": "True",
+        "BILLSTOOL": "True",
+        "BUDGETSTOOL": "True",
+        "CATEGORIESTOOL": "True",
+        "CHARTSTOOL": "True",
+        "CONFIGURATIONTOOL": "True",
+        "CURRENCIESTOOL": "True",
+        "CURRENCY_EXCHANGE_RATESTOOL": "True",
+        "DATATOOL": "True",
+        "INSIGHTTOOL": "True",
+        "LINKSTOOL": "True",
+        "OBJECT_GROUPSTOOL": "True",
+        "PIGGY_BANKSTOOL": "True",
+        "PREFERENCESTOOL": "True",
+        "RECURRENCESTOOL": "True",
+        "RULE_GROUPSTOOL": "True",
+        "RULESTOOL": "True",
+        "SEARCHTOOL": "True",
+        "SUMMARYTOOL": "True",
+        "TAGSTOOL": "True",
+        "TRANSACTIONSTOOL": "True",
+        "USER_GROUPSTOOL": "True",
+        "USERSTOOL": "True",
+        "WEBHOOKSTOOL": "True"
+      }
+    }
+  }
+}
