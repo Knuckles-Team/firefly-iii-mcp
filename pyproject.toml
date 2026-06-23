@@ -55,7 +55,7 @@ dev = [
 ]
 
 [tool.setuptools.package-data]
-firefly_iii_mcp = [ "mcp_config.json", "agent_data/**", "prompts/**", "skills/**", "specs/*.yaml",]
+firefly_iii_mcp = [ "mcp_config.json", "prompts/**", "skills/**", "specs/*.yaml",]
 
 [tool.ruff.lint]
 select = [ "E", "F", "I", "UP", "B",]
