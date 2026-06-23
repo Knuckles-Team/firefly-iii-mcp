@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   firefly-iii-mcp-mcp:
-    image: knucklessg1/firefly-iii-mcp:latest
+    image: knucklessg1/firefly-iii-mcp:mcp
     container_name: firefly-iii-mcp-mcp
     hostname: firefly-iii-mcp-mcp
     restart: always
