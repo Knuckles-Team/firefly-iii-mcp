@@ -1,7 +1,7 @@
 {
   "name": "firefly-iii-mcp-agent",
   "type": "agent",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Firefly III API + MCP Server + A2A Agent — personal finance manager",
   "url": "https://github.com/Knuckles-Team/firefly-iii-mcp/tree/main",
   "license": "MIT",
