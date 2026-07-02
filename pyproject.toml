@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "firefly-iii-mcp"
-version = "1.0.0"
+version = "1.0.1"
 description = "Firefly III API + MCP Server + A2A Agent — personal finance manager"
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: MIT License", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
@@ -20,7 +20,7 @@ text = "MIT"
 [project.optional-dependencies]
 mcp = [ "agent-utilities[mcp]>=1.0.0",]
 agent = [ "agent-utilities[agent,logfire]>=1.0.0",]
-all = [ "firefly-iii-mcp[mcp,agent,logfire]>=1.0.0",]
+all = [ "firefly-iii-mcp[mcp,agent,logfire]>=1.0.1",]
 test = [
     "pytest-xdist>=3.6.0", "pytest", "pytest-asyncio", "pytest-cov",]
 
