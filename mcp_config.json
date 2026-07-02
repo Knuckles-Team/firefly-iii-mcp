@@ -7,10 +7,7 @@
         "firefly-iii-mcp"
       ],
       "env": {
-        "FIREFLY_III_URL": "<YOUR_FIREFLY_III_URL>",
-        "FIREFLY_III_TOKEN": "<YOUR_FIREFLY_III_TOKEN>",
-        "FIREFLY_III_SSL_VERIFY": "True",
-        "MCP_TOOL_MODE": "both",
+        "MCP_TOOL_MODE": "condensed",
         "ABOUTTOOL": "True",
         "ACCOUNTSTOOL": "True",
         "ATTACHMENTSTOOL": "True",
@@ -24,20 +21,22 @@
         "CURRENCIESTOOL": "True",
         "CURRENCY_EXCHANGE_RATESTOOL": "True",
         "DATATOOL": "True",
+        "FIREFLY_III_TOKEN": "your_token_here",
+        "FIREFLY_III_URL": "http://localhost:8080",
         "INSIGHTTOOL": "True",
         "LINKSTOOL": "True",
         "OBJECT_GROUPSTOOL": "True",
         "PIGGY_BANKSTOOL": "True",
         "PREFERENCESTOOL": "True",
         "RECURRENCESTOOL": "True",
-        "RULE_GROUPSTOOL": "True",
         "RULESTOOL": "True",
+        "RULE_GROUPSTOOL": "True",
         "SEARCHTOOL": "True",
         "SUMMARYTOOL": "True",
         "TAGSTOOL": "True",
         "TRANSACTIONSTOOL": "True",
-        "USER_GROUPSTOOL": "True",
         "USERSTOOL": "True",
+        "USER_GROUPSTOOL": "True",
         "WEBHOOKSTOOL": "True"
       }
     }
