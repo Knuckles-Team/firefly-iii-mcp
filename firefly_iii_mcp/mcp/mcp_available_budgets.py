@@ -25,7 +25,7 @@ def register_available_budgets_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `available_budgets` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `available_budgets` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing available_budgets tool...")
         try:

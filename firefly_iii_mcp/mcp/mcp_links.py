@@ -25,7 +25,7 @@ def register_links_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `links` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `links` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing links tool...")
         try:

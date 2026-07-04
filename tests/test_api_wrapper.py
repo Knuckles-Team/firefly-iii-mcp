@@ -5,9 +5,9 @@ import pytest
 from firefly_iii_mcp.api import ApiClientBase
 
 
-@pytest.mark.concept("FF-001")
+@pytest.mark.concept("FF-OS.config.ff")
 def test_request_returns_json():
-    """API client returns parsed JSON. CONCEPT:FF-001"""
+    """API client returns parsed JSON. CONCEPT:FF-OS.config.ff"""
     client = ApiClientBase(base_url="http://localhost", token="t")
     response = MagicMock()
     response.json.return_value = {"ok": True}

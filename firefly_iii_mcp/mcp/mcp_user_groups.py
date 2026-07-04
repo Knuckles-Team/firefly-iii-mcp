@@ -25,7 +25,7 @@ def register_user_groups_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `user_groups` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `user_groups` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing user_groups tool...")
         try:

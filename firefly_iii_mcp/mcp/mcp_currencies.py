@@ -25,7 +25,7 @@ def register_currencies_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `currencies` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `currencies` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing currencies tool...")
         try:

@@ -25,7 +25,7 @@ def register_transactions_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `transactions` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `transactions` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing transactions tool...")
         try:

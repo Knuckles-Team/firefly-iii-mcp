@@ -25,7 +25,7 @@ def register_insight_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `insight` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `insight` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing insight tool...")
         try:

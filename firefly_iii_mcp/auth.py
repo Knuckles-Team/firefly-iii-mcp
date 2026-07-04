@@ -11,7 +11,7 @@ Priority:
 For a multi-tenant service, add an ``instances.py`` that resolves a configured
 instance NAME (from ``<service>_instances`` in ``~/.config/agent-utilities/config.json``)
 to ``(url, token, verify)`` and call it here before the delegation/fixed paths — see
-``gitlab_api.instances`` (CONCEPT:KG-2.9g) for the golden pattern.
+``gitlab_api.instances`` (CONCEPT:AU-KG.backend.declared-columns-so-schema) for the golden pattern.
 """
 
 from agent_utilities.base_utilities import get_logger

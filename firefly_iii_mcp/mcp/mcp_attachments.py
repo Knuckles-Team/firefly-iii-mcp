@@ -25,7 +25,7 @@ def register_attachments_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `attachments` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `attachments` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing attachments tool...")
         try:

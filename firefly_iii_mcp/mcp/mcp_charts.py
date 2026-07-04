@@ -25,7 +25,7 @@ def register_charts_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `charts` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `charts` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing charts tool...")
         try:

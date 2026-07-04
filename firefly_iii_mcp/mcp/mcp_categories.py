@@ -25,7 +25,7 @@ def register_categories_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `categories` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `categories` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing categories tool...")
         try:

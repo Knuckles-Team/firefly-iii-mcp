@@ -25,7 +25,7 @@ def register_currency_exchange_rates_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `currency_exchange_rates` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `currency_exchange_rates` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing currency_exchange_rates tool...")
         try:

@@ -25,7 +25,7 @@ def register_rule_groups_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `rule_groups` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `rule_groups` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing rule_groups tool...")
         try:

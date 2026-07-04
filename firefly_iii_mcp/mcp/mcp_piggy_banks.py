@@ -25,7 +25,7 @@ def register_piggy_banks_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `piggy_banks` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `piggy_banks` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing piggy_banks tool...")
         try:

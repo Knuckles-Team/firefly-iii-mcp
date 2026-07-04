@@ -25,7 +25,7 @@ def register_preferences_tools(mcp: FastMCP):
             default=None, description="MCP context for progress reporting"
         ),
     ) -> dict:
-        """Manage Firefly III `preferences` operations. CONCEPT:FF-001"""
+        """Manage Firefly III `preferences` operations. CONCEPT:FF-OS.config.ff"""
         if ctx:
             await ctx.info("Executing preferences tool...")
         try:
