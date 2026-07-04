@@ -1,0 +1,182 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix : <http://knuckles.team/kg#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Firefly III personal-finance ontology — accounts, double-entry transactions,
+# budgets and savings. All classes and properties live in the shared `:` (kg#)
+# namespace; only the owl:Ontology node gets the per-package IRI. Backs the
+# firefly-iii-mcp MCP tool surface (accounts_operations / transactions_operations /
+# budgets_operations / categories_operations / bills_operations / …).
+
+:Account a owl:Class ;
+    rdfs:label "Account" ;
+    rdfs:comment "A Firefly III account — asset, expense, revenue, liability or cash — that holds a running balance (accounts_operations)." .
+
+:Transaction a owl:Class ;
+    rdfs:label "Transaction" ;
+    rdfs:comment "A double-entry transaction group (withdrawal, deposit or transfer) moving money between a source and destination account (transactions_operations)." .
+
+:Budget a owl:Class ;
+    rdfs:label "Budget" ;
+    rdfs:comment "An envelope that caps spending over a period; transactions are booked against it (budgets_operations)." .
+
+:BudgetLimit a owl:Class ;
+    rdfs:label "Budget Limit" ;
+    rdfs:comment "A per-period spending ceiling for a Budget over a start/end date range (budgets_operations)." .
+
+:Category a owl:Class ;
+    rdfs:label "Category" ;
+    rdfs:comment "A free-form spending/income category tagging transactions for reporting (categories_operations)." .
+
+:Bill a owl:Class ;
+    rdfs:label "Bill" ;
+    rdfs:comment "A recurring expected payment (e.g. rent, subscription) matched against transactions (bills_operations)." .
+
+:PiggyBank a owl:Class ;
+    rdfs:label "Piggy Bank" ;
+    rdfs:comment "A savings goal attached to an asset account, accumulating toward a target amount (piggy_banks_operations)." .
+
+:Tag a owl:Class ;
+    rdfs:label "Tag" ;
+    rdfs:comment "A user-defined label applied across transactions for cross-cutting grouping (tags_operations)." .
+
+:Currency a owl:Class ;
+    rdfs:label "Currency" ;
+    rdfs:comment "A monetary currency (ISO code + symbol) that denominates accounts and transactions (currencies_operations)." .
+
+# --- links (owl:ObjectProperty) ---
+
+:sourceAccount a owl:ObjectProperty ;
+    rdfs:label "source account" ;
+    rdfs:comment "Links a Transaction to the Account money leaves." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Account .
+
+:destinationAccount a owl:ObjectProperty ;
+    rdfs:label "destination account" ;
+    rdfs:comment "Links a Transaction to the Account money arrives in." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Account .
+
+:inBudget a owl:ObjectProperty ;
+    rdfs:label "in budget" ;
+    rdfs:comment "Books a Transaction against a Budget envelope." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Budget .
+
+:inCategory a owl:ObjectProperty ;
+    rdfs:label "in category" ;
+    rdfs:comment "Tags a Transaction with a Category." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Category .
+
+:hasTag a owl:ObjectProperty ;
+    rdfs:label "has tag" ;
+    rdfs:comment "Applies a Tag to a Transaction." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Tag .
+
+:paysBill a owl:ObjectProperty ;
+    rdfs:label "pays bill" ;
+    rdfs:comment "Links a Transaction to the recurring Bill it settles." ;
+    rdfs:domain :Transaction ;
+    rdfs:range :Bill .
+
+:limitsBudget a owl:ObjectProperty ;
+    rdfs:label "limits budget" ;
+    rdfs:comment "Links a BudgetLimit to the Budget it caps." ;
+    rdfs:domain :BudgetLimit ;
+    rdfs:range :Budget .
+
+:savesToward a owl:ObjectProperty ;
+    rdfs:label "saves toward" ;
+    rdfs:comment "Links a PiggyBank to the asset Account it accumulates within." ;
+    rdfs:domain :PiggyBank ;
+    rdfs:range :Account .
+
+:denominatedIn a owl:ObjectProperty ;
+    rdfs:label "denominated in" ;
+    rdfs:comment "Links an Account, Transaction or Budget to its Currency." ;
+    rdfs:range :Currency .
+
+:heldBy a owl:ObjectProperty ;
+    rdfs:label "held by" ;
+    rdfs:comment "Links an Account to the Person who owns it." ;
+    rdfs:domain :Account ;
+    rdfs:range :Person .
+
+# --- fields (owl:DatatypeProperty) ---
+
+:accountType a owl:DatatypeProperty ;
+    rdfs:label "account type" ;
+    rdfs:comment "Firefly account type (asset, expense, revenue, liability, cash)." ;
+    rdfs:domain :Account ;
+    rdfs:range xsd:string .
+
+:accountRole a owl:DatatypeProperty ;
+    rdfs:label "account role" ;
+    rdfs:comment "Role of an asset account (defaultAsset, savingAsset, ccAsset, cashWalletAsset)." ;
+    rdfs:domain :Account ;
+    rdfs:range xsd:string .
+
+:currentBalance a owl:DatatypeProperty ;
+    rdfs:label "current balance" ;
+    rdfs:comment "Current running balance of an Account (string decimal)." ;
+    rdfs:domain :Account ;
+    rdfs:range xsd:string .
+
+:iban a owl:DatatypeProperty ;
+    rdfs:label "iban" ;
+    rdfs:comment "International Bank Account Number of an Account." ;
+    rdfs:domain :Account ;
+    rdfs:range xsd:string .
+
+:transactionType a owl:DatatypeProperty ;
+    rdfs:label "transaction type" ;
+    rdfs:comment "Direction of a Transaction (withdrawal, deposit, transfer, reconciliation)." ;
+    rdfs:domain :Transaction ;
+    rdfs:range xsd:string .
+
+:amount a owl:DatatypeProperty ;
+    rdfs:label "amount" ;
+    rdfs:comment "Monetary amount of a Transaction or BudgetLimit (string decimal)." ;
+    rdfs:range xsd:string .
+
+:currencyCode a owl:DatatypeProperty ;
+    rdfs:label "currency code" ;
+    rdfs:comment "ISO 4217 currency code (e.g. USD, EUR) of an Account, Transaction or Budget." ;
+    rdfs:range xsd:string .
+
+:code a owl:DatatypeProperty ;
+    rdfs:label "code" ;
+    rdfs:comment "ISO 4217 code identifying a Currency." ;
+    rdfs:domain :Currency ;
+    rdfs:range xsd:string .
+
+:date a owl:DatatypeProperty ;
+    rdfs:label "date" ;
+    rdfs:comment "Booking date of a Transaction (ISO 8601)." ;
+    rdfs:domain :Transaction ;
+    rdfs:range xsd:dateTime .
+
+:active a owl:DatatypeProperty ;
+    rdfs:label "active" ;
+    rdfs:comment "Whether an Account, Budget or Bill is currently active." ;
+    rdfs:range xsd:boolean .
+
+:externalToolId a owl:DatatypeProperty ;
+    rdfs:label "external tool id" ;
+    rdfs:comment "Native Firefly III numeric id of the object, preserved for round-tripping." ;
+    rdfs:range xsd:string .
+
+<http://knuckles.team/kg/firefly> a owl:Ontology ;
+    rdfs:label "Firefly III Personal Finance Ontology" ;
+    rdfs:comment """Firefly III personal-finance model — accounts, double-entry
+    transactions, budgets, budget limits, categories, bills, piggy banks, tags and
+    currencies, with their booking and savings relationships — federated into the
+    agent-utilities knowledge-graph hub.""" ;
+    owl:imports <http://knuckles.team/kg> .

@@ -1,0 +1,25 @@
+{
+  "_comment": "Tier-1 mcp_tool source presets for firefly-iii-mcp (AU-KG.ingest.mcp-tool-connector). Sync Firefly III accounts and transactions into the KG as finance documents via the firefly-iii-mcp MCP server. Contributed presets win over the central MCP_TOOL_PRESETS. Note: for typed :Account/:Transaction nodes prefer the native firefly_ingest_* tools (kg_ingest.py); these presets provide the generic document-ingestion path.",
+  "firefly-accounts": {
+    "server": "firefly-iii-mcp",
+    "tool": "accounts_operations",
+    "action": "list_account",
+    "records_path": "data",
+    "id_field": "id",
+    "title_field": "attributes.name",
+    "text_field": "attributes.notes",
+    "updated_field": "attributes.updated_at",
+    "doc_type": "account"
+  },
+  "firefly-transactions": {
+    "server": "firefly-iii-mcp",
+    "tool": "transactions_operations",
+    "action": "list_transaction",
+    "records_path": "data",
+    "id_field": "id",
+    "title_field": "attributes.group_title",
+    "text_field": "attributes.transactions.0.description",
+    "updated_field": "attributes.updated_at",
+    "doc_type": "transaction"
+  }
+}
