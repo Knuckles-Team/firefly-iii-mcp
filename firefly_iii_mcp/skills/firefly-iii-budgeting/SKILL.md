@@ -1,5 +1,6 @@
 ---
 name: firefly-iii-budgeting
+skill_type: skill
 description: >-
   Plan and track spending in Firefly III via the firefly-iii-mcp MCP server —
   manage budgets and per-period budget limits, categories, recurring bills, and

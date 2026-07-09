@@ -1,5 +1,6 @@
 ---
 name: firefly-iii-account-management
+skill_type: skill
 description: >-
   Manage Firefly III accounts (asset, expense, revenue, liability, cash) and their
   currencies via the firefly-iii-mcp MCP server — list, read, create, and update

@@ -1,5 +1,6 @@
 ---
 name: firefly-iii-transaction-ledger
+skill_type: skill
 description: >-
   Book and manage Firefly III transactions (withdrawals, deposits, transfers) via
   the firefly-iii-mcp MCP server — list, read, create, update, and delete
