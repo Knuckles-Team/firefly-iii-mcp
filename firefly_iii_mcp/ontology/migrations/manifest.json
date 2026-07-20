@@ -1,0 +1,6 @@
+{
+  "connector": "firefly-iii-mcp",
+  "current_ontology_source": "firefly",
+  "migrations": [],
+  "schema_version": "1"
+}

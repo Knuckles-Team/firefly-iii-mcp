@@ -45,6 +45,10 @@ This repository is actively maintained - Contributions are welcome!
   (`stdio` / `streamable-http` / `sse`), or a Pydantic-AI **A2A agent**.
 - **`agent-utilities` native** — built on the shared framework (auth, action router,
   telemetry, governance) for fleet consistency.
+- **Verified transport profiles** — outbound HTTP uses AgentConfig-backed TLS trust;
+  peer and hostname verification cannot be disabled by this connector.
+- **Governed graph inputs** — ships one comprehensive skill, a neutral ontology, and
+  source presets without packaging an instance URL, custom schema, or credential.
 - **Per-tool toggles** — enable or disable each tool domain with environment switches.
 - **Enterprise-ready** — OTEL/Langfuse telemetry and optional Eunomia access governance.
 
@@ -97,9 +101,9 @@ Pick the extra that matches what you want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `firefly-iii-mcp[mcp]` | Slim MCP server only (`agent-utilities[mcp]` — FastMCP/FastAPI) | You only run the **MCP server** (smallest install / image) |
-| `firefly-iii-mcp[agent]` | Full agent runtime (`agent-utilities[agent,logfire]` — Pydantic AI + the epistemic-graph engine) | You run the **integrated agent** |
-| `firefly-iii-mcp[all]` | Everything (`mcp` + `agent` + `logfire`) | Development / both surfaces |
+| `firefly-iii-mcp[mcp]` | MCP server (`agent-utilities[mcp]`) plus the mandatory full epistemic-graph base runtime | You run the **MCP server** without the agent UI/runtime |
+| `firefly-iii-mcp[agent]` | Current agent runtime (`agent-utilities[agent-runtime,logfire]`) | You run the **integrated agent** |
+| `firefly-iii-mcp[all]` | MCP + agent runtime + Logfire | Development or both surfaces |
 
 ### Install with `uvx` (no install — run on demand)
 
@@ -111,7 +115,7 @@ uvx --from "firefly-iii-mcp[agent]" firefly-iii-agent  # A2A agent server
 ### Install with `pip` / `uv`
 
 ```bash
-# MCP server only (recommended for tool hosting — slim deps)
+# MCP server only (recommended for tool hosting)
 uv pip install "firefly-iii-mcp[mcp]"
 
 # Full agent runtime (Pydantic AI + epistemic-graph engine)
@@ -127,26 +131,24 @@ One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `
 
 | Image tag | Build target | Contents | Entrypoint |
 |-----------|--------------|----------|------------|
-| `knucklessg1/firefly-iii-mcp:mcp` | `--target mcp` | `firefly-iii-mcp[mcp]` — **slim**, no engine/`pydantic-ai`/`dspy`/`llama-index`/`tree-sitter` | `firefly-iii-mcp` |
-| `knucklessg1/firefly-iii-mcp:latest` | `--target agent` (default) | `firefly-iii-mcp[agent]` — **full** agent runtime + epistemic-graph engine | `firefly-iii-agent` |
+| `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full epistemic-graph base dependency | `firefly-iii-mcp` |
+| `firefly-iii-mcp@sha256:<digest>` | `--target agent` (default) | MCP dependencies plus the current Pydantic-AI agent runtime | `firefly-iii-agent` |
 
 ```bash
-docker build --target mcp   -t knucklessg1/firefly-iii-mcp:mcp    docker/   # slim MCP server
-docker build --target agent -t knucklessg1/firefly-iii-mcp:latest docker/   # full agent
+docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
+docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
 
-`docker/mcp.compose.yml` runs the slim `:mcp` server; `docker/agent.compose.yml` runs the
-agent (`:latest`) with a co-located `:mcp` sidecar.
+`docker/mcp.compose.yml` runs the MCP-only `:mcp` server; `docker/agent.compose.yml` runs the
+agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-The **full agent** (`[agent]` / `:latest`) embeds the **epistemic-graph** engine (pulled in
-transitively via `agent-utilities[agent]`). For production — or to share one knowledge graph
-across multiple agents — run **epistemic-graph as its own database container** and point the
-agent at it instead of embedding it. Deployment recipes (single-node + Raft HA), connection
-config, and the full database architecture (with diagrams) are documented in the
+Every install receives `epistemic-graph[full]` through the current Agent Utilities base
+dependency. The connector does not open an insecure engine listener or silently select a
+machine-specific engine. Deployment topology and identity are resolved by AgentConfig. For a
+shared production authority, follow the
 [epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
-The slim `[mcp]` server does **not** require the database.
 
 ### Console scripts
 
@@ -165,8 +167,10 @@ After installation the following entry points are available on your `PATH`:
 from firefly_iii_mcp.auth import get_client
 
 client = get_client()
-status = client.get_system_status()
-print(status)
+try:
+    print(client.get_about())
+finally:
+    client.close()
 ```
 
 ### As an MCP server (CLI)
@@ -176,7 +180,7 @@ print(status)
 firefly-iii-mcp
 
 # Networked streamable-http
-firefly-iii-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+firefly-iii-mcp --transport streamable-http --host 127.0.0.1 --port 8000
 ```
 
 ### Calling an MCP tool
@@ -185,9 +189,9 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 
 ```json
 {
-  "tool": "system_operations",
+  "tool": "about_operations",
   "arguments": {
-    "action": "status",
+    "action": "get_about",
     "params_json": "{}"
   }
 }
@@ -195,11 +199,10 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 
 ## MCP
 
-> **Install the slim `[mcp]` extra.** All MCP examples below install
-> `firefly-iii-mcp[mcp]` — the MCP-server extra that pulls only the FastMCP /
-> FastAPI tooling (`agent-utilities[mcp]`). It deliberately **excludes** the heavy
-> agent runtime (the epistemic-graph engine, `pydantic-ai`, `dspy`, `llama-index`,
-> `tree-sitter`), so `uvx`/container installs are dramatically smaller and faster.
+> **Install the MCP-only `[mcp]` extra.** All MCP examples below install
+> `firefly-iii-mcp[mcp]` — the MCP-server extra that adds the FastMCP / FastAPI
+> tooling (`agent-utilities[mcp]`) to the shared base. The integrated Pydantic-AI
+> and UI runtime is separate, while full epistemic-graph remains mandatory.
 > Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
 > (see [Installation](#installation)).
 
@@ -207,11 +210,10 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
-> **Install the slim `[mcp]` extra.** All examples install `firefly-iii-mcp[mcp]` — the
-> MCP-server extra that pulls only the FastMCP / FastAPI tooling (`agent-utilities[mcp]`).
-> It deliberately **excludes** the heavy agent runtime (`pydantic-ai`, the epistemic-graph
-> engine, `dspy`, `llama-index`), so `uvx` / container installs are far smaller. Use the
-> full `[agent]` extra only when you need the integrated Pydantic AI agent.
+> **Install the connector-focused `[mcp]` extra.** Examples use `firefly-iii-mcp[mcp]` to add
+> FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
+> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
+> enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
@@ -226,7 +228,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
         "firefly-iii-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "ABOUTTOOL": "True",
         "ACCOUNTSTOOL": "True",
         "ATTACHMENTSTOOL": "True",
@@ -240,8 +242,6 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
         "CURRENCIESTOOL": "True",
         "CURRENCY_EXCHANGE_RATESTOOL": "True",
         "DATATOOL": "True",
-        "FIREFLY_III_TOKEN": "your_token_here",
-        "FIREFLY_III_URL": "http://localhost:8080",
         "INSIGHTTOOL": "True",
         "LINKSTOOL": "True",
         "OBJECT_GROUPSTOOL": "True",
@@ -263,6 +263,10 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 }
 ```
 
+Runtime references require an alias-aware launcher such as GraphOS. Other
+launchers must omit those entries and inject the resolved values through their
+own runtime secret boundary.
+
 #### Streamable-HTTP Transport (networked / production)
 
 ```json
@@ -281,9 +285,9 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
       ],
       "env": {
         "TRANSPORT": "streamable-http",
-        "HOST": "0.0.0.0",
+        "HOST": "127.0.0.1",
         "PORT": "8000",
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "ABOUTTOOL": "True",
         "ACCOUNTSTOOL": "True",
         "ATTACHMENTSTOOL": "True",
@@ -297,8 +301,6 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
         "CURRENCIESTOOL": "True",
         "CURRENCY_EXCHANGE_RATESTOOL": "True",
         "DATATOOL": "True",
-        "FIREFLY_III_TOKEN": "your_token_here",
-        "FIREFLY_III_URL": "http://localhost:8080",
         "INSIGHTTOOL": "True",
         "LINKSTOOL": "True",
         "OBJECT_GROUPSTOOL": "True",
@@ -332,16 +334,18 @@ Alternatively, connect to a pre-deployed Streamable-HTTP instance by `url`:
 }
 ```
 
-Deploying the Streamable-HTTP server via Docker:
+Run a reviewed container image as a least-privilege stdio child (no
+listener or published port):
 
 ```bash
-docker run -d \
-  --name firefly-iii-mcp-mcp \
-  -p 8000:8000 \
-  -e TRANSPORT=streamable-http \
-  -e HOST=0.0.0.0 \
-  -e PORT=8000 \
-  -e MCP_TOOL_MODE=condensed \
+docker run -i --rm \
+  --read-only \
+  --cap-drop=ALL \
+  --security-opt=no-new-privileges \
+  --pids-limit=256 \
+  --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+  -e TRANSPORT=stdio \
+  -e MCP_TOOL_MODE=intent \
   -e ABOUTTOOL=True \
   -e ACCOUNTSTOOL=True \
   -e ATTACHMENTSTOOL=True \
@@ -355,8 +359,6 @@ docker run -d \
   -e CURRENCIESTOOL=True \
   -e CURRENCY_EXCHANGE_RATESTOOL=True \
   -e DATATOOL=True \
-  -e FIREFLY_III_TOKEN=your_token_here \
-  -e FIREFLY_III_URL=http://localhost:8080 \
   -e INSIGHTTOOL=True \
   -e LINKSTOOL=True \
   -e OBJECT_GROUPSTOOL=True \
@@ -372,8 +374,13 @@ docker run -d \
   -e USERSTOOL=True \
   -e USER_GROUPSTOOL=True \
   -e WEBHOOKSTOOL=True \
-  knucklessg1/firefly-iii-mcp:mcp
+  registry.example.invalid/firefly-iii-mcp@sha256:<digest> firefly-iii-mcp
 ```
+
+For containerized network HTTP, supply an authenticated TLS ingress (or
+direct server TLS), exact `MCP_ALLOWED_HOSTS`, and an exact trusted-proxy
+CIDR policy through the operator-owned deployment profile. The generator
+does not emit an unauthenticated non-loopback listener.
 
 _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) — do not edit._
 <!-- MCP-CONFIG-EXAMPLES:END -->
@@ -381,16 +388,16 @@ _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) 
 <!-- BEGIN GENERATED: additional-deployment-options -->
 ### Additional Deployment Options
 
-`firefly-iii-mcp` can also run as a **local container** (Docker / Podman / `uv`) or be
-consumed from a **remote deployment**. The
-[Deployment guide](https://knuckles-team.github.io/firefly-iii-mcp/deployment/) has full,
-copy-paste `mcp_config.json` for all four transports — **stdio**, **streamable-http**,
-**local container / uv**, and **remote URL**:
+`firefly-iii-mcp` can run as a local stdio process or container, or behind a remote
+network boundary. The
+[Deployment guide](https://knuckles-team.github.io/firefly-iii-mcp/deployment/) carries
+the detailed transport contract.
 
-- **Local container / uv** — launch the server from `mcp_config.json` via `uvx`,
-  `docker run`, or `podman run`, or point at a local streamable-http container by `url`.
-- **Remote URL** — connect to a server deployed behind Caddy at
-  `http://firefly-iii-mcp.arpa/mcp` using the `"url"` key.
+- **Local container** — launch a reviewed immutable image as a least-privilege
+  stdio child with no listener or published port.
+- **Remote URL** — connect through an operator-supplied authenticated HTTPS
+  ingress. Keep its URL, outbound identity references, trust profile, and exact
+  `MCP_ALLOWED_HOSTS` in `AgentConfig`.
 <!-- END GENERATED: additional-deployment-options -->
 
 ## Install Python Package
@@ -406,29 +413,47 @@ Full documentation is published to the GitHub Pages site and mirrored under `doc
 - [Documentation site](https://knuckles-team.github.io/firefly-iii-mcp/)
 - [Overview](docs/overview.md)
 - [Installation](docs/installation.md)
+- [Configuration, Trust, and Privacy](docs/configuration.md)
 - [Usage](docs/usage.md)
 - [Deployment](docs/deployment.md)
 - [Platform](docs/platform.md)
 - [Concept Registry](docs/concepts.md)
 
 
-<!-- BEGIN agent-os-genesis-deploy (generated; do not edit between markers) -->
+<!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
 
-## Deploy with `agent-os-genesis`
+## Deploy with `agent-utilities-deployment`
 
-This package can be provisioned for you — skill-guided — by the **`agent-os-genesis`**
-universal skill (its *single-package deploy mode*): it picks your install method, seeds
-secrets to OpenBao/Vault (or `.env`), trusts your enterprise CA, registers the MCP
-server, and verifies it — the same machinery that stands up the whole Agent OS, narrowed
-to just this package. Ask your agent to **"deploy `firefly-iii-mcp` with agent-os-genesis"**.
+Provision this package with the consolidated **`agent-utilities-deployment`**
+workflow. It selects an installed-package, editable-source, or immutable-container
+path; records only runtime secret and TLS-profile references in `AgentConfig`; and
+runs doctor, registration, policy, observability, and rollback gates. Ask your agent
+to **"deploy `firefly-iii-mcp` with agent-utilities-deployment"**.
 
 | Install mode | Command |
 |------|---------|
-| Bare-metal, prod (PyPI) | `uvx firefly-iii-mcp` · or `uv tool install firefly-iii-mcp` |
-| Bare-metal, dev (editable) | `uv pip install -e ".[all]"` · or `pip install -e ".[all]"` |
-| Container, prod | deploy `knucklessg1/firefly-iii-mcp:latest` via docker-compose / swarm / podman / podman-compose / kubernetes |
-| Container, dev (editable) | deploy `docker/compose.dev.yml` (source-mounted at `/src`; edits live on restart) |
+| Installed package | `uv tool install "firefly-iii-mcp[mcp]"`, then run `firefly-iii-mcp` |
+| Editable source | `uv pip install -e ".[agent]"`, then run `firefly-iii-mcp` |
+| Immutable container | deploy `registry.example.invalid/firefly-iii-mcp@sha256:<digest>` through the operator-selected orchestrator |
 
-Secrets are read-existing + seeded via `vault_sync` — you are only prompted for what's missing.
+The repository embeds no deployment profile, credential value, certificate path, or
+environment-specific endpoint. Supply those at runtime through `AgentConfig` and the
+configured secret provider.
 
-<!-- END agent-os-genesis-deploy -->
+<!-- END agent-utilities-deployment -->
+
+<!-- GOVERNED-CAPABILITY:START -->
+## Governed capability contract
+
+This package owns the complete release-generated schema-v2 capability bundle:
+`connector_manifest.yml`, exact local MCP schema fingerprints, the neutral finance
+ontology, SHACL shapes, source mappings and fixtures, the migration ledger, and an
+offline source attestation. Release tooling derives and signs these artifacts from the
+current sources; they are not hand-authored and do not claim external-live
+certification.
+
+Runtime endpoints, credentials, certificate trust, identity, tenant/ACL policy,
+retention, and observability destinations are deployment inputs and are never packaged
+values. See [Configuration, trust, and privacy](docs/configuration.md) before enabling
+a network transport, GraphOS delegation, source synchronization, or trace export.
+<!-- GOVERNED-CAPABILITY:END -->

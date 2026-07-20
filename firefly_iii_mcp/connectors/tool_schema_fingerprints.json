@@ -1,0 +1,10 @@
+{
+  "algorithm": "agent-utilities:mcp-tool-schema-compat:v1",
+  "connector": "firefly-iii-mcp",
+  "schema_version": "1",
+  "tools": {
+    "accounts_operations": "85ceb4b7200e9a72ac0805b570e51e26269a195fe94e45761ba28a0b55cb3bc6",
+    "budgets_operations": "7c7e4af5dd237d5acc832ebd161d1cc1886b0c722d33a92efa2dc48b74f08b21",
+    "transactions_operations": "04e4a07255bffbd1003232344f44651867104578e7ffe973a23af3a9f5e2cf2d"
+  }
+}

@@ -1,9 +1,4 @@
 openapi: 3.0.0
-servers:
-  - description: Firefly III demo site
-    url: https://demo.firefly-iii.org/api
-  - description: "Local development server (do not use)"
-    url: http://firefly.sd.internal/api
 info:
   title: Firefly III API v6.4.17
   description: |
@@ -16,10 +11,6 @@ info:
     <small>This file was last generated on 2026-02-07 @ 09:56:11 (Europe/Amsterdam)</small>
 
   version: "v6.4.17"
-  contact:
-    name: James Cole
-    email: james@firefly-iii.org
-    url: https://firefly-iii.org
   license:
     name: AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
@@ -24332,7 +24323,7 @@ components:
         email:
           type: string
           format: email
-          example: "james@firefly-iii.org"
+          example: "user@example.invalid"
           description: The new users email address.
         blocked:
           type: boolean
@@ -24431,7 +24422,7 @@ components:
         user_email:
           type: string
           format: email
-          example: "james@firefly-iii.org"
+          example: "user@example.invalid"
           readOnly: true
           description: "The email address of the member"
         you:

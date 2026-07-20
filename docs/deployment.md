@@ -1,120 +1,71 @@
 # Deployment
 
-This page covers running `firefly-iii-mcp` as long-lived servers.
+`firefly-iii-mcp` exposes an MCP server and an optional A2A agent server. Keep all
+service endpoints, credentials, identity settings, TLS trust, model selection, and
+telemetry destinations in runtime AgentConfig or the deployment secret store.
 
-> `firefly-iii-mcp` ships both an **MCP server** (console script `firefly-iii-mcp`) and an
-> **A2A agent server** (console script `firefly-iii-agent`).
+Read [Configuration, trust, and privacy](configuration.md) before enabling a network
+transport.
 
-<!-- BEGIN GENERATED: deployment-options -->
-## Deployment Options
+## Stdio
 
-`firefly-iii-mcp` exposes its MCP server (console script `firefly-iii-mcp`) four ways. Pick the
-row that matches where the server runs relative to your MCP client, then copy the
-matching `mcp_config.json` below.
-
-| # | Option | Transport | Where it runs | `mcp_config.json` key |
-|---|--------|-----------|---------------|------------------------|
-| 1 | stdio | `stdio` | client launches a subprocess | `command` |
-| 2 | Streamable-HTTP (local) | `streamable-http` | a local network port | `command` or `url` |
-| 3 | Local container / uv | `stdio` or `streamable-http` | Docker / Podman / uv on this host | `command` or `url` |
-| 4 | Remote URL | `streamable-http` | a remote host behind Caddy | `url` |
-
-### 1. stdio (local subprocess)
+Use the checked-in `mcp_config.json` with GraphOS or another alias-aware launcher. It
+contains only `env://` references. A launcher without reference resolution must omit
+those environment entries and inject the runtime values itself.
 
 ```json
 {
   "mcpServers": {
     "firefly-iii-mcp": {
       "command": "uvx",
-      "args": ["--from", "firefly-iii-mcp", "firefly-iii-mcp"],
+      "args": ["--from", "firefly-iii-mcp[mcp]", "firefly-iii-mcp"],
       "env": {
-        "FIREFLY_III_URL": "https://service.example.com",
-        "FIREFLY_III_TOKEN": "your_token"
+        "MCP_TOOL_MODE": "condensed",
+        "FIREFLY_III_URL": "env://FIREFLY_III_URL",
+        "FIREFLY_III_TOKEN": "env://FIREFLY_III_TOKEN"
       }
     }
   }
 }
 ```
 
-### 2. Streamable-HTTP (local process)
+## Network transport
+
+Bind locally by default and place authentication, authorization, and verified TLS at
+the network boundary:
 
 ```bash
-uvx --from firefly-iii-mcp firefly-iii-mcp --transport streamable-http --host 0.0.0.0 --port 8000
-curl -s http://localhost:8000/health        # {"status":"OK"}
+firefly-iii-mcp --transport streamable-http --host 127.0.0.1 --port 8000
 ```
 
-Connect to the running process by URL:
+For a remote deployment, let the launcher or AgentConfig supply the authenticated
+HTTPS MCP URL. Do not persist that deployment endpoint in this repository.
 
-```json
-{
-  "mcpServers": {
-    "firefly-iii-mcp": { "url": "http://localhost:8000/mcp" }
-  }
-}
+## Containers
+
+Build the desired target, then inject runtime configuration through the orchestrator:
+
+```bash
+docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
+docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
 
-### 3. Local container / uv
-
-Launch a container directly from `mcp_config.json` (swap `docker` for `podman` for a
-daemonless runtime):
-
-```json
-{
-  "mcpServers": {
-    "firefly-iii-mcp": {
-      "command": "docker",
-      "args": [
-        "run", "-i", "--rm",
-        "-e", "TRANSPORT=stdio",
-        "-e", "FIREFLY_III_URL=https://service.example.com",
-        "-e", "FIREFLY_III_TOKEN=your_token",
-        "knucklessg1/firefly-iii-mcp:latest"
-      ]
-    }
-  }
-}
-```
-
-Or run a local streamable-http container and connect by URL:
+The Compose examples use operator-overridable image variables, bind published ports
+to loopback, disable telemetry and the web UI by default, and require the agent's MCP
+URL, provider, and model at runtime.
 
 ```bash
 docker compose -f docker/mcp.compose.yml up -d
+docker compose -f docker/agent.compose.yml up -d
 ```
 
-```json
-{
-  "mcpServers": {
-    "firefly-iii-mcp": { "url": "http://localhost:8000/mcp" }
-  }
-}
-```
+## A2A agent
 
-### 4. Remote URL (deployed behind Caddy)
-
-When the server is deployed remotely and published through Caddy on the internal
-`*.arpa` zone, connect with the `"url"` key — no local process or image required:
-
-```json
-{
-  "mcpServers": {
-    "firefly-iii-mcp": { "url": "http://firefly-iii-mcp.arpa/mcp" }
-  }
-}
-```
-
-Caddy reverse-proxies `http://firefly-iii-mcp.arpa` to the container's `:8000`
-streamable-http listener.
-<!-- END GENERATED: deployment-options -->
-
-## Docker Compose
-
-```bash
-docker compose -f docker/mcp.compose.yml up -d      # MCP server only
-docker compose -f docker/agent.compose.yml up -d    # MCP + agent
-```
-
-## Run the A2A agent server
+Run the agent only after supplying its MCP URL and model settings at runtime:
 
 ```bash
 firefly-iii-agent --mcp-config mcp_config.json --web
 ```
+
+Do not enable content-bearing telemetry by default. Validate configuration and trust
+before launch with the doctor command documented on the configuration page.

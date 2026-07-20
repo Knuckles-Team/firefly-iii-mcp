@@ -88,6 +88,7 @@ nav:
   - Home: index.md
   - Overview: overview.md
   - Installation: installation.md
+  - Configuration, Trust & Privacy: configuration.md
   - Deployment: deployment.md
   - Usage (API / CLI / MCP): usage.md
   - Backing Platform (Firefly III MCP): platform.md

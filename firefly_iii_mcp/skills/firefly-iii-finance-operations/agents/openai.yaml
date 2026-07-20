@@ -1,0 +1,4 @@
+interface:
+  display_name: "Firefly III Finance Operations"
+  short_description: "Operate a governed Firefly III ledger"
+  default_prompt: "Use $firefly-iii-finance-operations to inspect and safely manage this Firefly III ledger request."

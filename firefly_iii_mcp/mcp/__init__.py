@@ -12,7 +12,6 @@ from .mcp_currencies import register_currencies_tools
 from .mcp_currency_exchange_rates import register_currency_exchange_rates_tools
 from .mcp_data import register_data_tools
 from .mcp_insight import register_insight_tools
-from .mcp_kg import register_kg_tools
 from .mcp_links import register_links_tools
 from .mcp_object_groups import register_object_groups_tools
 from .mcp_piggy_banks import register_piggy_banks_tools
@@ -43,7 +42,6 @@ __all__ = [
     "register_currency_exchange_rates_tools",
     "register_data_tools",
     "register_insight_tools",
-    "register_kg_tools",
     "register_links_tools",
     "register_object_groups_tools",
     "register_piggy_banks_tools",

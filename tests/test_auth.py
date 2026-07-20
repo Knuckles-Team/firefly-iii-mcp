@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -13,6 +13,10 @@ def test_get_client_auth_error():
     with patch("firefly_iii_mcp.auth.ApiClientFireflyIii") as mock_client_cls:
         mock_client_cls.side_effect = Exception("Auth Failure")
         with pytest.raises(RuntimeError) as exc_info:
-            get_client()
+            get_client(
+                url="https://service.example.invalid",
+                token="test-token",
+                tls_profile=MagicMock(),
+            )
         assert "AUTHENTICATION ERROR" in str(exc_info.value)
     auth_module._client = None

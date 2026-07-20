@@ -1,11 +1,7 @@
-version: '3.8'
-
 services:
   firefly-iii-mcp-mcp:
-    image: knucklessg1/firefly-iii-mcp:mcp
-    container_name: firefly-iii-mcp-mcp
-    hostname: firefly-iii-mcp-mcp
-    restart: always
+    image: ${FIREFLY_III_MCP_IMAGE:?set-FIREFLY_III_MCP_IMAGE-to-image@sha256-digest}
+    restart: unless-stopped
     env_file:
       - ../.env
     environment:
@@ -14,7 +10,7 @@ services:
       - PORT=8000
       - TRANSPORT=streamable-http
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 30s
@@ -28,10 +24,8 @@ services:
         max-file: "3"
 
   firefly-iii-mcp-agent:
-    image: knucklessg1/firefly-iii-mcp:latest
-    container_name: firefly-iii-mcp-agent
-    hostname: firefly-iii-mcp-agent
-    restart: always
+    image: ${FIREFLY_III_AGENT_IMAGE:?set-FIREFLY_III_AGENT_IMAGE-to-image@sha256-digest}
+    restart: unless-stopped
     depends_on:
       - firefly-iii-mcp-mcp
     env_file:
@@ -41,13 +35,13 @@ services:
       - PYTHONUNBUFFERED=1
       - HOST=0.0.0.0
       - PORT=9000
-      - MCP_URL=http://firefly-iii-mcp-mcp:8000/mcp
-      - PROVIDER=${PROVIDER:-openai}
-      - MODEL_ID=${MODEL_ID:-gpt-4o}
-      - ENABLE_WEB_UI=True
-      - ENABLE_OTEL=True
+      - MCP_URL=${MCP_URL:?set MCP_URL in the runtime environment}
+      - PROVIDER=${PROVIDER:?set PROVIDER in the runtime environment}
+      - MODEL_ID=${MODEL_ID:?set MODEL_ID in the runtime environment}
+      - ENABLE_WEB_UI=${ENABLE_WEB_UI:-False}
+      - ENABLE_OTEL=${ENABLE_OTEL:-False}
     ports:
-      - "9000:9000"
+      - "127.0.0.1:9000:9000"
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health')"]
       interval: 30s

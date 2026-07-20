@@ -1,23 +1,19 @@
-# Backing Platform — Firefly III MCP
+# Backing platform — Firefly III
 
-`firefly-iii-mcp` is a **client** of a backing service instance. This page provides a
-Docker recipe for deploying one locally to serve as the target of
-`FIREFLY_III_URL`.
+`firefly-iii-mcp` is a client of an operator-managed Firefly III instance. This
+repository intentionally does not package a platform deployment, database password,
+instance URL, local volume path, or customized schema.
 
-!!! note "Backing-system recipe"
-    Each connector in the ecosystem follows the same convention — a
-    `docs/platform.md` recipe for the system it integrates with, accompanied by a
-    sample Compose stack. Systems offered only as a managed service have no local
-    recipe.
+Provision and maintain Firefly III using its upstream deployment documentation and
+your organization's database, backup, identity, TLS, and secret-management standards.
+Then supply only the selected HTTPS API endpoint and least-privilege credential through
+runtime AgentConfig as described in [Configuration, trust, and privacy](configuration.md).
 
-## Single-node deployment (Compose)
+Before connecting this package, verify that the platform:
 
-```yaml
-# docker/platform.compose.yml — replace with the real backing-service recipe
-services:
-  platform:
-    image: REPLACE_ME
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-```
+- presents a complete, trusted certificate chain;
+- exposes only the network routes required by the connector;
+- issues a credential scoped to the enabled tool domains;
+- has backup, retention, and deletion controls appropriate for financial data;
+- supports the chosen identity delegation and audit policy;
+- does not export record content to telemetry without explicit approval.

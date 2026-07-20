@@ -8,27 +8,33 @@ Priority:
    shared ``agent_utilities.mcp.delegated_auth`` helper.
 2. **Fixed credentials** — falls back to the ``FIREFLY_III_TOKEN`` env var.
 
-For a multi-tenant service, add an ``instances.py`` that resolves a configured
-instance NAME (from ``<service>_instances`` in ``~/.config/agent-utilities/config.json``)
-to ``(url, token, verify)`` and call it here before the delegation/fixed paths — see
-``gitlab_api.instances`` (CONCEPT:AU-KG.backend.declared-columns-so-schema) for the golden pattern.
+Endpoint and credential values are resolved at runtime through the shared
+AgentConfig projection. TLS trust is a mandatory-verification profile resolved by
+``agent_utilities.core.transport_security``; this package never stores certificate
+material or a machine-specific trust path.
 """
+
+from typing import Any
 
 from agent_utilities.base_utilities import get_logger
 from agent_utilities.core.config import setting
 from agent_utilities.core.exceptions import AuthError, UnauthorizedError
+from agent_utilities.core.transport_security import (
+    ResolvedTLSProfile,
+    resolve_configured_tls_profile,
+)
 
 from .api import ApiClientFireflyIii
 
 logger = get_logger(__name__)
-_client = None
+_client: ApiClientFireflyIii | None = None
 
 
 def get_client(
     url: str | None = None,
     token: str | None = None,
-    verify: bool | None = None,
-    config: dict | None = None,
+    tls_profile: ResolvedTLSProfile | None = None,
+    config: dict[str, Any] | None = None,
 ) -> ApiClientFireflyIii:
     """Get or create a singleton API client (OIDC delegation or fixed credentials).
 
@@ -36,59 +42,65 @@ def get_client(
     ``config.json`` / env) at call time, not frozen at import.
     """
     global _client
-    if _client is not None:
-        return _client
-
-    base_url = url or setting("FIREFLY_III_URL", "http://localhost:8080")
-    token = token or setting("FIREFLY_III_TOKEN", "")
-    if verify is None:
-        verify = setting("FIREFLY_III_SSL_VERIFY", True)
 
     from agent_utilities.mcp.delegated_auth import (
         get_delegated_token,
-        get_user_identity,
         is_delegation_enabled,
     )
 
+    delegated = is_delegation_enabled(config)
+    if not delegated and _client is not None:
+        return _client
+
+    base_url = url or setting("FIREFLY_III_URL", "")
+    if not base_url:
+        raise RuntimeError("FIREFLY_III_URL is required")
+    token = token or setting("FIREFLY_III_TOKEN", "")
+    if not delegated and not token:
+        raise RuntimeError("FIREFLY_III_TOKEN is required when delegation is disabled")
+    profile = tls_profile or resolve_configured_tls_profile("firefly_iii")
+
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
-    if is_delegation_enabled(config):
+    if delegated:
         try:
             delegated_token = get_delegated_token(
                 config=config,
                 audience=(config or {}).get("audience", base_url),
                 scopes=(config or {}).get("delegated_scopes", "api"),
-                verify=verify,
             )
-            identity = get_user_identity()
-            logger.info(
-                "Using OIDC delegated token",
-                extra={"user_email": identity.get("email"), "url": base_url},
+            logger.info("Using OIDC delegated credentials")
+            return ApiClientFireflyIii(
+                base_url=base_url,
+                token=delegated_token,
+                tls_profile=profile,
             )
-            _client = ApiClientFireflyIii(
-                base_url=base_url, token=delegated_token, verify=verify
-            )
-            return _client
         except Exception as e:
+            profile.cleanup()
             logger.error(
                 "OIDC delegation failed",
-                extra={"error_type": type(e).__name__, "error_message": str(e)},
+                extra={"error_type": type(e).__name__},
             )
-            raise RuntimeError(f"Token exchange failed: {str(e)}") from e
+            raise RuntimeError("Token exchange failed") from None
 
     # --- Path 2: Fixed Credentials (FIREFLY_III_TOKEN) ---
     logger.info("Using fixed credentials")
     try:
-        _client = ApiClientFireflyIii(base_url=base_url, token=token, verify=verify)
-    except (AuthError, UnauthorizedError) as e:
+        _client = ApiClientFireflyIii(
+            base_url=base_url,
+            token=token,
+            tls_profile=profile,
+        )
+    except (AuthError, UnauthorizedError):
+        profile.cleanup()
         raise RuntimeError(
-            f"AUTHENTICATION ERROR: The credentials provided are not valid for '{base_url}'. "
-            f"Please check your FIREFLY_III_TOKEN and FIREFLY_III_URL environment variables. "
-            f"Error details: {str(e)}"
-        ) from e
+            "AUTHENTICATION ERROR: The configured credentials were rejected. "
+            "Check the runtime FIREFLY_III_TOKEN and FIREFLY_III_URL inputs."
+        ) from None
     except Exception as e:
+        profile.cleanup()
         raise RuntimeError(
-            f"AUTHENTICATION ERROR: Failed to instantiate client. "
-            f"Error details: {str(e)}"
-        ) from e
+            "AUTHENTICATION ERROR: Failed to instantiate the client "
+            f"({type(e).__name__})."
+        ) from None
 
     return _client

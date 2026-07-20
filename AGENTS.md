@@ -187,24 +187,23 @@ why rather than bypassing it.
 ## Working with Git Worktrees (multi-session)
 
 Multiple agents/sessions work the `agent-packages/*` repos concurrently. **Do not
-edit the canonical checkout** (`/home/apps/workspace/agent-packages/<repo>`) — a
+edit the canonical `agent-packages/<repo>` checkout** — a
 background `repository-manager` sync can reset its working tree and discard
 uncommitted edits. Take your own git worktree on your own branch instead:
 
 ```bash
 # preferred — repository-manager MCP:
-rm_worktree add <repo> <your-branch>      # -> /home/apps/worktrees/<repo>/<your-branch>
+rm_worktree add <repo> <your-branch>
 
 # raw-git fallback:
 git -C agent-packages/<repo> checkout main
-git -C agent-packages/<repo> worktree add /home/apps/worktrees/<repo>/<branch> -b <branch>
+git -C agent-packages/<repo> worktree add <external-worktree-root>/<repo>/<branch> -b <branch>
 ```
 
-Work in the worktree and **commit often** (commits survive a working-tree reset).
+Work in an external worktree and **commit often** (commits survive a working-tree reset).
 Each session must use a **distinct branch** — git allows a branch in only one
-worktree, which is what keeps concurrent sessions from colliding. Worktrees live
-under `/home/apps/worktrees/` (outside the workspace scan, so the sync leaves them
-alone).
+worktree, which is what keeps concurrent sessions from colliding. Keep worktrees
+outside the managed workspace so the repository scan leaves them alone.
 
 **Finishing work in a worktree** — run this sequence before calling it done:
 1. **Pre-commit green** — `pre-commit run --all-files`; resolve every issue per the

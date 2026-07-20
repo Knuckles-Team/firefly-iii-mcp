@@ -14,14 +14,21 @@ flag.
 ```python
 from firefly_iii_mcp.auth import get_client
 
-api = get_client()        # reads FIREFLY_III_URL / FIREFLY_III_TOKEN from the environment / .env
-status = api.get_system_status()
+api = get_client()
+try:
+    status = api.get_about()
+finally:
+    api.close()
 ```
 
 ## As a CLI
 
+Inject `FIREFLY_III_URL` and, when delegation is disabled, `FIREFLY_III_TOKEN`
+through the runtime configuration boundary, then run:
+
 ```bash
-export FIREFLY_III_URL="http://localhost:8080"
-export FIREFLY_III_TOKEN="your_token"
 firefly-iii-mcp --transport stdio
 ```
+
+Use the packaged `firefly-iii-finance-operations` skill for read-before-write
+workflow, double-entry conventions, mutation approval, and governed source-sync rules.

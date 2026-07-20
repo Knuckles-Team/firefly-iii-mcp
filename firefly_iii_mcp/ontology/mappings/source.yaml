@@ -1,0 +1,42 @@
+schema_version: '1'
+connector: firefly-iii-mcp
+ontology_source: firefly
+sync:
+- preset: firefly-accounts
+  server: firefly-iii-mcp
+  tool: accounts_operations
+  action: list_account
+  records_path: data
+  id_field: id
+  title_field: attributes.name
+  text_field: attributes.type
+  updated_field: attributes.updated_at
+  doc_type: account
+  tool_schema_sha256: 85ceb4b7200e9a72ac0805b570e51e26269a195fe94e45761ba28a0b55cb3bc6
+- preset: firefly-budgets
+  server: firefly-iii-mcp
+  tool: budgets_operations
+  action: list_budget
+  records_path: data
+  id_field: id
+  title_field: attributes.name
+  text_field: attributes.name
+  updated_field: attributes.updated_at
+  doc_type: budget
+  tool_schema_sha256: 7c7e4af5dd237d5acc832ebd161d1cc1886b0c722d33a92efa2dc48b74f08b21
+- preset: firefly-transactions
+  server: firefly-iii-mcp
+  tool: transactions_operations
+  action: list_transaction
+  records_path: data
+  id_field: id
+  title_field: attributes.group_title
+  text_field: attributes.group_title
+  updated_field: attributes.updated_at
+  doc_type: transaction
+  tool_schema_sha256: 04e4a07255bffbd1003232344f44651867104578e7ffe973a23af3a9f5e2cf2d
+governance:
+  default_acl: quarantine
+  identity: opaque-reference
+  tenant: required-at-materialization
+  provenance: required-at-materialization

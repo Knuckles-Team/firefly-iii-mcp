@@ -1,43 +1,16 @@
 {
   "mcpServers": {
     "firefly-iii-mcp": {
-      "command": "uv",
+      "command": "uvx",
       "args": [
-        "run",
+        "--from",
+        "firefly-iii-mcp[mcp]",
         "firefly-iii-mcp"
       ],
       "env": {
         "MCP_TOOL_MODE": "condensed",
-        "ABOUTTOOL": "True",
-        "ACCOUNTSTOOL": "True",
-        "ATTACHMENTSTOOL": "True",
-        "AUTOCOMPLETETOOL": "True",
-        "AVAILABLE_BUDGETSTOOL": "True",
-        "BILLSTOOL": "True",
-        "BUDGETSTOOL": "True",
-        "CATEGORIESTOOL": "True",
-        "CHARTSTOOL": "True",
-        "CONFIGURATIONTOOL": "True",
-        "CURRENCIESTOOL": "True",
-        "CURRENCY_EXCHANGE_RATESTOOL": "True",
-        "DATATOOL": "True",
-        "FIREFLY_III_TOKEN": "your_token_here",
-        "FIREFLY_III_URL": "http://localhost:8080",
-        "INSIGHTTOOL": "True",
-        "LINKSTOOL": "True",
-        "OBJECT_GROUPSTOOL": "True",
-        "PIGGY_BANKSTOOL": "True",
-        "PREFERENCESTOOL": "True",
-        "RECURRENCESTOOL": "True",
-        "RULESTOOL": "True",
-        "RULE_GROUPSTOOL": "True",
-        "SEARCHTOOL": "True",
-        "SUMMARYTOOL": "True",
-        "TAGSTOOL": "True",
-        "TRANSACTIONSTOOL": "True",
-        "USERSTOOL": "True",
-        "USER_GROUPSTOOL": "True",
-        "WEBHOOKSTOOL": "True"
+        "FIREFLY_III_TOKEN": "env://FIREFLY_III_TOKEN",
+        "FIREFLY_III_URL": "env://FIREFLY_III_URL"
       }
     }
   }

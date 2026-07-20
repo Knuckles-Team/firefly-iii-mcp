@@ -18,16 +18,18 @@ typed, action-routed connector.
 optional Pydantic-AI agent server.
 
 The connector remains inactive when credentials are absent: configure
-`FIREFLY_III_URL` and `FIREFLY_III_TOKEN` to connect it to an instance.
+`FIREFLY_III_URL` and `FIREFLY_III_TOKEN` at runtime to connect it to an instance.
+Endpoints, credentials, private trust, and finance records are never packaged values.
 
 ## Explore the documentation
 
 <div class="grid cards" markdown>
 
-- :material-rocket-launch: **[Installation](installation.md)** — pip, source, extras, and the prebuilt Docker image.
-- :material-server-network: **[Deployment](deployment.md)** — run the MCP and agent servers, Docker Compose, Caddy + Technitium.
+- :material-rocket-launch: **[Installation](installation.md)** — pip, source, extras, and container targets.
+- :material-shield-lock: **[Configuration](configuration.md)** — AgentConfig, verified TLS, secrets, and privacy.
+- :material-server-network: **[Deployment](deployment.md)** — run the MCP and agent servers with runtime-injected configuration.
 - :material-console: **[Usage](usage.md)** — the MCP tools, the Python client, and the CLI.
-- :material-database-cog: **[Backing Platform](platform.md)** — deploy the target service with Docker.
+- :material-database-cog: **[Backing Platform](platform.md)** — connect an operator-managed Firefly III service.
 - :material-sitemap: **[Overview](overview.md)** — the action-routed tool surface and architecture.
 - :material-graph: **[Concepts](concepts.md)** — the CONCEPT ID registry.
 

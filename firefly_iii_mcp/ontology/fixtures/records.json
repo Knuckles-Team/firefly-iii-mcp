@@ -1,0 +1,55 @@
+{
+  "connector": "firefly-iii-mcp",
+  "fixtures": [
+    {
+      "expected": {
+        "acl_state": "quarantine",
+        "id": "fixture-record",
+        "title": "Synthetic certification record"
+      },
+      "preset": "firefly-accounts",
+      "record": {
+        "acl_public": false,
+        "attributes": {
+          "name": "Synthetic certification record",
+          "type": "Synthetic content used only for contract validation.",
+          "updated_at": "2000-01-01T00:00:00Z"
+        },
+        "id": "fixture-record"
+      }
+    },
+    {
+      "expected": {
+        "acl_state": "quarantine",
+        "id": "fixture-record",
+        "title": "Synthetic certification record"
+      },
+      "preset": "firefly-budgets",
+      "record": {
+        "acl_public": false,
+        "attributes": {
+          "name": "Synthetic content used only for contract validation.",
+          "updated_at": "2000-01-01T00:00:00Z"
+        },
+        "id": "fixture-record"
+      }
+    },
+    {
+      "expected": {
+        "acl_state": "quarantine",
+        "id": "fixture-record",
+        "title": "Synthetic certification record"
+      },
+      "preset": "firefly-transactions",
+      "record": {
+        "acl_public": false,
+        "attributes": {
+          "group_title": "Synthetic content used only for contract validation.",
+          "updated_at": "2000-01-01T00:00:00Z"
+        },
+        "id": "fixture-record"
+      }
+    }
+  ],
+  "schema_version": "1"
+}

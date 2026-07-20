@@ -1,11 +1,11 @@
 # Installation
 
-`firefly-iii-mcp` is a standard Python package and a prebuilt container image.
+`firefly-iii-mcp` is a standard Python package with MCP and agent container targets.
 
 ## Requirements
 
 - **Python 3.11 – 3.14**.
-- A reachable target service instance and access token.
+- A runtime-configured Firefly III HTTPS endpoint and delegated or fixed credential.
 
 ## From PyPI (recommended)
 
@@ -17,8 +17,8 @@ pip install firefly-iii-mcp
 
 | Extra | Install | Pulls in |
 |---|---|---|
-| `mcp` | `pip install "firefly-iii-mcp[mcp]"` | FastMCP MCP-server runtime (`agent-utilities[mcp]`) |
-| `agent` | `pip install "firefly-iii-mcp[agent]"` | Pydantic-AI agent + Logfire tracing |
+| `mcp` | `pip install "firefly-iii-mcp[mcp]"` | MCP-server runtime plus the mandatory `epistemic-graph[full]` base dependency |
+| `agent` | `pip install "firefly-iii-mcp[agent]"` | Current Pydantic-AI agent runtime + Logfire tracing |
 | `all` | `pip install "firefly-iii-mcp[all]"` | Everything above |
 
 ## From source
@@ -29,8 +29,11 @@ cd firefly-iii-mcp
 pip install -e ".[all]"
 ```
 
-## Docker
+## Container
 
 ```bash
-docker pull knucklessg1/firefly-iii-mcp:latest
+docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
+
+Inject endpoints, credentials, trust, and model settings through the runtime
+orchestrator; do not add them to the image.

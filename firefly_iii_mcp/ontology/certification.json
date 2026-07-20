@@ -1,0 +1,37 @@
+{
+  "api_version": "graphos.io/v1",
+  "artifacts": {
+    "a2a.json": "34050bb5b6bc07f3dd089f361a70702268d90f97888529e493e1151eb096785f",
+    "connector_manifest.yml": "a96c8f9efbff5cd6db0f183c590ad5e7a531a2c5a1e39306cc2710b59d40d7f6",
+    "firefly_iii_mcp/connectors/mcp_source_presets.json": "7f35e71c9f693bcacdb27037520c8c7050d39d31bc9237ff1dd42bacd9247d76",
+    "firefly_iii_mcp/connectors/tool_schema_fingerprints.json": "2c30ef2fc6810c861878fb2156cb62e9410762b91435d39b235d1a65547bfb00",
+    "firefly_iii_mcp/ontology/firefly.ttl": "5178a9710778abd1f880373c72fc316c1c960e23095169ccb76626c7ecda94a6",
+    "firefly_iii_mcp/ontology/fixtures/records.json": "daedade71ebb3ef27824197ae71a9516057c2e6eeb3eea0278dde413043950ee",
+    "firefly_iii_mcp/ontology/mappings/source.yaml": "d45f2f3c4a120ba488f52208bff814d0c2aa592aac274cbf33029f4739d6b156",
+    "firefly_iii_mcp/ontology/migrations/manifest.json": "cbe85cfd03db470e0ebb554554e79f34e6310c0a3b60fb101ff8238d3e978178",
+    "firefly_iii_mcp/ontology/shapes/connector.shacl.ttl": "e2e9d5e23c3a758169c567bdc6dda279bc64efb63b2b3f61ec2d3bcede57e23b"
+  },
+  "checks": {
+    "declared_tool_schema": "passed",
+    "manifest_integrity": "passed",
+    "privacy_contract": "passed",
+    "shacl_parse": "passed",
+    "synthetic_fixture_contract": "passed"
+  },
+  "compatibility": {
+    "agent_utilities": ">=1.27.1,<2",
+    "bundle_schema": "2",
+    "epistemic_graph": ">=2.23.1,<3"
+  },
+  "connector": "firefly-iii-mcp",
+  "kind": "ConnectorSourceAttestation",
+  "live_certified": false,
+  "mode": "offline-source",
+  "schema_version": "2",
+  "signature": "GCmzphfqCFyCDLGF1kONKzqNtquw1rBGujBcG2Go3IN5_sA0TFD20to7zXaOnGb64IGKHAR8hNm4IyUndiaAAA",
+  "signature_algorithm": "ed25519",
+  "signer": "ontology-manifest-generator",
+  "signing_public_key": "q0Cp7bmQMqJhbofGKKw8xXC6KbFzukBDDke0UYVi8y4",
+  "status": "source-validated",
+  "validated_at": "2026-07-18T14:21:05Z"
+}

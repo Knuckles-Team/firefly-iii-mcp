@@ -1,139 +1,71 @@
 #!/usr/bin/env python3
+"""Run a bounded, content-free A2A readiness probe against a runtime URL."""
+
+from __future__ import annotations
+
+import argparse
 import asyncio
-import json
 import uuid
+from urllib.parse import urlsplit
 
 import httpx
+from agent_utilities.core.transport_security import resolve_configured_tls_profile
 
-A2A_URL = "http://localhost:9016/a2a/"
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--url", required=True, help="Runtime A2A endpoint")
+    return parser
 
 
-async def main():
-    print(f"Validating A2A Agent at {A2A_URL}...")
-
-    questions = [
-        "Can you get me the commits for project id 171?",
-    ]
-
-    async with httpx.AsyncClient(timeout=10000.0) as client:
-        for q in questions:
-            print(f"\n\n\nUser: {q}")
-            print("--- Sending Request ---")
-
-            payload = {
-                "jsonrpc": "2.0",
-                "method": "message/send",
-                "params": {
-                    "message": {
-                        "kind": "message",
-                        "role": "user",
-                        "parts": [{"kind": "text", "text": q}],
-                        "messageId": str(uuid.uuid4()),
-                    }
-                },
-                "id": 1,
+async def _probe(url: str) -> int:
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or not parsed.hostname:
+        print("A2A readiness failed (invalid HTTPS URL)")
+        return 1
+    if parsed.username or parsed.password:
+        print("A2A readiness failed (credentials in URL)")
+        return 1
+    profile = resolve_configured_tls_profile("firefly_iii_a2a")
+    payload = {
+        "jsonrpc": "2.0",
+        "method": "message/send",
+        "params": {
+            "message": {
+                "kind": "message",
+                "role": "user",
+                "parts": [{"kind": "text", "text": "Return readiness status only."}],
+                "messageId": str(uuid.uuid4()),
             }
+        },
+        "id": 1,
+    }
+    try:
+        async with httpx.AsyncClient(
+            timeout=30.0,
+            follow_redirects=False,
+            **profile.httpx_kwargs(),
+        ) as client:
+            response = await client.post(url, json=payload)
+            response.raise_for_status()
+            data = response.json()
+            if not isinstance(data, dict) or (
+                "result" not in data and "error" not in data
+            ):
+                raise RuntimeError("A2A response had an invalid shape")
+    except Exception as exc:
+        print(f"A2A readiness failed ({type(exc).__name__})")
+        return 1
+    finally:
+        profile.cleanup()
+    print("A2A readiness succeeded")
+    return 0
 
-            try:
-                url = A2A_URL
-                print(f"Trying POST {url} with JSON-RPC (message/send)...")
-                resp = await client.post(
-                    url, json=payload, headers={"Content-Type": "application/json"}
-                )
 
-                print(f"Status Code: {resp.status_code}")
-                if resp.status_code == 200:
-                    try:
-                        data = resp.json()
-                        print(f"Response (JSON):\n{json.dumps(data, indent=2)}")
-
-                        if "result" in data and "id" in data["result"]:
-                            task_id = data["result"]["id"]
-                            print(
-                                f"\nTask Submitted with ID: {task_id}. Polling for result..."
-                            )
-
-                            while True:
-                                await asyncio.sleep(2)
-                                poll_payload = {
-                                    "jsonrpc": "2.0",
-                                    "method": "tasks/get",
-                                    "params": {"id": task_id},
-                                    "id": 2,
-                                }
-                                poll_resp = await client.post(
-                                    url,
-                                    json=poll_payload,
-                                    headers={"Content-Type": "application/json"},
-                                )
-                                if poll_resp.status_code == 200:
-                                    poll_data = poll_resp.json()
-                                    if "result" in poll_data:
-                                        state = poll_data["result"]["status"]["state"]
-                                        print(f"Task State: {state}")
-                                        if state not in [
-                                            "submitted",
-                                            "running",
-                                            "working",
-                                        ]:
-                                            print(
-                                                f"\nTask Finished with state: {state}"
-                                            )
-
-                                            if "history" in poll_data["result"]:
-                                                history = poll_data["result"]["history"]
-                                                if history:
-                                                    last_msg = None
-                                                    for msg in reversed(history):
-                                                        if msg.get("role") != "user":
-                                                            last_msg = msg
-                                                            break
-
-                                                    if last_msg and "parts" in last_msg:
-                                                        print(
-                                                            "\n--- Agent Response ---"
-                                                        )
-                                                        for part in last_msg["parts"]:
-                                                            if "text" in part:
-                                                                print(part["text"])
-                                                            elif "content" in part:
-                                                                print(part["content"])
-                                                    elif last_msg:
-                                                        print(
-                                                            f"Final Message (No parts): {last_msg}"
-                                                        )
-                                                    else:
-                                                        print(
-                                                            "\n--- No Agent Response Found in History ---"
-                                                        )
-
-                                            print(
-                                                f"Full Result Debug:\n{json.dumps(poll_data, indent=2)}"
-                                            )
-                                            break
-                                    else:
-                                        print("Starting polling error key check...")
-                                        if "error" in poll_data:
-                                            print(
-                                                f"Polling Error: {poll_data['error']}"
-                                            )
-                                        break
-                                else:
-                                    print(f"Polling Failed: {poll_resp.status_code}")
-                                    print(f"Polling Error Details: {poll_resp.text}")
-                                    break
-
-                        if "error" in data:
-                            print(f"JSON-RPC Error: {data['error']}")
-                    except json.JSONDecodeError:
-                        print(f"Response (Text):\n{resp.text}")
-                else:
-                    print(f"Error: {resp.status_code}")
-                    print(resp.text)
-
-            except httpx.RequestError as e:
-                print(f"Connection failed to {url}: {e}")
+def main() -> int:
+    args = _parser().parse_args()
+    return asyncio.run(_probe(args.url))
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    raise SystemExit(main())

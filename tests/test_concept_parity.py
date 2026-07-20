@@ -14,7 +14,9 @@ def test_concepts_doc_exists():
 @pytest.mark.concept("FF-OS.config.ff")
 def test_eco_bridge_present():
     """ECO-4.0 bridge concept is referenced. CONCEPT:FF-OS.config.ff"""
-    assert "AU-ECO.messaging.native-backend-abstraction" in CONCEPTS_DOC.read_text(encoding="utf-8")
+    assert "AU-ECO.messaging.native-backend-abstraction" in CONCEPTS_DOC.read_text(
+        encoding="utf-8"
+    )
 
 
 @pytest.mark.concept("FF-OS.config.ff")
