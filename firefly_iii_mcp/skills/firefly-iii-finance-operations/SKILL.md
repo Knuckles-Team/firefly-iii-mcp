@@ -1,5 +1,6 @@
 ---
 name: firefly-iii-finance-operations
+skill_type: skill
 description: Operate Firefly III through the firefly-iii-mcp action-routed tools, covering accounts, currencies, transactions and splits, budgets and limits, categories, bills, savings goals, rules, recurrences, reports, attachments, users, webhooks, and governed source synchronization. Use when an agent must inspect or safely change a Firefly III ledger, reconcile or report on finance records, configure automation, or prepare approved Firefly III data for GraphOS ingestion.
 ---
 
