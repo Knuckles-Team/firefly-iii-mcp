@@ -10,11 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://knuckles-team.github.io/firefly-iii-mcp/concepts/">
+        <link rel="canonical" href="https://knuckles-team.github.io/firefly-iii-mcp/configuration/">
       
       
-        <link rel="prev" href="../platform/">
+        <link rel="prev" href="../installation/">
       
+      
+        <link rel="next" href="../deployment/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Concepts - firefly-iii-mcp</title>
+        <title>Configuration, Trust & Privacy - firefly-iii-mcp</title>
       
     
     
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#concept-registry-firefly-iii-mcp" class="md-skip">
+        <a href="#configuration-trust-and-privacy" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Concepts
+              Configuration, Trust & Privacy
             
           </span>
         </div>
@@ -289,9 +291,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../configuration/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -365,11 +369,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
         
   
   
@@ -518,10 +520,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration, Trust & Privacy
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -537,6 +566,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration boundary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS trust
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-graph-capability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge-graph capability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability-and-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observability and privacy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -626,37 +741,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Concepts
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
         
   
   
@@ -672,48 +760,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#project-specific-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project-Specific Concepts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cross-project-references-from-agent-utilities" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cross-Project References (from agent-utilities)
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -745,10 +791,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#project-specific-concepts" class="md-nav__link">
+  <a href="#configuration-boundary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Project-Specific Concepts
+        Configuration boundary
       
     </span>
   </a>
@@ -756,10 +802,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cross-project-references-from-agent-utilities" class="md-nav__link">
+  <a href="#authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cross-Project References (from agent-utilities)
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS trust
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-graph-capability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge-graph capability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability-and-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observability and privacy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
       
     </span>
   </a>
@@ -786,57 +876,107 @@
   
 
 
-<h1 id="concept-registry-firefly-iii-mcp">Concept Registry — firefly-iii-mcp<a class="headerlink" href="#concept-registry-firefly-iii-mcp" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p><strong>Prefix</strong>: <code>CONCEPT:FF-*</code>
-<strong>Version</strong>: 0.1.0
-<strong>Bridge</strong>: <a href="https://github.com/Knuckles-Team/agent-utilities/blob/main/docs/concepts.md"><code>CONCEPT:AU-ECO.messaging.native-backend-abstraction</code></a> (Unified Toolkit Ingestion)</p>
-</blockquote>
-<hr />
-<h2 id="project-specific-concepts">Project-Specific Concepts<a class="headerlink" href="#project-specific-concepts" title="Permanent link">&para;</a></h2>
+<h1 id="configuration-trust-and-privacy">Configuration, trust, and privacy<a class="headerlink" href="#configuration-trust-and-privacy" title="Permanent link">&para;</a></h1>
+<p><code>firefly-iii-mcp</code> contains connection code and neutral capability metadata only.
+Every endpoint, credential, identity-provider value, trust profile, tenant decision,
+and observability destination is supplied at runtime. The package does not ship an
+instance profile or a customized Firefly III ontology.</p>
+<h2 id="configuration-boundary">Configuration boundary<a class="headerlink" href="#configuration-boundary" title="Permanent link">&para;</a></h2>
+<p>The connector reads runtime values through the Agent Utilities configuration layer.
+For a standalone process, inject values through its process environment. When GraphOS
+launches the connector, keep <code>mcp_config.json</code> reference-only and let the MCP fleet
+secret resolver project aliases into the child process.</p>
 <table>
 <thead>
 <tr>
-<th>Concept ID</th>
-<th>Name</th>
-<th>Description</th>
+<th>Setting</th>
+<th>Purpose</th>
+<th>Durable value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>CONCEPT:FF-OS.config.ff</code></td>
-<td>Firefly III API Domains</td>
-<td>Action-routed + verbose 1:1 MCP tool surface over the Firefly III v1 REST API (28 domains, 230 operations): <code>about</code>, <code>accounts</code>, <code>attachments</code>, <code>autocomplete</code>, <code>available_budgets</code>, <code>bills</code>, <code>budgets</code>, <code>categories</code>, <code>charts</code>, <code>configuration</code>, <code>currencies</code>, <code>currency_exchange_rates</code>, <code>data</code>, <code>insight</code>, <code>links</code>, <code>object_groups</code>, <code>piggy_banks</code>, <code>preferences</code>, <code>recurrences</code>, <code>rule_groups</code>, <code>rules</code>, <code>search</code>, <code>summary</code>, <code>tags</code>, <code>transactions</code>, <code>user_groups</code>, <code>users</code>, <code>webhooks</code>.</td>
+<td><code>FIREFLY_III_URL</code></td>
+<td>HTTPS base URL of the selected Firefly III API</td>
+<td>No packaged default; resolve at runtime</td>
+</tr>
+<tr>
+<td><code>FIREFLY_III_TOKEN</code></td>
+<td>Fixed bearer credential when OIDC delegation is inactive</td>
+<td>Runtime secret only</td>
+</tr>
+<tr>
+<td><code>TLS_PROFILE</code> / <code>TLS_PROFILES_REF</code></td>
+<td>Verified system/private trust selection</td>
+<td>Runtime reference only</td>
 </tr>
 </tbody>
 </table>
-<h2 id="cross-project-references-from-agent-utilities">Cross-Project References (from agent-utilities)<a class="headerlink" href="#cross-project-references-from-agent-utilities" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Concept ID</th>
-<th>Name</th>
-<th>Origin</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>CONCEPT:AU-ECO.messaging.native-backend-abstraction</code></td>
-<td>Unified Toolkit Ingestion</td>
-<td>agent-utilities</td>
-</tr>
-<tr>
-<td><code>CONCEPT:AU-ORCH.adapter.hot-cache-invalidation</code></td>
-<td>Confidence-Gated Router</td>
-<td>agent-utilities</td>
-</tr>
-<tr>
-<td><code>CONCEPT:AU-OS.config.secrets-authentication</code></td>
-<td>Prompt Injection Defense</td>
-<td>agent-utilities</td>
-</tr>
-</tbody>
-</table>
+<p><code>mcp_config.json</code> uses <code>env://FIREFLY_III_URL</code> and
+<code>env://FIREFLY_III_TOKEN</code>. A launcher may populate those aliases directly or map the
+credential alias through AgentConfig's <code>MCP_FLEET_SECRET_REFS</code> to an approved
+<code>env://</code>, <code>vault://</code>, or <code>secret://</code> source. Never replace a reference with a token or
+endpoint in a checked-in file.</p>
+<p>The default tool surface is <code>MCP_TOOL_MODE=condensed</code>. Domain toggles default to
+enabled and may be disabled by the deployment. Network transports must also apply the
+authentication and authorization policy selected for the MCP server.</p>
+<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
+<p>The connector has two current authentication paths:</p>
+<ol>
+<li>OIDC delegation exchanges the request-scoped user token through the shared RFC
+   8693 implementation and creates a request-specific Firefly III client.</li>
+<li>Without delegation, <code>FIREFLY_III_TOKEN</code> supplies the fixed service credential.</li>
+</ol>
+<p>No token, subject, email address, endpoint, or exception body is written to logs.
+Prefer delegation when the target and identity provider support it; otherwise scope
+the fixed token to the smallest operational role the enabled tools require. Supply
+OIDC client credentials through runtime references such as <code>OIDC_CLIENT_SECRET_REF</code>.</p>
+<h2 id="tls-trust">TLS trust<a class="headerlink" href="#tls-trust" title="Permanent link">&para;</a></h2>
+<p>Firefly III endpoints must use HTTPS. Peer and hostname verification are mandatory.
+The HTTP session is configured through
+<code>resolve_configured_tls_profile("firefly_iii")</code>; there is no boolean verification
+control and per-request trust overrides are rejected.</p>
+<p>System trust works without additional configuration. For a private certificate
+authority, keep a complete-chain PEM bundle or mTLS material in the runtime trust
+store, place the catalog behind <code>TLS_PROFILES_REF</code>, and select <code>TLS_PROFILE</code> for this
+connector process. Standard runtime trust variables are honored by the shared
+resolver. Do not commit certificate material or machine paths, and do not disable
+verification to compensate for an incomplete server chain.</p>
+<h2 id="knowledge-graph-capability">Knowledge-graph capability<a class="headerlink" href="#knowledge-graph-capability" title="Permanent link">&para;</a></h2>
+<p>The package contributes human-reviewed inputs for the central capability compiler:</p>
+<ul>
+<li>the Firefly III finance ontology in <code>firefly_iii_mcp/ontology/</code>;</li>
+<li>neutral accounts, transactions, and budgets source presets in
+  <code>firefly_iii_mcp/connectors/</code>;</li>
+<li>one comprehensive provider skill and canonical prompt sources;</li>
+<li>package entry points proving distribution ownership of those assets.</li>
+</ul>
+<p>These inputs describe the public Firefly III model and tool surface only. The committed
+release-generated bundle adds exact local tool-schema fingerprints, a signed manifest,
+SHACL shapes, neutral mappings and fixtures, a migration ledger, and an offline source
+attestation. It contains no instance URL, record, tenant mapping, local path, or
+external-live claim. The connector deliberately exposes no direct graph-write tool;
+missing or stale evidence fails closed.</p>
+<p>Finance records can contain account identifiers, balances, descriptions, amounts,
+dates, attachments, and user data. Enable source synchronization only with an approved
+tenant, ACL, classification, retention, provenance, redaction, and deletion policy.</p>
+<h2 id="observability-and-privacy">Observability and privacy<a class="headerlink" href="#observability-and-privacy" title="Permanent link">&para;</a></h2>
+<p>Telemetry is disabled in the checked-in example. When OTLP or Langfuse is enabled:</p>
+<ul>
+<li>use credential and TLS-profile references;</li>
+<li>keep <code>LANGFUSE_CAPTURE_CONTENT=false</code> unless a separately approved policy permits
+  content capture;</li>
+<li>use opaque run, actor, and tenant references;</li>
+<li>export status, counts, timing, and bounded error classes rather than prompts,
+  responses, tool payloads, finance records, filesystem paths, or credentials.</li>
+</ul>
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
+<p>After runtime configuration is injected, validate the shared boundary without
+printing resolved values:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>agent-utilities-doctor<span class="w"> </span>--only<span class="w"> </span>config<span class="w"> </span>transport_security<span class="w"> </span>mcp_fleet_secrets<span class="w"> </span>mcp_fleet
+</span></code></pre></div>
+<p>Use <code>agent-utilities-doctor --live</code> only when bounded calls to the configured service
+and observability backends are authorized.</p>
 
 
 
@@ -874,7 +1014,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../platform/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Backing Platform (Firefly III MCP)">
+          <a href="../installation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installation">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -884,11 +1024,27 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Backing Platform (Firefly III MCP)
+                Installation
               </div>
             </div>
           </a>
         
+        
+          
+          <a href="../deployment/" class="md-footer__link md-footer__link--next" aria-label="Next: Deployment">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Deployment
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
         
       </nav>
     
