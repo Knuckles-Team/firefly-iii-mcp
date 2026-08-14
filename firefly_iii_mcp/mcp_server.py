@@ -13,7 +13,7 @@ from . import mcp as tool_modules
 from .api import ApiClientFireflyIii
 from .auth import get_client
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 logger = get_logger(name="MCP_Server")
 logger.setLevel(logging.INFO)

@@ -8,7 +8,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/firefly-iii-mcp)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/firefly-iii-mcp)
 
-*Version: 2.0.0*
+*Version: 2.1.0*
 
 > **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
 > interfaces, the integrated A2A agent server, and guidance for provisioning the
@@ -457,3 +457,74 @@ retention, and observability destinations are deployment inputs and are never pa
 values. See [Configuration, trust, and privacy](docs/configuration.md) before enabling
 a network transport, GraphOS delegation, source synchronization, or trace export.
 <!-- GOVERNED-CAPABILITY:END -->
+
+## Environment Variables
+
+<!-- ENV-VARS-TABLE:START -->
+
+#### Package environment variables
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `HOST` | `127.0.0.1` |  |
+| `PORT` | `8000` |  |
+| `TRANSPORT` | `stdio` | options: stdio, streamable-http, sse |
+| `ENABLE_OTEL` | `False` |  |
+| `OTEL_EXPORTER_OTLP_HEADERS_REF` | `secret://telemetry/headers` | OTEL_EXPORTER_OTLP_ENDPOINT is supplied at runtime. |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | `http/protobuf` |  |
+| `EUNOMIA_TYPE` | `none` | options: none, embedded, remote |
+| `MCP_TOOL_MODE` | `condensed` |  |
+| `ABOUTTOOL` | `True` |  |
+| `ACCOUNTSTOOL` | `True` |  |
+| `ATTACHMENTSTOOL` | `True` |  |
+| `AUTOCOMPLETETOOL` | `True` |  |
+| `AVAILABLE_BUDGETSTOOL` | `True` |  |
+| `BILLSTOOL` | `True` |  |
+| `BUDGETSTOOL` | `True` |  |
+| `CATEGORIESTOOL` | `True` |  |
+| `CHARTSTOOL` | `True` |  |
+| `CONFIGURATIONTOOL` | `True` |  |
+| `CURRENCIESTOOL` | `True` |  |
+| `CURRENCY_EXCHANGE_RATESTOOL` | `True` |  |
+| `DATATOOL` | `True` |  |
+| `INSIGHTTOOL` | `True` |  |
+| `LINKSTOOL` | `True` |  |
+| `OBJECT_GROUPSTOOL` | `True` |  |
+| `PIGGY_BANKSTOOL` | `True` |  |
+| `PREFERENCESTOOL` | `True` |  |
+| `RECURRENCESTOOL` | `True` |  |
+| `RULE_GROUPSTOOL` | `True` |  |
+| `RULESTOOL` | `True` |  |
+| `SEARCHTOOL` | `True` |  |
+| `SUMMARYTOOL` | `True` |  |
+| `TAGSTOOL` | `True` |  |
+| `TRANSACTIONSTOOL` | `True` |  |
+| `USER_GROUPSTOOL` | `True` |  |
+| `USERSTOOL` | `True` |  |
+| `WEBHOOKSTOOL` | `True` |  |
+
+#### Inherited agent-utilities variables (apply to every connector)
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `MCP_ENABLED_TOOLS` | — | Comma-separated tool allow-list |
+| `MCP_DISABLED_TOOLS` | — | Comma-separated tool deny-list |
+| `MCP_ENABLED_TAGS` | — | Comma-separated tag allow-list |
+| `MCP_DISABLED_TAGS` | — | Comma-separated tag deny-list |
+| `EUNOMIA_POLICY_FILE` | `mcp_policies.json` | Embedded Eunomia policy file |
+| `EUNOMIA_REMOTE_URL` | — | Remote Eunomia authorization server URL |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | — | OTLP collector endpoint |
+| `MCP_CLIENT_AUTH` | — | Outbound MCP child auth: `oidc-client-credentials` \| `basic` \| `none` |
+| `OIDC_CLIENT_ID` | — | OIDC client id (service-account auth) |
+| `OIDC_CLIENT_SECRET_REF` | `secret://identity/oidc-client-secret` | Runtime secret reference for the OIDC service account |
+| `MCP_BASIC_AUTH_USERNAME` | — | HTTP Basic username (`MCP_CLIENT_AUTH=basic`) |
+| `MCP_BASIC_AUTH_PASSWORD_REF` | `secret://identity/mcp-basic-password` | Runtime secret reference for HTTP Basic auth (`MCP_CLIENT_AUTH=basic`) |
+| `DEBUG` | `False` | Verbose logging |
+| `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
+| `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
+| `PROVIDER` | `openai` | LLM provider for the agent |
+| `MODEL_ID` | `gpt-4o` | Model id for the agent |
+| `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
+
+_36 package + 18 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+<!-- ENV-VARS-TABLE:END -->
