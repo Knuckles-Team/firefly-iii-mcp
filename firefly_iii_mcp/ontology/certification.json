@@ -1,7 +1,7 @@
 {
   "api_version": "graphos.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "85c1e89384e7159feb5a24e1a5334e015b0ef38841e4ec5f4645ea6fdb9fd73a",
+    "connector_manifest.yml": "aafe363bb2731b3264e595ccf06209d04dc130029be3e0abc64d68cf207fc876",
     "firefly_iii_mcp/connectors/mcp_source_presets.json": "7f35e71c9f693bcacdb27037520c8c7050d39d31bc9237ff1dd42bacd9247d76",
     "firefly_iii_mcp/connectors/tool_schema_fingerprints.json": "2c30ef2fc6810c861878fb2156cb62e9410762b91435d39b235d1a65547bfb00",
     "firefly_iii_mcp/ontology/firefly.ttl": "5178a9710778abd1f880373c72fc316c1c960e23095169ccb76626c7ecda94a6",
@@ -18,9 +18,9 @@
     "synthetic_fixture_contract": "passed"
   },
   "compatibility": {
-    "agent_utilities": ">=2.4.0,<3",
+    "agent_utilities": ">=2.5.0,<3",
     "bundle_schema": "2",
-    "epistemic_graph": ">=2.26.0,<3"
+    "epistemic_graph": ">=2.27.0,<3"
   },
   "connector": "firefly-iii-mcp",
   "kind": "ConnectorSourceAttestation",
@@ -32,5 +32,5 @@
   "signer": "UNSIGNED-PREVIEW",
   "signing_public_key": "",
   "status": "source-validated",
-  "validated_at": "2026-08-21T04:30:39Z"
+  "validated_at": "2026-08-26T13:42:55Z"
 }
