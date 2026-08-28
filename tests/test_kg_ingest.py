@@ -219,6 +219,60 @@ def test_ingest_transactions_maps_splits_and_links():
     assert ("firefly:transaction:789", "firefly:category:5", "inCategory") in edge_types
 
 
+def test_ingest_transactions_skips_records_without_an_id():
+    c = _FakeClient()
+    res = ingest_transactions(
+        [{"attributes": {"transactions": [{"description": "no id"}]}}],
+        client=c,
+    )
+    assert res is None
+    assert c.nodes.values == {}
+
+
+def test_ingest_transactions_falls_back_to_flat_record_without_splits():
+    c = _FakeClient()
+    res = ingest_transactions(
+        [
+            {
+                "id": "42",
+                "attributes": {
+                    "description": "Flat record, no transactions list",
+                    "type": "deposit",
+                    "amount": "10.00",
+                },
+            }
+        ],
+        client=c,
+    )
+    assert res == {"nodes": 1, "edges": 0}
+    txn = c.nodes.values["firefly:transaction:42"]
+    assert txn["description"] == "Flat record, no transactions list"
+    assert txn["splitCount"] == 1
+
+
+def test_ingest_transactions_only_links_present_fields():
+    c = _FakeClient()
+    res = ingest_transactions(
+        [
+            {
+                "id": "5",
+                "attributes": {
+                    "transactions": [
+                        {
+                            "description": "Only a source account",
+                            "source_id": "12",
+                        }
+                    ],
+                },
+            }
+        ],
+        client=c,
+    )
+    assert res == {"nodes": 1, "edges": 1}
+    edge_types = {(s, d, p["relationship"]) for s, d, p in c.changes.edges}
+    assert edge_types == {("firefly:transaction:5", "firefly:account:12", "sourceAccount")}
+
+
 def test_ingest_budgets_maps_budget():
     c = _FakeClient()
     res = ingest_budgets(
