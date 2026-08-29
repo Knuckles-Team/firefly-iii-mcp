@@ -158,6 +158,49 @@ def ingest_accounts(
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
 
+# field on the split, target-node-type prefix, relationship name
+_TRANSACTION_LINK_FIELDS: tuple[tuple[str, str, str], ...] = (
+    ("source_id", "account", "sourceAccount"),
+    ("destination_id", "account", "destinationAccount"),
+    ("budget_id", "budget", "inBudget"),
+    ("category_id", "category", "inCategory"),
+)
+
+
+def _transaction_entity(
+    tid: str, a: dict[str, Any], split: dict[str, Any], splits: Any
+) -> dict[str, Any]:
+    """Map one transaction's summary split to a ``:Transaction`` node."""
+    return {
+        "id": f"firefly:transaction:{tid}",
+        "node_type": "Transaction",
+        "description": split.get("description"),
+        "transactionType": split.get("type"),
+        "amount": split.get("amount"),
+        "currencyCode": split.get("currency_code"),
+        "date": split.get("date"),
+        "splitCount": len(splits) if isinstance(splits, list) else 1,
+        "updated_at": a.get("updated_at"),
+        "externalToolId": tid,
+    }
+
+
+def _transaction_links(tid: str, split: dict[str, Any]) -> list[dict[str, Any]]:
+    """Build the source/destination/budget/category link edges present on a split."""
+    relationships: list[dict[str, Any]] = []
+    for field, target_prefix, relationship in _TRANSACTION_LINK_FIELDS:
+        target = split.get(field)
+        if target:
+            relationships.append(
+                {
+                    "source": f"firefly:transaction:{tid}",
+                    "target": f"firefly:{target_prefix}:{target}",
+                    "relationship": relationship,
+                }
+            )
+    return relationships
+
+
 def ingest_transactions(
     transactions: list[dict[str, Any]],
     *,
@@ -178,56 +221,8 @@ def ingest_transactions(
             continue
         splits = a.get("transactions")
         split = splits[0] if isinstance(splits, list) and splits else a
-        entities.append(
-            {
-                "id": f"firefly:transaction:{tid}",
-                "node_type": "Transaction",
-                "description": split.get("description"),
-                "transactionType": split.get("type"),
-                "amount": split.get("amount"),
-                "currencyCode": split.get("currency_code"),
-                "date": split.get("date"),
-                "splitCount": len(splits) if isinstance(splits, list) else 1,
-                "updated_at": a.get("updated_at"),
-                "externalToolId": tid,
-            }
-        )
-        src = split.get("source_id")
-        if src:
-            relationships.append(
-                {
-                    "source": f"firefly:transaction:{tid}",
-                    "target": f"firefly:account:{src}",
-                    "relationship": "sourceAccount",
-                }
-            )
-        dst = split.get("destination_id")
-        if dst:
-            relationships.append(
-                {
-                    "source": f"firefly:transaction:{tid}",
-                    "target": f"firefly:account:{dst}",
-                    "relationship": "destinationAccount",
-                }
-            )
-        bud = split.get("budget_id")
-        if bud:
-            relationships.append(
-                {
-                    "source": f"firefly:transaction:{tid}",
-                    "target": f"firefly:budget:{bud}",
-                    "relationship": "inBudget",
-                }
-            )
-        cat = split.get("category_id")
-        if cat:
-            relationships.append(
-                {
-                    "source": f"firefly:transaction:{tid}",
-                    "target": f"firefly:category:{cat}",
-                    "relationship": "inCategory",
-                }
-            )
+        entities.append(_transaction_entity(tid, a, split, splits))
+        relationships.extend(_transaction_links(tid, split))
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
 

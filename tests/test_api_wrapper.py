@@ -64,3 +64,40 @@ def test_client_rejects_header_control_characters():
             base_url="https://service.example.invalid",
             token="token\r\ninjected-header: value",
         )
+
+
+@pytest.mark.concept("FF-OS.config.ff")
+def test_client_rejects_empty_endpoint():
+    """An empty base URL fails the length bound rather than reaching urlsplit."""
+    with pytest.raises(ValueError, match="URL is invalid"):
+        ApiClientBase(base_url="", token="test-token")
+
+
+@pytest.mark.concept("FF-OS.config.ff")
+def test_client_rejects_control_characters_in_endpoint():
+    """A base URL cannot inject a stray header line via control characters."""
+    with pytest.raises(ValueError, match="URL is invalid"):
+        ApiClientBase(
+            base_url="https://service.example.invalid\r\nHost: evil",
+            token="test-token",
+        )
+
+
+@pytest.mark.concept("FF-OS.config.ff")
+def test_client_rejects_empty_token():
+    """An empty bearer token fails the length bound."""
+    with pytest.raises(ValueError, match="token is invalid"):
+        ApiClientBase(base_url="https://service.example.invalid", token="")
+
+
+@pytest.mark.concept("FF-OS.config.ff")
+def test_client_tolerates_endpoint_with_existing_api_suffix():
+    """A base URL already ending in /api is not doubled."""
+    profile = MagicMock()
+    profile.configure_requests_session.side_effect = lambda session: session
+    client = ApiClientBase(
+        base_url="https://service.example.invalid/api",
+        token="test-token",
+        tls_profile=profile,
+    )
+    assert client.base_url == "https://service.example.invalid/api"
