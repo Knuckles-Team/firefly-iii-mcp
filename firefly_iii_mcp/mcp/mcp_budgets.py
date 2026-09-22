@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 from agent_utilities.mcp.action_dispatch import resolve_action
 from agent_utilities.mcp.concurrency import run_blocking
@@ -14,7 +15,23 @@ def register_budgets_tools(mcp: FastMCP):
 
     @mcp.tool(tags={"budgets"})
     async def budgets_operations(
-        action: str = Field(
+        action: Literal[
+            "delete_budget",
+            "delete_budget_limit",
+            "get_budget",
+            "get_budget_limit",
+            "list_attachment_by_budget",
+            "list_budget",
+            "list_budget_limit",
+            "list_budget_limit_by_budget",
+            "list_transaction_by_budget",
+            "list_transaction_by_budget_limit",
+            "list_transaction_without_budget",
+            "store_budget",
+            "store_budget_limit",
+            "update_budget",
+            "update_budget_limit",
+        ] = Field(
             description="Action to perform. One of: 'delete_budget', 'delete_budget_limit', 'get_budget', 'get_budget_limit', 'list_attachment_by_budget', 'list_budget', 'list_budget_limit', 'list_budget_limit_by_budget', 'list_transaction_by_budget', 'list_transaction_by_budget_limit', 'list_transaction_without_budget', 'store_budget', 'store_budget_limit', 'update_budget', 'update_budget_limit'."
         ),
         params_json: str = Field(

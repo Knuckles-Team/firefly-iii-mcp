@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 from agent_utilities.mcp.action_dispatch import resolve_action
 from agent_utilities.mcp.concurrency import run_blocking
@@ -14,7 +15,16 @@ def register_accounts_tools(mcp: FastMCP):
 
     @mcp.tool(tags={"accounts"})
     async def accounts_operations(
-        action: str = Field(
+        action: Literal[
+            "delete_account",
+            "get_account",
+            "list_account",
+            "list_attachment_by_account",
+            "list_piggy_bank_by_account",
+            "list_transaction_by_account",
+            "store_account",
+            "update_account",
+        ] = Field(
             description="Action to perform. One of: 'delete_account', 'get_account', 'list_account', 'list_attachment_by_account', 'list_piggy_bank_by_account', 'list_transaction_by_account', 'store_account', 'update_account'."
         ),
         params_json: str = Field(

@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 from agent_utilities.mcp.action_dispatch import resolve_action
 from agent_utilities.mcp.concurrency import run_blocking
@@ -14,7 +15,18 @@ def register_transactions_tools(mcp: FastMCP):
 
     @mcp.tool(tags={"transactions"})
     async def transactions_operations(
-        action: str = Field(
+        action: Literal[
+            "delete_transaction",
+            "delete_transaction_journal",
+            "get_transaction",
+            "get_transaction_by_journal",
+            "list_attachment_by_transaction",
+            "list_event_by_transaction",
+            "list_links_by_journal",
+            "list_transaction",
+            "store_transaction",
+            "update_transaction",
+        ] = Field(
             description="Action to perform. One of: 'delete_transaction', 'delete_transaction_journal', 'get_transaction', 'get_transaction_by_journal', 'list_attachment_by_transaction', 'list_event_by_transaction', 'list_links_by_journal', 'list_transaction', 'store_transaction', 'update_transaction'."
         ),
         params_json: str = Field(
