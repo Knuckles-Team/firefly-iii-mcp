@@ -13,7 +13,18 @@ from ..auth import get_client
 def register_transactions_tools(mcp: FastMCP):
     """Register `transactions` domain dynamic tools."""
 
-    @mcp.tool(tags={"transactions"})
+    @mcp.tool(
+        tags={"transactions"},
+        annotations={
+            "readOnlyHint": False,
+            "destructiveHint": True,
+            "idempotentHint": False,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def transactions_operations(
         action: Literal[
             "delete_transaction",

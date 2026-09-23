@@ -13,7 +13,18 @@ from ..auth import get_client
 def register_budgets_tools(mcp: FastMCP):
     """Register `budgets` domain dynamic tools."""
 
-    @mcp.tool(tags={"budgets"})
+    @mcp.tool(
+        tags={"budgets"},
+        annotations={
+            "readOnlyHint": False,
+            "destructiveHint": True,
+            "idempotentHint": False,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def budgets_operations(
         action: Literal[
             "delete_budget",

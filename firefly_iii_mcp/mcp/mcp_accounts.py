@@ -13,7 +13,18 @@ from ..auth import get_client
 def register_accounts_tools(mcp: FastMCP):
     """Register `accounts` domain dynamic tools."""
 
-    @mcp.tool(tags={"accounts"})
+    @mcp.tool(
+        tags={"accounts"},
+        annotations={
+            "readOnlyHint": False,
+            "destructiveHint": True,
+            "idempotentHint": False,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def accounts_operations(
         action: Literal[
             "delete_account",
