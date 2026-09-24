@@ -2,7 +2,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from agent_connector_sdk.auth.delegation import DelegationSettings
-from agent_connector_sdk.auth.tokens import AccessToken
 from agent_connector_sdk.exceptions import AuthError
 
 import firefly_iii_mcp.auth as auth_module
@@ -98,14 +97,14 @@ def test_get_client_delegated_uses_exchanged_token():
     """OIDC delegation exchanges the caller's token and always builds a fresh client."""
     auth_module._client = None
     profile = MagicMock()
-    fake_token = AccessToken("exchanged-token", 300.0, 0.0)
     with (
         patch("firefly_iii_mcp.auth.ApiClientFireflyIii") as mock_client_cls,
         patch.object(
             DelegationSettings, "from_settings", return_value=_DELEGATION_SETTINGS
         ),
-        patch("firefly_iii_mcp.auth.current_user_token", return_value="user-token"),
-        patch("firefly_iii_mcp.auth.exchange_token", return_value=fake_token),
+        patch(
+            "firefly_iii_mcp.auth.delegated_token", return_value="exchanged-token"
+        ),
     ):
         get_client(
             url="https://service.example.invalid",
@@ -128,9 +127,8 @@ def test_get_client_delegated_failure_cleans_up_profile():
         patch.object(
             DelegationSettings, "from_settings", return_value=_DELEGATION_SETTINGS
         ),
-        patch("firefly_iii_mcp.auth.current_user_token", return_value="user-token"),
         patch(
-            "firefly_iii_mcp.auth.exchange_token",
+            "firefly_iii_mcp.auth.delegated_token",
             side_effect=RuntimeError("exchange failed"),
         ),
     ):
