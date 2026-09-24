@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "firefly-iii-mcp"
 version = "2.1.0"
-description = "Firefly III API + MCP Server + A2A Agent — personal finance manager"
+description = "Firefly III API + MCP Server — personal finance manager"
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: MIT License", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
 requires-python = ">=3.12, <3.15"
-dependencies = [ "agent-utilities>=2.0.0,<3.0.0",]
+dependencies = [ "agent-utilities>=2.0.0,<3.0.0", "agent-connector-sdk>=0.1.0,<1.0.0",]
 [[project.authors]]
 name = "Project Maintainers"
 email = "maintainers@example.invalid"
@@ -18,15 +18,13 @@ email = "maintainers@example.invalid"
 text = "MIT"
 
 [project.optional-dependencies]
-mcp = [ "agent-utilities[mcp]>=2.0.0,<3.0.0",]
-agent = [ "agent-utilities[agent-runtime,logfire]>=2.0.0,<3.0.0",]
-all = [ "agent-utilities[mcp,agent-runtime,logfire]>=2.0.0,<3.0.0",]
+mcp = [ "agent-connector-sdk>=0.1.0,<1.0.0",]
+all = [ "agent-connector-sdk>=0.1.0,<1.0.0",]
 test = [
     "pytest-xdist>=3.8.0", "pytest>=9.1.1", "pytest-asyncio>=1.4.0", "pytest-cov>=7.1.0",]
 
 [project.scripts]
 firefly-iii-mcp = "firefly_iii_mcp.mcp_server:mcp_server"
-firefly-iii-agent = "firefly_iii_mcp.agent_server:agent_server"
 
 # Fleet contribution (CONCEPT:OS-5.52): advertise this package's skills and
 # system-prompt blueprints so agent-utilities' skill-installer and KG prompt
@@ -56,6 +54,7 @@ override-dependencies = [
 
 [tool.uv.sources]
 agent-utilities = { path = ".uv-workspace-siblings/agent-utilities", editable = true }
+agent-connector-sdk = { path = ".uv-workspace-siblings/agent-connector-sdk", editable = true }
 
 [tool.ruff]
 line-length = 88

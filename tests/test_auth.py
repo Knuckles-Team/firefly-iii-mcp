@@ -1,10 +1,21 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+from agent_connector_sdk.auth.delegation import DelegationSettings
+from agent_connector_sdk.auth.tokens import AccessToken
+from agent_connector_sdk.exceptions import AuthError
 
 import firefly_iii_mcp.auth as auth_module
-from agent_utilities.core.exceptions import AuthError
 from firefly_iii_mcp.auth import get_client
+
+_DELEGATION_SETTINGS = DelegationSettings(
+    enabled=True,
+    token_endpoint="https://idp.example/token",
+    client_id="firefly-iii-mcp",
+    client_secret_ref="env://FIREFLY_III_OIDC_CLIENT_SECRET",
+    audience="svc",
+    scopes="api",
+)
 
 
 @pytest.mark.concept("FF-OS.config.ff")
@@ -87,21 +98,18 @@ def test_get_client_delegated_uses_exchanged_token():
     """OIDC delegation exchanges the caller's token and always builds a fresh client."""
     auth_module._client = None
     profile = MagicMock()
+    fake_token = AccessToken("exchanged-token", 300.0, 0.0)
     with (
         patch("firefly_iii_mcp.auth.ApiClientFireflyIii") as mock_client_cls,
-        patch(
-            "agent_utilities.mcp.delegated_auth.is_delegation_enabled",
-            return_value=True,
+        patch.object(
+            DelegationSettings, "from_settings", return_value=_DELEGATION_SETTINGS
         ),
-        patch(
-            "agent_utilities.mcp.delegated_auth.get_delegated_token",
-            return_value="exchanged-token",
-        ),
+        patch("firefly_iii_mcp.auth.current_user_token", return_value="user-token"),
+        patch("firefly_iii_mcp.auth.exchange_token", return_value=fake_token),
     ):
         get_client(
             url="https://service.example.invalid",
             tls_profile=profile,
-            config={"audience": "svc"},
         )
         mock_client_cls.assert_called_once_with(
             base_url="https://service.example.invalid",
@@ -117,12 +125,12 @@ def test_get_client_delegated_failure_cleans_up_profile():
     auth_module._client = None
     profile = MagicMock()
     with (
-        patch(
-            "agent_utilities.mcp.delegated_auth.is_delegation_enabled",
-            return_value=True,
+        patch.object(
+            DelegationSettings, "from_settings", return_value=_DELEGATION_SETTINGS
         ),
+        patch("firefly_iii_mcp.auth.current_user_token", return_value="user-token"),
         patch(
-            "agent_utilities.mcp.delegated_auth.get_delegated_token",
+            "firefly_iii_mcp.auth.exchange_token",
             side_effect=RuntimeError("exchange failed"),
         ),
     ):
