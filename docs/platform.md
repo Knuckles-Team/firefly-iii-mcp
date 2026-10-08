@@ -5,7 +5,7 @@ repository intentionally does not package a platform deployment, database passwo
 instance URL, local volume path, or customized schema.
 
 Provision and maintain Firefly III using its upstream deployment documentation and
-your organization's database, backup, identity, TLS, and secret-management standards.
+the operator's organization's database, backup, identity, TLS, and secret-management standards.
 Then supply only the selected HTTPS API endpoint and least-privilege credential through
 runtime AgentConfig as described in [Configuration, trust, and privacy](configuration.md).
 

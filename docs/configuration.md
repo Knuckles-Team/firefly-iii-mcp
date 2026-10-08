@@ -16,7 +16,7 @@ secret resolver project aliases into the child process.
 | --- | --- | --- |
 | `FIREFLY_III_URL` | HTTPS base URL of the selected Firefly III API | No packaged default; resolve at runtime |
 | `FIREFLY_III_TOKEN` | Fixed bearer credential when OIDC delegation is inactive | Runtime secret only |
-| `TLS_PROFILE` / `TLS_PROFILES_REF` | Verified system/private trust selection | Runtime reference only |
+| `TLS_PROFILE` / `TLS_PROFILES_REF` | Checked system/private trust selection | Runtime reference only |
 
 `mcp_config.json` uses `env://FIREFLY_III_URL` and
 `env://FIREFLY_III_TOKEN`. A launcher may populate those aliases directly or map the
@@ -62,7 +62,7 @@ The package contributes human-reviewed inputs for the central capability compile
 - the Firefly III finance ontology in `firefly_iii_mcp/ontology/`;
 - neutral accounts, transactions, and budgets source presets in
   `firefly_iii_mcp/connectors/`;
-- one comprehensive provider skill and canonical prompt sources;
+- one complete provider skill and canonical prompt sources;
 - package entry points proving distribution ownership of those assets.
 
 These inputs describe the public Firefly III model and tool surface only. The committed

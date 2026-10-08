@@ -31,7 +31,7 @@ those environment entries and inject the runtime values itself.
 
 ## Network transport
 
-Bind locally by default and place authentication, authorization, and verified TLS at
+Bind locally by default and place authentication, authorization, and checked TLS at
 the network boundary:
 
 ```bash

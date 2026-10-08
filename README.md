@@ -40,14 +40,14 @@ This repository is actively maintained - Contributions are welcome!
 ## Key Features
 
 - **Action-routed MCP tools** — each domain is exposed as a single MCP tool that routes
-  to many underlying operations via an `action` argument, keeping the tool surface small.
+  to multiple underlying operations via an `action` argument, keeping the tool surface small.
 - **Three interfaces, one package** — use it as a Python **API client**, an **MCP server**
   (`stdio` / `streamable-http` / `sse`), or a Pydantic-AI **A2A agent**.
 - **`agent-utilities` native** — built on the shared framework (auth, action router,
   telemetry, governance) for fleet consistency.
 - **Verified transport profiles** — outbound HTTP uses AgentConfig-backed TLS trust;
   peer and hostname verification cannot be disabled by this connector.
-- **Governed graph inputs** — ships one comprehensive skill, a neutral ontology, and
+- **Governed graph inputs** — ships one complete skill, a neutral ontology, and
   source presets without packaging an instance URL, custom schema, or credential.
 - **Per-tool toggles** — enable or disable each tool domain with environment switches.
 - **Enterprise-ready** — OTEL/Langfuse telemetry and optional Eunomia access governance.
@@ -97,12 +97,12 @@ _28 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unl
 
 ## Installation
 
-Pick the extra that matches what you want to run:
+Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `firefly-iii-mcp[mcp]` | MCP server (`agent-utilities[mcp]`) plus the mandatory full epistemic-graph base runtime | You run the **MCP server** without the agent UI/runtime |
-| `firefly-iii-mcp[agent]` | Current agent runtime (`agent-utilities[agent-runtime,logfire]`) | You run the **integrated agent** |
+| `firefly-iii-mcp[mcp]` | MCP server (`agent-utilities[mcp]`) plus the mandatory full epistemic-graph base runtime | The operator run the **MCP server** without the agent UI/runtime |
+| `firefly-iii-mcp[agent]` | Current agent runtime (`agent-utilities[agent-runtime,logfire]`) | The operator run the **integrated agent** |
 | `firefly-iii-mcp[all]` | MCP + agent runtime + Logfire | Development or both surfaces |
 
 ### Install with `uvx` (no install — run on demand)
@@ -152,12 +152,12 @@ shared production authority, follow the
 
 ### Console scripts
 
-After installation the following entry points are available on your `PATH`:
+After installation the following entry points are available on the operator's `PATH`:
 
 | Command | Description |
 |---------|-------------|
-| `firefly-iii-mcp` | Launch the MCP server |
-| `firefly-iii-agent` | Launch the A2A agent server |
+| `firefly-iii-mcp` | Start the MCP server |
+| `firefly-iii-agent` | Start the A2A agent server |
 
 ## Usage
 
@@ -203,7 +203,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 > `firefly-iii-mcp[mcp]` — the MCP-server extra that adds the FastMCP / FastAPI
 > tooling (`agent-utilities[mcp]`) to the shared base. The integrated Pydantic-AI
 > and UI runtime is separate, while full epistemic-graph remains mandatory.
-> Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
+> Use the full `[agent]` extra only when the operator need the integrated Pydantic AI agent
 > (see [Installation](#installation)).
 
 ### MCP Configuration Examples
