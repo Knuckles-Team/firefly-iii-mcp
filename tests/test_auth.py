@@ -1,9 +1,9 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+from agent_connector_sdk.exceptions import AuthError
 
 import firefly_iii_mcp.auth as auth_module
-from agent_utilities.core.exceptions import AuthError
 from firefly_iii_mcp.auth import get_client
 
 

@@ -1,28 +1,23 @@
 """Native epistemic-graph typed-node ingestion — Wire-First coverage.
 
 Exercises the real ``ingest_entities`` / ``ingest_accounts`` / ``ingest_transactions``
-/ ``ingest_budgets`` seam with a fake ChangeEnvelope-capable engine client (no engine
-required), asserting the committed nodes/edges and the Firefly record -> typed-node
+/ ``ingest_budgets`` seam against a fake SDK transport (no engine required),
+asserting the submitted records/relationships and the Firefly record -> typed-node
 mapping. CONCEPT:AU-KG.ingest.enterprise-source-extractor.
 
-The fake client mirrors agent-utilities' own sanctioned test double
-(``agent-utilities/tests/knowledge_graph/test_native_ingest.py``) — the ``txn``-only
-fake is retired; ``native_ingest`` now hard-requires an injected client exposing
-``.changes``/``.nodes``/``.rdf``/``.supports()``. Unlike most fleet connectors,
-``firefly_iii_mcp.kg_ingest`` is a **best-effort** surface (its MCP tools must never
-raise when the KG stack is down), so it converts ``NativeIngestError`` into ``None``
-rather than propagating it — those semantics are exercised explicitly below.
+Unlike most fleet connectors, ``firefly_iii_mcp.kg_ingest`` is a **best-effort**
+surface (its MCP tools must never raise when the KG stack is down), so it converts
+``IngestError``/``IngestUnavailableError`` into ``None`` rather than propagating it —
+those semantics are exercised explicitly below.
 """
 
 from __future__ import annotations
 
+from types import SimpleNamespace
 from typing import Any
 
-import msgpack
 import pytest
-from agent_utilities.knowledge_graph.core.session import GraphSession, use_session
-from agent_utilities.security.actor_identity import ActorType
-from agent_utilities.security.brain_context import ActorContext, use_actor
+from agent_connector_sdk.ingest import KnowledgeIngest
 
 from firefly_iii_mcp.kg_ingest import (
     ingest_accounts,
@@ -32,115 +27,51 @@ from firefly_iii_mcp.kg_ingest import (
 )
 
 
-@pytest.fixture(autouse=True)
-def _governed_session():
-    actor = ActorContext(
-        actor_id="subject:opaque:synthetic",
-        actor_type=ActorType.AUTOMATED_SERVICE,
-        roles=(),
-        tenant_id="tenant:opaque:synthetic",
-        authenticated=True,
-    )
-    session = GraphSession(
-        actor=actor,
-        tenant=actor.tenant_id,
-        scopes=frozenset({"kg:write"}),
-        graph="graph:opaque:synthetic",
-        policy_version="policy:opaque:synthetic",
-        audience="epistemic-graph",
-    )
-    with use_actor(actor), use_session(session):
-        yield
-
-
-class _FakeNodes:
+class _FakeTransport:
     def __init__(self) -> None:
-        self.values: dict[str, dict[str, Any]] = {}
+        self.requests: list[Any] = []
 
-    def properties(self, node_id: str) -> dict[str, Any] | None:
-        return self.values.get(node_id)
+    async def source_status(self, connector: str, stream: str) -> Any:
+        return SimpleNamespace(accepted_checkpoint=None)
 
-    def list(self) -> list[tuple[str, dict[str, Any]]]:
-        return list(self.values.items())
+    async def submit(self, request: Any) -> Any:
+        self.requests.append(request)
+        return SimpleNamespace(
+            affected_count=len(request.records),
+            relationship_count=len(request.relationships),
+        )
 
-
-class _FakeChanges:
-    def __init__(self, nodes: _FakeNodes) -> None:
-        self.nodes = nodes
-        self.edges: list[tuple[str, str, dict[str, Any]]] = []
-        self.applied: list[dict[str, Any]] = []
-        self.records: dict[str, dict[str, Any]] = {}
-        self.versions: dict[str, dict[str, Any]] = {}
-
-    def get(self, envelope_id: str) -> dict[str, Any] | None:
-        return self.records.get(envelope_id)
-
-    def content_version(self, object_id: str) -> dict[str, Any] | None:
-        return self.versions.get(object_id)
-
-    def cursor(self, _source: str, _partition: str = "") -> None:
-        return None
-
-    def apply(self, envelope: dict[str, Any]) -> dict[str, Any]:
-        self.applied.append(envelope)
-        mutation = envelope["mutation"]
-        for operation in mutation["operations"]:
-            method = operation["method"]
-            params = method["params"]
-            properties = msgpack.unpackb(params["properties_msgpack"], raw=False)
-            if method["method"] == "AddNode":
-                self.nodes.values[params["node_id"]] = properties
-            elif method["method"] == "AddEdge":
-                self.edges.append(
-                    (params["source_id"], params["target_id"], properties)
-                )
-        version = envelope["content_version"]
-        self.versions[version["object_id"]] = version
-        self.records[envelope["envelope_id"]] = envelope
-        return {
-            "batch_id": mutation["batch_id"],
-            "replayed": False,
-            "projection_pending": False,
-        }
+    async def store_blob(self, data: Any) -> Any:
+        raise AssertionError("this connector's ingestion carries no media")
 
 
-class _FakeRdf:
-    def validate_shacl(self, _shapes: str, _data_graph: str) -> dict[str, Any]:
-        return {"conforms": True, "results": []}
+@pytest.fixture
+def ingest():
+    transport = _FakeTransport()
+    return KnowledgeIngest(transport, loop=None), transport
 
 
-class _FakeClient:
-    def __init__(self) -> None:
-        self.nodes = _FakeNodes()
-        self.changes = _FakeChanges(self.nodes)
-        self.rdf = _FakeRdf()
-
-    @staticmethod
-    def supports(operation: str) -> bool:
-        return operation == "ApplyChangeEnvelope"
-
-
-def test_ingest_entities_writes_nodes_and_edges():
-    c = _FakeClient()
-    res = ingest_entities(
+async def test_ingest_entities_writes_nodes_and_edges(ingest):
+    service, transport = ingest
+    res = await ingest_entities(
         [
             {"id": "a", "node_type": "Account", "name": "checking"},
             {"id": "cur", "node_type": "Currency", "code": "USD"},
         ],
         [{"source": "a", "target": "cur", "relationship": "denominatedIn"}],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 2, "edges": 1}
-    assert set(c.nodes.values) == {"a", "cur"}
-    # provenance is stamped
-    assert c.nodes.values["a"]["source"] == "firefly-iii-mcp"
-    assert c.nodes.values["a"]["domain"] == "firefly"
-    assert c.changes.edges == [("a", "cur", {"relationship": "denominatedIn"})]
+    record_ids = {r.record_id for r in transport.requests[0].records}
+    assert record_ids == {"a", "cur"}
+    rel = transport.requests[0].relationships[0]
+    assert rel.source.record_id == "a"
+    assert rel.target.record_id == "cur"
 
 
-def test_ingest_accounts_maps_account_and_currency():
-    c = _FakeClient()
-    res = ingest_accounts(
+async def test_ingest_accounts_maps_account_and_currency(ingest):
+    service, transport = ingest
+    res = await ingest_accounts(
         [
             {
                 "id": "12",
@@ -154,27 +85,23 @@ def test_ingest_accounts_maps_account_and_currency():
                 },
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 2, "edges": 1}
-    acct = c.nodes.values["firefly:account:12"]
-    assert acct["node_type"] == "Account"
-    assert acct["name"] == "Everyday Checking"
-    assert acct["accountType"] == "asset"
-    assert acct["externalToolId"] == "12"
-    assert c.nodes.values["firefly:currency:USD"]["node_type"] == "Currency"
-    assert c.changes.edges == [
-        (
-            "firefly:account:12",
-            "firefly:currency:USD",
-            {"relationship": "denominatedIn"},
-        )
-    ]
+    records = {r.record_id: r for r in transport.requests[0].records}
+    acct = records["firefly:account:12"]
+    assert acct.payload["name"] == "Everyday Checking"
+    assert acct.payload["accountType"] == "asset"
+    assert acct.payload["externalToolId"] == "12"
+    assert "firefly:currency:USD" in records
+    rel = transport.requests[0].relationships[0]
+    assert rel.source.record_id == "firefly:account:12"
+    assert rel.target.record_id == "firefly:currency:USD"
 
 
-def test_ingest_transactions_maps_splits_and_links():
-    c = _FakeClient()
-    res = ingest_transactions(
+async def test_ingest_transactions_maps_splits_and_links(ingest):
+    service, transport = ingest
+    res = await ingest_transactions(
         [
             {
                 "id": "789",
@@ -196,42 +123,35 @@ def test_ingest_transactions_maps_splits_and_links():
                 },
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 1, "edges": 4}
-    txn = c.nodes.values["firefly:transaction:789"]
-    assert txn["node_type"] == "Transaction"
-    assert txn["transactionType"] == "withdrawal"
-    assert txn["amount"] == "42.50"
-    assert txn["splitCount"] == 1
-    edge_types = {(s, d, p["relationship"]) for s, d, p in c.changes.edges}
-    assert (
-        "firefly:transaction:789",
+    txn = transport.requests[0].records[0]
+    assert txn.record_id == "firefly:transaction:789"
+    assert txn.payload["transactionType"] == "withdrawal"
+    assert txn.payload["amount"] == "42.50"
+    assert txn.payload["splitCount"] == 1
+    edge_targets = {r.target.record_id for r in transport.requests[0].relationships}
+    assert edge_targets == {
         "firefly:account:12",
-        "sourceAccount",
-    ) in edge_types
-    assert (
-        "firefly:transaction:789",
         "firefly:account:30",
-        "destinationAccount",
-    ) in edge_types
-    assert ("firefly:transaction:789", "firefly:budget:3", "inBudget") in edge_types
-    assert ("firefly:transaction:789", "firefly:category:5", "inCategory") in edge_types
+        "firefly:budget:3",
+        "firefly:category:5",
+    }
 
 
-def test_ingest_transactions_skips_records_without_an_id():
-    c = _FakeClient()
-    res = ingest_transactions(
+async def test_ingest_transactions_skips_records_without_an_id(ingest):
+    service, _transport = ingest
+    res = await ingest_transactions(
         [{"attributes": {"transactions": [{"description": "no id"}]}}],
-        client=c,
+        ingest=service,
     )
     assert res is None
-    assert c.nodes.values == {}
 
 
-def test_ingest_transactions_falls_back_to_flat_record_without_splits():
-    c = _FakeClient()
-    res = ingest_transactions(
+async def test_ingest_transactions_falls_back_to_flat_record_without_splits(ingest):
+    service, transport = ingest
+    res = await ingest_transactions(
         [
             {
                 "id": "42",
@@ -242,17 +162,17 @@ def test_ingest_transactions_falls_back_to_flat_record_without_splits():
                 },
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 1, "edges": 0}
-    txn = c.nodes.values["firefly:transaction:42"]
-    assert txn["description"] == "Flat record, no transactions list"
-    assert txn["splitCount"] == 1
+    txn = transport.requests[0].records[0]
+    assert txn.payload["description"] == "Flat record, no transactions list"
+    assert txn.payload["splitCount"] == 1
 
 
-def test_ingest_transactions_only_links_present_fields():
-    c = _FakeClient()
-    res = ingest_transactions(
+async def test_ingest_transactions_only_links_present_fields(ingest):
+    service, transport = ingest
+    res = await ingest_transactions(
         [
             {
                 "id": "5",
@@ -266,42 +186,44 @@ def test_ingest_transactions_only_links_present_fields():
                 },
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 1, "edges": 1}
-    edge_types = {(s, d, p["relationship"]) for s, d, p in c.changes.edges}
-    assert edge_types == {("firefly:transaction:5", "firefly:account:12", "sourceAccount")}
+    rel = transport.requests[0].relationships[0]
+    assert rel.source.record_id == "firefly:transaction:5"
+    assert rel.target.record_id == "firefly:account:12"
 
 
-def test_ingest_budgets_maps_budget():
-    c = _FakeClient()
-    res = ingest_budgets(
+async def test_ingest_budgets_maps_budget(ingest):
+    service, transport = ingest
+    res = await ingest_budgets(
         [{"id": "3", "attributes": {"name": "Groceries", "active": True}}],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 1, "edges": 0}
-    bud = c.nodes.values["firefly:budget:3"]
-    assert bud["node_type"] == "Budget"
-    assert bud["name"] == "Groceries"
-    assert bud["externalToolId"] == "3"
+    bud = transport.requests[0].records[0]
+    assert bud.record_id == "firefly:budget:3"
+    assert bud.payload["name"] == "Groceries"
+    assert bud.payload["externalToolId"] == "3"
 
 
-def test_ingest_noops_without_engine():
-    # No injected client + no reachable engine -> clean no-op (best-effort surface).
-    assert ingest_entities([{"id": "a", "node_type": "Account"}]) is None
+async def test_ingest_noops_without_engine():
+    # No injected ingest + no reachable engine -> clean no-op (best-effort surface).
+    assert await ingest_entities([{"id": "a", "node_type": "Account"}]) is None
 
 
-def test_ingest_rejects_retired_structural_alias_as_noop():
+async def test_ingest_rejects_retired_structural_alias_as_noop(ingest):
     # firefly_iii_mcp's tool surface is best-effort (never raises): a malformed
     # record (the retired ``type`` alias instead of canonical ``node_type``) is
-    # reported back as a clean no-op rather than propagating NativeIngestError.
-    c = _FakeClient()
-    assert ingest_entities([{"id": "a", "type": "Account"}], client=c) is None
-    assert c.changes.applied == []
+    # reported back as a clean no-op rather than propagating IngestError.
+    service, transport = ingest
+    assert await ingest_entities([{"id": "a", "type": "Account"}], ingest=service) is None
+    assert transport.requests == []
 
 
-def test_ingest_empty_is_noop():
-    assert ingest_entities([], client=_FakeClient()) is None
-    assert ingest_accounts([], client=_FakeClient()) is None
-    assert ingest_transactions([], client=_FakeClient()) is None
-    assert ingest_budgets([], client=_FakeClient()) is None
+async def test_ingest_empty_is_noop(ingest):
+    service, _transport = ingest
+    assert await ingest_entities([], ingest=service) is None
+    assert await ingest_accounts([], ingest=service) is None
+    assert await ingest_transactions([], ingest=service) is None
+    assert await ingest_budgets([], ingest=service) is None

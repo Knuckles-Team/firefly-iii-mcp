@@ -10,7 +10,7 @@ when no engine is reachable.
 
 import json
 
-from agent_utilities.mcp.concurrency import run_blocking
+from agent_connector_sdk.mcp.concurrency import run_blocking
 from fastmcp import Context, FastMCP
 from fastmcp.dependencies import Depends
 from pydantic import Field
@@ -52,7 +52,7 @@ def register_kg_tools(mcp: FastMCP):
         kwargs = json.loads(params_json) if params_json else {}
         resp = await run_blocking(client.list_account, **kwargs)
         records = _records(resp)
-        return {"listed": len(records), "ingested": ingest_accounts(records)}
+        return {"listed": len(records), "ingested": await ingest_accounts(records)}
 
     @mcp.tool(tags={"kg"})
     async def firefly_ingest_transactions(
@@ -76,7 +76,7 @@ def register_kg_tools(mcp: FastMCP):
         kwargs = json.loads(params_json) if params_json else {}
         resp = await run_blocking(client.list_transaction, **kwargs)
         records = _records(resp)
-        return {"listed": len(records), "ingested": ingest_transactions(records)}
+        return {"listed": len(records), "ingested": await ingest_transactions(records)}
 
     @mcp.tool(tags={"kg"})
     async def firefly_ingest_budgets(
@@ -98,6 +98,6 @@ def register_kg_tools(mcp: FastMCP):
         kwargs = json.loads(params_json) if params_json else {}
         resp = await run_blocking(client.list_budget, **kwargs)
         records = _records(resp)
-        return {"listed": len(records), "ingested": ingest_budgets(records)}
+        return {"listed": len(records), "ingested": await ingest_budgets(records)}
 
     return None
