@@ -4,16 +4,15 @@ CONCEPT:AU-KG.ingest.enterprise-source-extractor. This is the record-source twin
 media-downloader's blob ingestion: the package natively pushes its personal-finance
 data into the ONE epistemic-graph knowledge graph as **typed OWL nodes**
 (``:Account``, ``:Transaction``, ``:Budget``, ``:Category``, ``:Bill``, ``:PiggyBank``,
-``:Tag``, ``:Currency``) plus links, through the required
-``agent_utilities.knowledge_graph.memory.native_ingest`` authority — the one connector
-write path; there is no self-contained fallback transaction here.
+``:Tag``, ``:Currency``) plus links, through the ``agent_connector_sdk.ingest`` facade
+— the one connector write path; there is no self-contained fallback transaction here.
 
 The MCP tool surface exposes these as best-effort tools that must never raise on an
 unreachable/misconfigured KG stack, so ``ingest_entities``/``ingest_documents`` stay
-**best-effort**: they return ``None`` (never raise) for empty input or when the shared
-primitive reports :class:`NativeIngestError` (no reachable engine, or a malformed
-record). Node ids follow ``firefly:<class>:<externalId>`` and each ``node_type``
-matches a class federated by ``firefly_iii_mcp.ontology``.
+**best-effort**: they return ``None`` (never raise) for empty input or when the SDK
+reports :class:`IngestError`/:class:`IngestUnavailableError` (no reachable engine, or a
+malformed record). Node ids follow ``firefly:<class>:<externalId>`` and each
+``node_type`` matches a class federated by ``firefly_iii_mcp.ontology``.
 """
 
 from __future__ import annotations
@@ -21,58 +20,80 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    NativeIngestError,
-    ingest_documents as _native_ingest_documents,
-    ingest_entities as _native_ingest_entities,
+from agent_connector_sdk.ingest import (
+    ChangeSet,
+    Entity,
+    IngestBinding,
+    IngestError,
+    IngestUnavailableError,
+    KnowledgeIngest,
+    Relationship,
+    current_ingest,
 )
 
 logger = logging.getLogger("firefly_iii_mcp.kg")
 
-_SOURCE = "firefly-iii-mcp"
-_DOMAIN = "firefly"
+_ENTITY_BINDING = IngestBinding(connector="firefly-iii-mcp", stream="firefly")
+_DOCUMENT_BINDING = IngestBinding(
+    connector="firefly-iii-mcp", stream="firefly-documents"
+)
 
 
-def ingest_entities(
+def _to_entity(record: dict[str, Any]) -> Entity:
+    return Entity(
+        id=record.get("id"),
+        node_type=record.get("node_type"),
+        properties={k: v for k, v in record.items() if k not in ("id", "node_type")},
+    )
+
+
+def _to_relationship(record: dict[str, Any]) -> Relationship:
+    props = {
+        k: v
+        for k, v in record.items()
+        if k not in ("source", "target", "relationship")
+    }
+    return Relationship(
+        source=record["source"],
+        target=record["target"],
+        relationship=record["relationship"],
+        properties=props or None,
+    )
+
+
+async def ingest_entities(
     entities: list[dict[str, Any]],
     relationships: list[dict[str, Any]] | None = None,
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int] | None:
     """Write typed OWL nodes (+ edges) into epistemic-graph. Best-effort, never raises.
 
     ``entities``: ``[{"id":..., "node_type":<owl:Class>, ...props}]``.
     ``relationships``: ``[{"source":id, "target":id, "relationship":<link>}]``.
     Returns ``{"nodes":n, "edges":m}`` or ``None`` (empty input / no reachable engine /
-    malformed record). ``client``/``graph`` may be injected (tests); otherwise the
-    process-owned governed authority is resolved on demand.
+    malformed record). ``ingest`` may be injected (tests); otherwise the
+    process-installed knowledge-ingest service is resolved on demand.
     """
     if not entities:
         return None
+    change_set = ChangeSet(
+        entities=tuple(_to_entity(e) for e in entities),
+        relationships=tuple(_to_relationship(r) for r in relationships or ()),
+    )
     try:
-        return _native_ingest_entities(
-            entities,
-            relationships,
-            source=source,
-            domain=domain,
-            client=client,
-            graph=graph,
-        )
-    except NativeIngestError as exc:
+        service = ingest if ingest is not None else current_ingest()
+        receipt = await service.submit(_ENTITY_BINDING, change_set)
+        return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
+    except (IngestError, IngestUnavailableError) as exc:
         logger.debug("KG ingest unavailable/failed: %s", exc)
         return None
 
 
-def ingest_documents(
+async def ingest_documents(
     docs: list[dict[str, Any]],
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int] | None:
     """Write text records as ``:Document`` nodes (semantic-search fodder). Best-effort.
 
@@ -84,11 +105,28 @@ def ingest_documents(
     ]
     if not docs:
         return None
+    change_set = ChangeSet(
+        entities=tuple(
+            Entity(
+                id=d["id"],
+                node_type="Document",
+                properties={
+                    "text": d.get("text") or d.get("content"),
+                    **{
+                        k: v
+                        for k, v in d.items()
+                        if k not in ("id", "text", "content")
+                    },
+                },
+            )
+            for d in docs
+        ),
+    )
     try:
-        return _native_ingest_documents(
-            docs, source=source, domain=domain, client=client, graph=graph
-        )
-    except NativeIngestError as exc:
+        service = ingest if ingest is not None else current_ingest()
+        receipt = await service.submit(_DOCUMENT_BINDING, change_set)
+        return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
+    except (IngestError, IngestUnavailableError) as exc:
         logger.debug("KG ingest unavailable/failed: %s", exc)
         return None
 
@@ -110,11 +148,10 @@ def _attrs(record: dict[str, Any]) -> tuple[str | None, dict[str, Any]]:
     return (str(rid) if rid is not None else None), record
 
 
-def ingest_accounts(
+async def ingest_accounts(
     accounts: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int] | None:
     """Map Firefly account records → ``:Account`` nodes (+ ``:Currency`` links)."""
     entities: list[dict[str, Any]] = []
@@ -155,7 +192,7 @@ def ingest_accounts(
                     "relationship": "denominatedIn",
                 }
             )
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
 # field on the split, target-node-type prefix, relationship name
@@ -201,11 +238,10 @@ def _transaction_links(tid: str, split: dict[str, Any]) -> list[dict[str, Any]]:
     return relationships
 
 
-def ingest_transactions(
+async def ingest_transactions(
     transactions: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int] | None:
     """Map Firefly transaction groups → ``:Transaction`` nodes and their links.
 
@@ -223,14 +259,13 @@ def ingest_transactions(
         split = splits[0] if isinstance(splits, list) and splits else a
         entities.append(_transaction_entity(tid, a, split, splits))
         relationships.extend(_transaction_links(tid, split))
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
-def ingest_budgets(
+async def ingest_budgets(
     budgets: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int] | None:
     """Map Firefly budget records → ``:Budget`` nodes."""
     entities: list[dict[str, Any]] = []
@@ -251,4 +286,4 @@ def ingest_budgets(
                 "externalToolId": bid,
             }
         )
-    return ingest_entities(entities, client=client, graph=graph)
+    return await ingest_entities(entities, ingest=ingest)

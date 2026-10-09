@@ -10,23 +10,21 @@ Priority:
 
 Endpoint and credential values are resolved at runtime through the shared
 AgentConfig projection. TLS trust is a mandatory-verification profile resolved by
-``agent_utilities.core.transport_security``; this package never stores certificate
+``agent_connector_sdk.tls.resolve``; this package never stores certificate
 material or a machine-specific trust path.
 """
 
+import logging
 from typing import Any
 
-from agent_utilities.base_utilities import get_logger
-from agent_utilities.core.config import setting
-from agent_utilities.core.exceptions import AuthError, UnauthorizedError
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.config import setting
+from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 from .api import ApiClientFireflyIii
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 _client: ApiClientFireflyIii | None = None
 
 
@@ -124,7 +122,7 @@ def get_client(
         return _client
 
     base_url, token = _resolve_firefly_credentials(url, token, delegated)
-    profile = tls_profile or resolve_configured_tls_profile("firefly_iii")
+    profile = tls_profile or resolve_tls_profile("firefly_iii")
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
     if delegated:

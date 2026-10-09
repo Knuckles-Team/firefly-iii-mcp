@@ -2,10 +2,8 @@ from typing import Any
 from urllib.parse import urlsplit
 
 import requests
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 
 def _reject_unbounded_or_control_chars(
@@ -58,7 +56,7 @@ class ApiClientBase:
     ):
         self.base_url = _validate_firefly_base_url(base_url)
         _validate_firefly_token(token)
-        self.tls_profile = tls_profile or resolve_configured_tls_profile("firefly_iii")
+        self.tls_profile = tls_profile or resolve_tls_profile("firefly_iii")
         self.session = self.tls_profile.configure_requests_session(requests.Session())
         self.session.headers.update(
             {

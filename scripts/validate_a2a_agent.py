@@ -9,7 +9,7 @@ import uuid
 from urllib.parse import urlsplit
 
 import httpx
-from agent_utilities.core.transport_security import resolve_configured_tls_profile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -26,7 +26,7 @@ async def _probe(url: str) -> int:
     if parsed.username or parsed.password:
         print("A2A readiness failed (credentials in URL)")
         return 1
-    profile = resolve_configured_tls_profile("firefly_iii_a2a")
+    profile = resolve_tls_profile("firefly_iii_a2a")
     payload = {
         "jsonrpc": "2.0",
         "method": "message/send",
