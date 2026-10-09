@@ -4,8 +4,8 @@
 
 Priority:
 1. **OIDC Delegation** (RFC 8693 Token Exchange) — when ``ENABLE_DELEGATION`` is
-   active, exchanges the IdP-issued user token for a downstream access token via the
-   shared ``agent_utilities.mcp.delegated_auth`` helper.
+   active, exchanges the IdP-issued user token for a downstream access token via
+   ``agent_connector_sdk.auth.delegation``.
 2. **Fixed credentials** — falls back to the ``FIREFLY_III_TOKEN`` env var.
 
 Endpoint and credential values are resolved at runtime through the shared
@@ -45,25 +45,57 @@ def _resolve_firefly_credentials(
     return base_url, token
 
 
+def _is_delegation_enabled(config: dict[str, Any] | None) -> bool:
+    """Whether the OIDC delegation path should be attempted.
+
+    An explicit ``config`` dict (test injection only -- no production caller
+    passes one) wins outright; otherwise reads the real ``ENABLE_DELEGATION``
+    setting through ``agent_connector_sdk.auth.delegation.DelegationSettings``.
+    """
+    if config is not None:
+        return bool(config.get("enable_delegation", False))
+    from agent_connector_sdk.auth.delegation import DelegationSettings
+
+    return DelegationSettings.from_settings().enabled
+
+
 def _build_delegated_client(
     base_url: str,
     profile: ResolvedTLSProfile,
-    config: dict[str, Any] | None,
 ) -> ApiClientFireflyIii:
     """Exchange the caller's IdP token for a downstream token (RFC 8693 Token
-    Exchange) and build the client from it."""
-    from agent_utilities.mcp.delegated_auth import get_delegated_token
+    Exchange) and build the client from it.
+
+    Reads delegation settings (``OIDC_TOKEN_URL``/``OIDC_CLIENT_ID``/
+    ``OIDC_CLIENT_SECRET_REF``/``AUDIENCE``/``DELEGATED_SCOPES``) from the
+    process settings via ``agent_connector_sdk.auth.delegation.DelegationSettings``;
+    unlike the old ``agent_utilities`` helper, this has no per-call override for
+    those fields, only for whether delegation is attempted at all (see
+    :func:`_is_delegation_enabled`).
+    """
+    import httpx
+    from agent_connector_sdk.auth.delegation import (
+        DelegationSettings,
+        current_user_token,
+        exchange_token,
+    )
+    from agent_connector_sdk.exceptions import LoginRequiredError
 
     try:
-        delegated_token = get_delegated_token(
-            config=config,
-            audience=(config or {}).get("audience", base_url),
-            scopes=(config or {}).get("delegated_scopes", "api"),
-        )
+        delegation_settings = DelegationSettings.from_settings()
+        subject_token = current_user_token()
+        if not subject_token:
+            raise LoginRequiredError("no verified caller token to delegate")
+        with httpx.Client(timeout=30) as http_client:
+            access_token = exchange_token(
+                delegation_settings,
+                subject_token=subject_token,
+                http_client=http_client,
+            )
         logger.info("Using OIDC delegated credentials")
         return ApiClientFireflyIii(
             base_url=base_url,
-            token=delegated_token,
+            token=access_token.value,
             tls_profile=profile,
         )
     except Exception as e:
@@ -82,6 +114,7 @@ def _build_fixed_credential_client(
 ) -> ApiClientFireflyIii:
     """Build the client from the fixed FIREFLY_III_TOKEN credential."""
     logger.info("Using fixed credentials")
+    assert token is not None  # guaranteed by _resolve_firefly_credentials
     try:
         return ApiClientFireflyIii(
             base_url=base_url,
@@ -115,9 +148,7 @@ def get_client(
     """
     global _client
 
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
-
-    delegated = is_delegation_enabled(config)
+    delegated = _is_delegation_enabled(config)
     if not delegated and _client is not None:
         return _client
 
@@ -126,7 +157,7 @@ def get_client(
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
     if delegated:
-        return _build_delegated_client(base_url, profile, config)
+        return _build_delegated_client(base_url, profile)
 
     # --- Path 2: Fixed Credentials (FIREFLY_III_TOKEN) ---
     _client = _build_fixed_credential_client(base_url, token, profile)
