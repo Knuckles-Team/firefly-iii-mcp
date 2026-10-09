@@ -87,21 +87,22 @@ def test_get_client_delegated_uses_exchanged_token():
     """OIDC delegation exchanges the caller's token and always builds a fresh client."""
     auth_module._client = None
     profile = MagicMock()
+    fake_access_token = MagicMock(value="exchanged-token")
     with (
         patch("firefly_iii_mcp.auth.ApiClientFireflyIii") as mock_client_cls,
         patch(
-            "agent_utilities.mcp.delegated_auth.is_delegation_enabled",
-            return_value=True,
+            "agent_connector_sdk.auth.delegation.current_user_token",
+            return_value="caller-token",
         ),
         patch(
-            "agent_utilities.mcp.delegated_auth.get_delegated_token",
-            return_value="exchanged-token",
+            "agent_connector_sdk.auth.delegation.exchange_token",
+            return_value=fake_access_token,
         ),
     ):
         get_client(
             url="https://service.example.invalid",
             tls_profile=profile,
-            config={"audience": "svc"},
+            config={"enable_delegation": True},
         )
         mock_client_cls.assert_called_once_with(
             base_url="https://service.example.invalid",
@@ -118,15 +119,19 @@ def test_get_client_delegated_failure_cleans_up_profile():
     profile = MagicMock()
     with (
         patch(
-            "agent_utilities.mcp.delegated_auth.is_delegation_enabled",
-            return_value=True,
+            "agent_connector_sdk.auth.delegation.current_user_token",
+            return_value="caller-token",
         ),
         patch(
-            "agent_utilities.mcp.delegated_auth.get_delegated_token",
+            "agent_connector_sdk.auth.delegation.exchange_token",
             side_effect=RuntimeError("exchange failed"),
         ),
     ):
         with pytest.raises(RuntimeError, match="Token exchange failed"):
-            get_client(url="https://service.example.invalid", tls_profile=profile)
+            get_client(
+                url="https://service.example.invalid",
+                tls_profile=profile,
+                config={"enable_delegation": True},
+            )
     profile.cleanup.assert_called_once()
     auth_module._client = None
