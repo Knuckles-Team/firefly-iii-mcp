@@ -5,7 +5,7 @@
 
 ## Tech Stack & Architecture
 - Language/Version: Python 3.11+
-- Core Libraries: `agent-utilities`, `fastmcp`, `pydantic-ai`
+- Core Libraries: `agent-connector-sdk`, `fastmcp`, `pydantic-ai`
 - Key principles: Functional patterns, Pydantic for data validation, asynchronous tool execution.
 - Architecture:
     - `firefly_iii_mcp/api/`: Modular folder for target service client wrappers.
@@ -67,7 +67,7 @@ firefly-iii-agent
 
 ## Code Style & Conventions
 **Always:**
-- Use `agent-utilities` for common patterns (e.g., `create_mcp_server`, `create_agent_server`).
+- Use `agent-connector-sdk` for common patterns (e.g., `create_mcp_server`, `create_agent_server`).
 - Define input/output models using Pydantic.
 - Include descriptive docstrings for all tools (they are used as tool descriptions for LLMs).
 - Check for optional dependencies using `try/except ImportError`.
@@ -75,7 +75,7 @@ firefly-iii-agent
 ## Dos and Don'ts
 **Do:**
 - Run `pre-commit` before pushing changes.
-- Use existing patterns from `agent-utilities`.
+- Use existing patterns from `agent-connector-sdk`.
 - Keep tools focused and idempotent where possible.
 
 **Don't:**
@@ -86,7 +86,7 @@ firefly-iii-agent
 ## Safety & Boundaries
 **Always do:**
 - Run lint/test via `pre-commit`.
-- Use `agent-utilities` base classes.
+- Use `agent-connector-sdk` base classes.
 
 **Ask first:**
 - Major refactors of `mcp_server.py` or `agent_server.py`.
@@ -94,11 +94,11 @@ firefly-iii-agent
 
 **Never do:**
 - Commit `.env` files or secrets.
-- Modify `agent-utilities` or `universal-skills` files from within this package.
+- Modify `agent-connector-sdk` or `universal-skills` files from within this package.
 
 ## When Stuck
 - Propose a plan first before making large changes.
-- Check `agent-utilities` documentation for existing helpers.
+- Check `agent-connector-sdk` documentation for existing helpers.
 
 ## ⛔ No Scratch or Temporary Files in Repository
 
@@ -240,14 +240,14 @@ is what Dependabot flags. Rules:
 ## Upstream currency edict — target the newest release; a pin is a hypothesis, not a fact (READ BEFORE capping, deferring, or opt-in-gating an upgrade)
 
 This governs how this repository treat **other people's** releases, deprecations, and version caps in
-this repo (fleet-wide edict, propagated from `agent-utilities/AGENTS.md`).
+this repo (fleet-wide edict, propagated from `agent-connector-sdk/AGENTS.md`).
 
 1. **Latest by default.** Target the newest upstream release -- including a pre-release
    where the ecosystem has already moved onto it. Sitting on an old major because the
    upgrade is work is not a reason to defer it.
 2. **A conservative upstream pin is a hypothesis, not a fact -- test it, don't inherit
    it.** Upstream maintainers cap defensively (an unreleased major, an untested surface)
-   as often as they cap for a known break. Worked example (from `agent-utilities`):
+   as often as they cap for a known break. Worked example (from `agent-connector-sdk`):
    `pydantic-ai-slim` 2.18.0 declared `fastmcp-slim[client]>=3.3.0` with no upper bound;
    2.19.0 added `<4` purely as a defensive guard while fastmcp 4 was still pre-release --
    not because of an observed incompatibility. Blocking an upgrade on that kind of cap

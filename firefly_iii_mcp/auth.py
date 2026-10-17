@@ -69,7 +69,7 @@ def _build_delegated_client(
     Reads delegation settings (``OIDC_TOKEN_URL``/``OIDC_CLIENT_ID``/
     ``OIDC_CLIENT_SECRET_REF``/``AUDIENCE``/``DELEGATED_SCOPES``) from the
     process settings via ``agent_connector_sdk.auth.delegation.DelegationSettings``;
-    unlike the old ``agent_utilities`` helper, this has no per-call override for
+    unlike the old ``agent_connector_sdk`` helper, this has no per-call override for
     those fields, only for whether delegation is attempted at all (see
     :func:`_is_delegation_enabled`).
     """

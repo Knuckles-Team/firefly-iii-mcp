@@ -1,6 +1,5 @@
 # Deployment
 
-`firefly-iii-mcp` exposes an MCP server and an optional A2A agent server. Keep all
 service endpoints, credentials, identity settings, TLS trust, model selection, and
 telemetry destinations in runtime AgentConfig or the deployment secret store.
 
@@ -47,7 +46,6 @@ Build the desired target, then inject runtime configuration through the orchestr
 
 ```bash
 docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
-docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
 
 The Compose examples use operator-overridable image variables, bind published ports
@@ -56,7 +54,6 @@ URL, provider, and model at runtime.
 
 ```bash
 docker compose -f docker/mcp.compose.yml up -d
-docker compose -f docker/agent.compose.yml up -d
 ```
 
 ## A2A agent

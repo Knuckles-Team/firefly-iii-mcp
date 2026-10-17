@@ -7,7 +7,7 @@ instance profile or a customized Firefly III ontology.
 
 ## Configuration boundary
 
-The connector reads runtime values through the Agent Utilities configuration layer.
+The connector reads runtime values through the Agent Connector SDK configuration layer.
 For a standalone process, inject values through its process environment. When GraphOS
 launches the connector, keep `mcp_config.json` reference-only and let the MCP fleet
 secret resolver project aliases into the child process.
@@ -93,8 +93,8 @@ After runtime configuration is injected, validate the shared boundary without
 printing resolved values:
 
 ```bash
-agent-utilities-doctor --only config transport_security mcp_fleet_secrets mcp_fleet
+agent-connector-sdk-doctor --only config transport_security mcp_fleet_secrets mcp_fleet
 ```
 
-Use `agent-utilities-doctor --live` only when bounded calls to the configured service
+Use `agent-connector-sdk-doctor --live` only when bounded calls to the configured service
 and observability backends are authorized.

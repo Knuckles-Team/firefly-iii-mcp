@@ -18,7 +18,6 @@ pip install firefly-iii-mcp
 | Extra | Install | Pulls in |
 |---|---|---|
 | `mcp` | `pip install "firefly-iii-mcp[mcp]"` | MCP-server runtime plus the mandatory `epistemic-graph[full]` base dependency |
-| `agent` | `pip install "firefly-iii-mcp[agent]"` | Current Pydantic-AI agent runtime + Logfire tracing |
 | `all` | `pip install "firefly-iii-mcp[all]"` | Everything above |
 
 ## From source
@@ -32,7 +31,6 @@ pip install -e ".[all]"
 ## Container
 
 ```bash
-docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
 
 Inject endpoints, credentials, trust, and model settings through the runtime
