@@ -1,5 +1,5 @@
 {
-  "api_version": "graphos.io/v1",
+  "api_version": "arbora.io/v1",
   "artifacts": {
     "connector_manifest.yml": "aafe363bb2731b3264e595ccf06209d04dc130029be3e0abc64d68cf207fc876",
     "firefly_iii_mcp/connectors/mcp_source_presets.json": "7f35e71c9f693bcacdb27037520c8c7050d39d31bc9237ff1dd42bacd9247d76",

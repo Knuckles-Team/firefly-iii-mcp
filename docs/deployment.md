@@ -8,7 +8,7 @@ transport.
 
 ## Stdio
 
-Use the checked-in `mcp_config.json` with GraphOS or another alias-aware launcher. It
+Use the checked-in `mcp_config.json` with Arbora or another alias-aware launcher. It
 contains only `env://` references. A launcher without reference resolution must omit
 those environment entries and inject the runtime values itself.
 

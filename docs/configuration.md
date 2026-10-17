@@ -8,7 +8,7 @@ instance profile or a customized Firefly III ontology.
 ## Configuration boundary
 
 The connector reads runtime values through the Agent Connector SDK configuration layer.
-For a standalone process, inject values through its process environment. When GraphOS
+For a standalone process, inject values through its process environment. When Arbora
 launches the connector, keep `mcp_config.json` reference-only and let the MCP fleet
 secret resolver project aliases into the child process.
 
