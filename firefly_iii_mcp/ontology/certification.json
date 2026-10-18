@@ -1,12 +1,12 @@
 {
   "api_version": "arbora.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "aafe363bb2731b3264e595ccf06209d04dc130029be3e0abc64d68cf207fc876",
-    "firefly_iii_mcp/connectors/mcp_source_presets.json": "7f35e71c9f693bcacdb27037520c8c7050d39d31bc9237ff1dd42bacd9247d76",
-    "firefly_iii_mcp/connectors/tool_schema_fingerprints.json": "2c30ef2fc6810c861878fb2156cb62e9410762b91435d39b235d1a65547bfb00",
+    "connector_manifest.yml": "269899515e3de997f2e9aa2050e9858801ae059a4791fe387ba8765509f92878",
+    "firefly_iii_mcp/connectors/mcp_source_presets.json": "78d2ff72368123f74bf8da7f2dba443ac8504aaef3cc34af9c8c23d0fd632ade",
+    "firefly_iii_mcp/connectors/tool_schema_fingerprints.json": "1a0999a03f929979e17e4dceceb259599c920ec945362efafc1bc1fb56257254",
     "firefly_iii_mcp/ontology/firefly.ttl": "5178a9710778abd1f880373c72fc316c1c960e23095169ccb76626c7ecda94a6",
     "firefly_iii_mcp/ontology/fixtures/records.json": "daedade71ebb3ef27824197ae71a9516057c2e6eeb3eea0278dde413043950ee",
-    "firefly_iii_mcp/ontology/mappings/source.yaml": "d45f2f3c4a120ba488f52208bff814d0c2aa592aac274cbf33029f4739d6b156",
+    "firefly_iii_mcp/ontology/mappings/source.yaml": "bb9369147b76812d2381b8472f186d635f1bf5360e3c3890129d7b185df2cd08",
     "firefly_iii_mcp/ontology/migrations/manifest.json": "cbe85cfd03db470e0ebb554554e79f34e6310c0a3b60fb101ff8238d3e978178",
     "firefly_iii_mcp/ontology/shapes/connector.shacl.ttl": "e2e9d5e23c3a758169c567bdc6dda279bc64efb63b2b3f61ec2d3bcede57e23b"
   },
