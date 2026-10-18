@@ -12,7 +12,7 @@ requires-python = ">=3.12, <3.15"
 dependencies = [ "agent-connector-sdk[mcp]>=0.3.0,<1.0.0", "requests>=2.34.2",]
 [[project.authors]]
 name = "Project Maintainers"
-email = "maintainers@example.invalid"
+email = "maintainers@users.noreply.github.com"
 
 [project.license]
 text = "MIT"
