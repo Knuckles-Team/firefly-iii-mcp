@@ -1,19 +1,6 @@
 # syntax=docker/dockerfile:1
-# Two right-sized images from ONE Dockerfile, selected by build --target. Both are
-# slim multi-stage (build in a builder, ship only /usr/local — no dev-tools/source):
-#
-#   --target agent  (DEFAULT)  installs firefly-iii-mcp[agent] = the current runtime
-#                              (agent-utilities[agent-runtime]: full engine + pydantic-ai +
-#                              skills). Because the package also includes [mcp], this image
-#                              can run EITHER the agent OR the mcp server. Push as the
-#                              default tags: latest / main / <version>.
-#
-#   --target mcp               installs firefly-iii-mcp[mcp] = MCP-server tooling
-#                              without the Pydantic-AI/UI runtime. The mandatory
-#                              epistemic-graph[full] base dependency remains present.
-#
-#   docker build --target agent -t firefly-iii-mcp:agent-local .
-#   docker build --target mcp   -t firefly-iii-mcp:mcp    .
+# MCP-only image: ships the MCP server and nothing else (no agent mode).
+#   docker build --target mcp -t <name>:mcp .
 FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS builder-base
 COPY --from=ghcr.io/astral-sh/uv:0.11.7@sha256:240fb85ab0f263ef12f492d8476aa3a2e4e1e333f7d67fbdd923d00a506a516a /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 \
@@ -27,12 +14,7 @@ RUN apt-get update \
 # MCP-only dependency closure.
 FROM builder-base AS builder-mcp
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --upgrade --break-system-packages --prerelease=allow firefly-iii-mcp[mcp]>=2.1.0
-
-# Full agent runtime dependency closure.
-FROM builder-base AS builder-agent
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --upgrade --break-system-packages --prerelease=allow firefly-iii-mcp[agent]>=2.1.0
+    uv pip install --system --upgrade --break-system-packages firefly-iii-mcp[mcp]==2.2.0
 
 FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS runtime-base
 ARG HOST=0.0.0.0
@@ -54,8 +36,3 @@ ENV HOST=${HOST} \
 FROM runtime-base AS mcp
 COPY --from=builder-mcp /usr/local /usr/local
 CMD ["firefly-iii-mcp"]
-
-# Full image (DEFAULT target): agent runtime; can also run the mcp server.
-FROM runtime-base AS agent
-COPY --from=builder-agent /usr/local /usr/local
-CMD ["firefly-iii-agent"]

@@ -178,5 +178,5 @@
     rdfs:comment """Firefly III personal-finance model — accounts, double-entry
     transactions, budgets, budget limits, categories, bills, piggy banks, tags and
     currencies, with their booking and savings relationships — federated into the
-    agent-utilities knowledge-graph hub.""" ;
+    agent-connector-sdk knowledge-graph hub.""" ;
     owl:imports <http://knuckles.team/kg> .

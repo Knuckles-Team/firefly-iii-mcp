@@ -8,7 +8,6 @@
         "firefly-iii-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
         "FIREFLY_III_TOKEN": "env://FIREFLY_III_TOKEN",
         "FIREFLY_III_URL": "env://FIREFLY_III_URL"
       }

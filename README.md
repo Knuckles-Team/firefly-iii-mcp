@@ -1,5 +1,5 @@
 # Firefly III MCP
-## CLI or API | MCP | Agent
+## CLI or API | MCP
 
 ![PyPI - Version](https://img.shields.io/pypi/v/firefly-iii-mcp)
 ![MCP Server](https://badge.mcpx.dev?type=server 'MCP Server')
@@ -8,10 +8,9 @@
 ![PyPI - License](https://img.shields.io/pypi/l/firefly-iii-mcp)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/firefly-iii-mcp)
 
-*Version: 2.1.0*
+*Version: 2.2.0*
 
 > **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
-> interfaces, the integrated A2A agent server, and guidance for provisioning the
 > backing platform are maintained in the
 > [official documentation](https://knuckles-team.github.io/firefly-iii-mcp/).
 
@@ -41,9 +40,9 @@ This repository is actively maintained - Contributions are welcome!
 
 - **Action-routed MCP tools** — each domain is exposed as a single MCP tool that routes
   to multiple underlying operations via an `action` argument, keeping the tool surface small.
-- **Three interfaces, one package** — use it as a Python **API client**, an **MCP server**
-  (`stdio` / `streamable-http` / `sse`), or a Pydantic-AI **A2A agent**.
-- **`agent-utilities` native** — built on the shared framework (auth, action router,
+- **Two interfaces, one package** — use it as a Python **API client**, an **MCP server**
+  (`stdio` / `streamable-http` / `sse`).
+- **`agent-connector-sdk` native** — built on the shared framework (auth, action router,
   telemetry, governance) for fleet consistency.
 - **Verified transport profiles** — outbound HTTP uses AgentConfig-backed TLS trust;
   peer and hostname verification cannot be disabled by this connector.
@@ -57,7 +56,7 @@ This repository is actively maintained - Contributions are welcome!
 Each tool is **action-routed**: pass an `action` and a JSON `params_json` payload. Tool
 domains can be toggled on or off with the listed environment variable. The table below is
 **auto-generated from the live server** by the `mcp-readme-table` pre-commit hook
-(`python -m agent_utilities.mcp.readme_tools`) — do not edit it by hand.
+(`python -m agent_connector_sdk.mcp.readme_tools`) — do not edit it by hand.
 
 <!-- MCP-TOOLS-TABLE:START -->
 
@@ -101,15 +100,13 @@ Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `firefly-iii-mcp[mcp]` | MCP server (`agent-utilities[mcp]`) plus the mandatory full epistemic-graph base runtime | The operator run the **MCP server** without the agent UI/runtime |
-| `firefly-iii-mcp[agent]` | Current agent runtime (`agent-utilities[agent-runtime,logfire]`) | The operator run the **integrated agent** |
-| `firefly-iii-mcp[all]` | MCP + agent runtime + Logfire | Development or both surfaces |
+| `firefly-iii-mcp[mcp]` | MCP server (`agent-connector-sdk`) plus the mandatory full epistemic-graph base runtime | The operator run the **MCP server** |
+| `firefly-iii-mcp[all]` | MCP + test tooling | Development |
 
 ### Install with `uvx` (no install — run on demand)
 
 ```bash
 uvx --from "firefly-iii-mcp[mcp]" firefly-iii-mcp      # MCP server
-uvx --from "firefly-iii-mcp[agent]" firefly-iii-agent  # A2A agent server
 ```
 
 ### Install with `pip` / `uv`
@@ -118,33 +115,27 @@ uvx --from "firefly-iii-mcp[agent]" firefly-iii-agent  # A2A agent server
 # MCP server only (recommended for tool hosting)
 uv pip install "firefly-iii-mcp[mcp]"
 
-# Full agent runtime (Pydantic AI + epistemic-graph engine)
-uv pip install "firefly-iii-mcp[agent]"
-
 # Everything (development)
 uv pip install "firefly-iii-mcp[all]"      # or: python -m pip install "firefly-iii-mcp[all]"
 ```
 
-### Container images (`:mcp` vs `:agent`)
+### Container images (`:mcp`)
 
-One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+One multi-stage `docker/Dockerfile` builds the MCP-only image (`--target mcp`):
 
 | Image tag | Build target | Contents | Entrypoint |
 |-----------|--------------|----------|------------|
 | `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full epistemic-graph base dependency | `firefly-iii-mcp` |
-| `firefly-iii-mcp@sha256:<digest>` | `--target agent` (default) | MCP dependencies plus the current Pydantic-AI agent runtime | `firefly-iii-agent` |
 
 ```bash
 docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
-docker build --target agent -t firefly-iii-mcp:agent-local -f docker/Dockerfile .
 ```
 
-`docker/mcp.compose.yml` runs the MCP-only `:mcp` server; `docker/agent.compose.yml` runs the
 agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-Every install receives `epistemic-graph[full]` through the current Agent Utilities base
+Every install receives `epistemic-graph[full]` through the current Agent Connector SDK base
 dependency. The connector does not open an insecure engine listener or silently select a
 machine-specific engine. Deployment topology and identity are resolved by AgentConfig. For a
 shared production authority, follow the
@@ -157,7 +148,6 @@ After installation the following entry points are available on the operator's `P
 | Command | Description |
 |---------|-------------|
 | `firefly-iii-mcp` | Start the MCP server |
-| `firefly-iii-agent` | Start the A2A agent server |
 
 ## Usage
 
@@ -201,9 +191,8 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 
 > **Install the MCP-only `[mcp]` extra.** All MCP examples below install
 > `firefly-iii-mcp[mcp]` — the MCP-server extra that adds the FastMCP / FastAPI
-> tooling (`agent-utilities[mcp]`) to the shared base. The integrated Pydantic-AI
+> tooling (`agent-connector-sdk`) to the shared base. The integrated Pydantic-AI
 > and UI runtime is separate, while full epistemic-graph remains mandatory.
-> Use the full `[agent]` extra only when the operator need the integrated Pydantic AI agent
 > (see [Installation](#installation)).
 
 ### MCP Configuration Examples
@@ -211,7 +200,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `firefly-iii-mcp[mcp]` to add
-> FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
+> FastMCP / FastAPI through `agent-connector-sdk`; the required Agent Connector SDK core
 > still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
@@ -263,7 +252,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 }
 ```
 
-Runtime references require an alias-aware launcher such as GraphOS. Other
+Runtime references require an alias-aware launcher such as Arbora. Other
 launchers must omit those entries and inject the resolved values through their
 own runtime secret boundary.
 
@@ -420,27 +409,6 @@ Full documentation is published to the GitHub Pages site and mirrored under `doc
 - [Concept Registry](docs/concepts.md)
 
 
-<!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
-
-## Deploy with `agent-utilities-deployment`
-
-Provision this package with the consolidated **`agent-utilities-deployment`**
-workflow. It selects an installed-package, editable-source, or immutable-container
-path; records only runtime secret and TLS-profile references in `AgentConfig`; and
-runs doctor, registration, policy, observability, and rollback gates. Ask your agent
-to **"deploy `firefly-iii-mcp` with agent-utilities-deployment"**.
-
-| Install mode | Command |
-|------|---------|
-| Installed package | `uv tool install "firefly-iii-mcp[mcp]"`, then run `firefly-iii-mcp` |
-| Editable source | `uv pip install -e ".[agent]"`, then run `firefly-iii-mcp` |
-| Immutable container | deploy `registry.example.invalid/firefly-iii-mcp@sha256:<digest>` through the operator-selected orchestrator |
-
-The repository embeds no deployment profile, credential value, certificate path, or
-environment-specific endpoint. Supply those at runtime through `AgentConfig` and the
-configured secret provider.
-
-<!-- END agent-utilities-deployment -->
 
 <!-- GOVERNED-CAPABILITY:START -->
 ## Governed capability contract
@@ -455,7 +423,7 @@ certification.
 Runtime endpoints, credentials, certificate trust, identity, tenant/ACL policy,
 retention, and observability destinations are deployment inputs and are never packaged
 values. See [Configuration, trust, and privacy](docs/configuration.md) before enabling
-a network transport, GraphOS delegation, source synchronization, or trace export.
+a network transport, Arbora delegation, source synchronization, or trace export.
 <!-- GOVERNED-CAPABILITY:END -->
 
 ## Environment Variables
@@ -503,7 +471,7 @@ a network transport, GraphOS delegation, source synchronization, or trace export
 | `USERSTOOL` | `True` |  |
 | `WEBHOOKSTOOL` | `True` |  |
 
-#### Inherited agent-utilities variables (apply to every connector)
+#### Inherited agent-connector-sdk variables (apply to every connector)
 
 | Variable | Example | Description |
 |----------|---------|-------------|
@@ -526,5 +494,5 @@ a network transport, GraphOS delegation, source synchronization, or trace export
 | `MODEL_ID` | `gpt-4o` | Model id for the agent |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_36 package + 18 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_36 package + 18 inherited variable(s). Auto-generated from `.env.example` + the shared agent-connector-sdk set — do not edit._
 <!-- ENV-VARS-TABLE:END -->

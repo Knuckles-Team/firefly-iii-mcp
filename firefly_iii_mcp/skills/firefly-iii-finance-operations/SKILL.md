@@ -1,7 +1,7 @@
 ---
 name: firefly-iii-finance-operations
 skill_type: skill
-description: Operate Firefly III through the firefly-iii-mcp action-routed tools, covering accounts, currencies, transactions and splits, budgets and limits, categories, bills, savings goals, rules, recurrences, reports, attachments, users, webhooks, and governed source synchronization. Use when an agent must inspect or safely change a Firefly III ledger, reconcile or report on finance records, configure automation, or prepare approved Firefly III data for GraphOS ingestion.
+description: Operate Firefly III through the firefly-iii-mcp action-routed tools, covering accounts, currencies, transactions and splits, budgets and limits, categories, bills, savings goals, rules, recurrences, reports, attachments, users, webhooks, and governed source synchronization. Use when an agent must inspect or safely change a Firefly III ledger, reconcile or report on finance records, configure automation, or prepare approved Firefly III data for Arbora ingestion.
 ---
 
 # Firefly III finance operations
@@ -96,11 +96,11 @@ Create a transaction only after the execution-safety checks:
 
 Do not write Firefly III records directly into epistemic-graph. This provider supplies
 neutral source presets and an ontology as human-reviewed compiler inputs; it does not
-ship live tool-schema fingerprints or a signed capability bundle. Use the GraphOS
+ship live tool-schema fingerprints or a signed capability bundle. Use the Arbora
 source-sync path only after the central compiler has generated the current schema-v2
 bundle and an operator has approved its tenant, ACL, classification, retention,
 provenance, redaction, and deletion policy. Missing governance must fail closed.
 
-When synchronization is approved, invoke the central `source_sync`/GraphOS capability
+When synchronization is approved, invoke the central `source_sync`/Arbora capability
 with the provider preset; do not call a connector-local graph-write tool or create an
 alternate ingestion path.

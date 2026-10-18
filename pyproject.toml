@@ -1,15 +1,15 @@
 [build-system]
-requires = [ "setuptools>=80.9.0", "wheel",]
+requires = [ "setuptools>=84.0.0", "wheel",]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "firefly-iii-mcp"
-version = "2.1.0"
-description = "Firefly III API + MCP Server + A2A Agent — personal finance manager"
+version = "2.2.0"
+description = "Firefly III API + MCP Server — personal finance manager"
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: MIT License", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
 requires-python = ">=3.12, <3.15"
-dependencies = [ "agent-connector-sdk>=0.1.0,<1.0.0", "agent-utilities>=2.0.0,<3.0.0",]
+dependencies = [ "agent-connector-sdk[mcp]>=0.2.1,<1.0.0", "requests>=2.34.2",]
 [[project.authors]]
 name = "Project Maintainers"
 email = "maintainers@example.invalid"
@@ -18,30 +18,25 @@ email = "maintainers@example.invalid"
 text = "MIT"
 
 [project.optional-dependencies]
-mcp = [ "agent-utilities[mcp]>=2.0.0,<3.0.0",]
-agent = [ "agent-utilities[agent-runtime,logfire]>=2.0.0,<3.0.0",]
-all = [ "agent-utilities[mcp,agent-runtime,logfire]>=2.0.0,<3.0.0",]
+mcp = [ "agent-connector-sdk[mcp]>=0.2.1,<1.0.0",]
+all = [ "agent-connector-sdk[mcp]>=0.2.1,<1.0.0",]
 test = [
     "pytest-xdist>=3.8.0", "pytest>=9.1.1", "pytest-asyncio>=1.4.0", "pytest-cov>=7.1.0",]
 
 [project.scripts]
 firefly-iii-mcp = "firefly_iii_mcp.mcp_server:mcp_server"
-firefly-iii-agent = "firefly_iii_mcp.agent_server:agent_server"
 
 # Fleet contribution (CONCEPT:OS-5.52): advertise this package's skills and
-# system-prompt blueprints so agent-utilities' skill-installer and KG prompt
+# system-prompt blueprints so agent-connector-sdk' skill-installer and KG prompt
 # library discover them without importing this package's agent code.
-[project.entry-points."agent_utilities.skill_providers"]
+[project.entry-points."agent_connector_sdk.skill_providers"]
 firefly-iii-mcp = "firefly_iii_mcp.skills"
 
-[project.entry-points."agent_utilities.ontology_providers"]
+[project.entry-points."agent_connector_sdk.ontology_providers"]
 firefly-iii-mcp = "firefly_iii_mcp.ontology"
 
-[project.entry-points."agent_utilities.source_connector_providers"]
+[project.entry-points."agent_connector_sdk.source_connector_providers"]
 firefly-iii-mcp = "firefly_iii_mcp.connectors"
-
-[project.entry-points."agent_utilities.prompt_providers"]
-firefly-iii-mcp = "firefly_iii_mcp.prompts"
 
 [tool.uv.workspace]
 members = ["."]
@@ -51,12 +46,8 @@ include-package-data = true
 
 [tool.uv]
 override-dependencies = [
-    "fastmcp-slim[client,server]>=4.0.0b1",
+    "fastmcp-slim[client,server]>=4.1.0",
 ]
-
-[tool.uv.sources]
-agent-connector-sdk = { path = ".uv-workspace-siblings/agent-connector-sdk", editable = true }
-agent-utilities = { path = ".uv-workspace-siblings/agent-utilities", editable = true }
 
 [tool.ruff]
 line-length = 88
@@ -83,7 +74,7 @@ ignore = [ "E402", "E501", "B008",]
 where = [ ".",]
 
 [tool.vulture]
-ignore_names = ["request", "config"]
+ignore_names = ["request", "config", "connector", "stream"]
 
 [tool.pipelines_hooks.ste]
 exempt = ["specs/*", "specs/**/*"]
