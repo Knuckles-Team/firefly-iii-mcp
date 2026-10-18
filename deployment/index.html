@@ -833,13 +833,12 @@
 
 
 <h1 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h1>
-<p><code>firefly-iii-mcp</code> exposes an MCP server and an optional A2A agent server. Keep all
-service endpoints, credentials, identity settings, TLS trust, model selection, and
+<p>service endpoints, credentials, identity settings, TLS trust, model selection, and
 telemetry destinations in runtime AgentConfig or the deployment secret store.</p>
 <p>Read <a href="../configuration/">Configuration, trust, and privacy</a> before enabling a network
 transport.</p>
 <h2 id="stdio">Stdio<a class="headerlink" href="#stdio" title="Permanent link">&para;</a></h2>
-<p>Use the checked-in <code>mcp_config.json</code> with GraphOS or another alias-aware launcher. It
+<p>Use the checked-in <code>mcp_config.json</code> with Arbora or another alias-aware launcher. It
 contains only <code>env://</code> references. A launcher without reference resolution must omit
 those environment entries and inject the runtime values itself.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
@@ -866,13 +865,11 @@ HTTPS MCP URL. Do not persist that deployment endpoint in this repository.</p>
 <h2 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h2>
 <p>Build the desired target, then inject runtime configuration through the orchestrator:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>mcp<span class="w"> </span>-t<span class="w"> </span>firefly-iii-mcp:mcp<span class="w"> </span>-f<span class="w"> </span>docker/Dockerfile<span class="w"> </span>.
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>agent<span class="w"> </span>-t<span class="w"> </span>firefly-iii-mcp:agent-local<span class="w"> </span>-f<span class="w"> </span>docker/Dockerfile<span class="w"> </span>.
 </span></code></pre></div>
 <p>The Compose examples use operator-overridable image variables, bind published ports
 to loopback, disable telemetry and the web UI by default, and require the agent's MCP
 URL, provider, and model at runtime.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/mcp.compose.yml<span class="w"> </span>up<span class="w"> </span>-d
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/agent.compose.yml<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
 <h2 id="a2a-agent">A2A agent<a class="headerlink" href="#a2a-agent" title="Permanent link">&para;</a></h2>
 <p>Run the agent only after supplying its MCP URL and model settings at runtime:</p>

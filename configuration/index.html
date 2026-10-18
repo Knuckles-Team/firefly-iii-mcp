@@ -882,8 +882,8 @@ Every endpoint, credential, identity-provider value, trust profile, tenant decis
 and observability destination is supplied at runtime. The package does not ship an
 instance profile or a customized Firefly III ontology.</p>
 <h2 id="configuration-boundary">Configuration boundary<a class="headerlink" href="#configuration-boundary" title="Permanent link">&para;</a></h2>
-<p>The connector reads runtime values through the Agent Utilities configuration layer.
-For a standalone process, inject values through its process environment. When GraphOS
+<p>The connector reads runtime values through the Agent Connector SDK configuration layer.
+For a standalone process, inject values through its process environment. When Arbora
 launches the connector, keep <code>mcp_config.json</code> reference-only and let the MCP fleet
 secret resolver project aliases into the child process.</p>
 <table>
@@ -973,9 +973,9 @@ tenant, ACL, classification, retention, provenance, redaction, and deletion poli
 <h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
 <p>After runtime configuration is injected, validate the shared boundary without
 printing resolved values:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>agent-utilities-doctor<span class="w"> </span>--only<span class="w"> </span>config<span class="w"> </span>transport_security<span class="w"> </span>mcp_fleet_secrets<span class="w"> </span>mcp_fleet
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>agent-connector-sdk-doctor<span class="w"> </span>--only<span class="w"> </span>config<span class="w"> </span>transport_security<span class="w"> </span>mcp_fleet_secrets<span class="w"> </span>mcp_fleet
 </span></code></pre></div>
-<p>Use <code>agent-utilities-doctor --live</code> only when bounded calls to the configured service
+<p>Use <code>agent-connector-sdk-doctor --live</code> only when bounded calls to the configured service
 and observability backends are authorized.</p>
 
 
