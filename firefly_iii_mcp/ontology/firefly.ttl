@@ -12,9 +12,8 @@
 # firefly-iii-mcp MCP tool surface (accounts_operations / transactions_operations /
 # budgets_operations / categories_operations / bills_operations / …).
 
-:Account a owl:Class ;
-    rdfs:label "Account" ;
-    rdfs:comment "A Firefly III account — asset, expense, revenue, liability or cash — that holds a running balance (accounts_operations)." .
+:Account a owl:Class .
+
 
 :Transaction a owl:Class ;
     rdfs:label "Transaction" ;
@@ -28,9 +27,8 @@
     rdfs:label "Budget Limit" ;
     rdfs:comment "A per-period spending ceiling for a Budget over a start/end date range (budgets_operations)." .
 
-:Category a owl:Class ;
-    rdfs:label "Category" ;
-    rdfs:comment "A free-form spending/income category tagging transactions for reporting (categories_operations)." .
+:Category a owl:Class .
+
 
 :Bill a owl:Class ;
     rdfs:label "Bill" ;
@@ -40,9 +38,8 @@
     rdfs:label "Piggy Bank" ;
     rdfs:comment "A savings goal attached to an asset account, accumulating toward a target amount (piggy_banks_operations)." .
 
-:Tag a owl:Class ;
-    rdfs:label "Tag" ;
-    rdfs:comment "A user-defined label applied across transactions for cross-cutting grouping (tags_operations)." .
+:Tag a owl:Class .
+
 
 :Currency a owl:Class ;
     rdfs:label "Currency" ;
@@ -178,5 +175,4 @@
     rdfs:comment """Firefly III personal-finance model — accounts, double-entry
     transactions, budgets, budget limits, categories, bills, piggy banks, tags and
     currencies, with their booking and savings relationships — federated into the
-    agent-connector-sdk knowledge-graph hub.""" ;
-    owl:imports <http://knuckles.team/kg> .
+    agent-connector-sdk knowledge-graph hub.""" .
