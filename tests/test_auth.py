@@ -98,6 +98,8 @@ def test_get_client_delegated_uses_exchanged_token():
             "agent_connector_sdk.auth.delegation.exchange_token",
             return_value=fake_access_token,
         ),
+        patch("agent_connector_sdk.http.client.create_http_client"),
+        patch("agent_connector_sdk.http.options.HttpClientOptions"),
     ):
         get_client(
             url="https://service.example.invalid",
