@@ -73,20 +73,23 @@ def _build_delegated_client(
     those fields, only for whether delegation is attempted at all (see
     :func:`_is_delegation_enabled`).
     """
-    import httpx
     from agent_connector_sdk.auth.delegation import (
         DelegationSettings,
         current_user_token,
         exchange_token,
     )
     from agent_connector_sdk.exceptions import LoginRequiredError
+    from agent_connector_sdk.http.client import create_http_client
+    from agent_connector_sdk.http.options import HttpClientOptions
 
     try:
         delegation_settings = DelegationSettings.from_settings()
         subject_token = current_user_token()
         if not subject_token:
             raise LoginRequiredError("no verified caller token to delegate")
-        with httpx.Client(timeout=30) as http_client:
+        with create_http_client(
+            HttpClientOptions(base_url=delegation_settings.token_endpoint, tls=profile)
+        ) as http_client:
             access_token = exchange_token(
                 delegation_settings,
                 subject_token=subject_token,

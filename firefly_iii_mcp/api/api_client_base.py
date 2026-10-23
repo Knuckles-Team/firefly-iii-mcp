@@ -1,7 +1,9 @@
 from typing import Any
 from urllib.parse import urlsplit
 
-import requests
+from agent_connector_sdk.auth.static import BearerAuth
+from agent_connector_sdk.http.client import create_http_client
+from agent_connector_sdk.http.options import HttpClientOptions
 from agent_connector_sdk.tls.profile import ResolvedTLSProfile
 from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
@@ -57,13 +59,13 @@ class ApiClientBase:
         self.base_url = _validate_firefly_base_url(base_url)
         _validate_firefly_token(token)
         self.tls_profile = tls_profile or resolve_tls_profile("firefly_iii")
-        self.session = self.tls_profile.configure_requests_session(requests.Session())
-        self.session.headers.update(
-            {
-                "Authorization": f"Bearer {token}",
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            }
+        self.session = create_http_client(
+            HttpClientOptions(
+                base_url=self.base_url,
+                tls=self.tls_profile,
+                auth=BearerAuth(token),
+                headers={"Accept": "application/json"},
+            )
         )
 
     def close(self) -> None:
@@ -77,8 +79,6 @@ class ApiClientBase:
         )
         if forbidden_transport_overrides:
             raise ValueError("per-request TLS policy overrides are not accepted")
-        kwargs.setdefault("timeout", 30.0)
-        kwargs.setdefault("allow_redirects", False)
         url = f"{self.base_url}/{path.lstrip('/')}"
         response = self.session.request(method, url, **kwargs)
         response.raise_for_status()

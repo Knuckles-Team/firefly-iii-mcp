@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 from firefly_iii_mcp.api import ApiClientBase
 
@@ -8,8 +9,7 @@ from firefly_iii_mcp.api import ApiClientBase
 @pytest.mark.concept("FF-OS.config.ff")
 def test_request_returns_json():
     """API client returns parsed JSON. CONCEPT:FF-OS.config.ff"""
-    profile = MagicMock()
-    profile.configure_requests_session.side_effect = lambda session: session
+    profile = resolve_tls_profile("firefly_iii")
     client = ApiClientBase(
         base_url="https://service.example.invalid",
         token="test-token",
@@ -24,8 +24,7 @@ def test_request_returns_json():
 @pytest.mark.concept("FF-OS.config.ff")
 def test_request_rejects_tls_override():
     """Callers cannot bypass the resolved TLS profile. CONCEPT:FF-OS.config.ff"""
-    profile = MagicMock()
-    profile.configure_requests_session.side_effect = lambda session: session
+    profile = resolve_tls_profile("firefly_iii")
     client = ApiClientBase(
         base_url="https://service.example.invalid",
         token="test-token",
@@ -93,8 +92,7 @@ def test_client_rejects_empty_token():
 @pytest.mark.concept("FF-OS.config.ff")
 def test_client_tolerates_endpoint_with_existing_api_suffix():
     """A base URL already ending in /api is not doubled."""
-    profile = MagicMock()
-    profile.configure_requests_session.side_effect = lambda session: session
+    profile = resolve_tls_profile("firefly_iii")
     client = ApiClientBase(
         base_url="https://service.example.invalid/api",
         token="test-token",
