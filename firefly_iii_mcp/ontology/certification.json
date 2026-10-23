@@ -1,9 +1,6 @@
 {
   "api_version": "arbora.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "269899515e3de997f2e9aa2050e9858801ae059a4791fe387ba8765509f92878",
-    "firefly_iii_mcp/connectors/mcp_source_presets.json": "78d2ff72368123f74bf8da7f2dba443ac8504aaef3cc34af9c8c23d0fd632ade",
-    "firefly_iii_mcp/connectors/tool_schema_fingerprints.json": "1a0999a03f929979e17e4dceceb259599c920ec945362efafc1bc1fb56257254",
     "firefly_iii_mcp/ontology/firefly.ttl": "5178a9710778abd1f880373c72fc316c1c960e23095169ccb76626c7ecda94a6",
     "firefly_iii_mcp/ontology/fixtures/records.json": "daedade71ebb3ef27824197ae71a9516057c2e6eeb3eea0278dde413043950ee",
     "firefly_iii_mcp/ontology/mappings/source.yaml": "bb9369147b76812d2381b8472f186d635f1bf5360e3c3890129d7b185df2cd08",
