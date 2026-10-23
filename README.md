@@ -8,7 +8,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/firefly-iii-mcp)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/firefly-iii-mcp)
 
-*Version: 2.3.1*
+*Version: 2.3.2*
 
 > **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
 > backing platform are maintained in the
