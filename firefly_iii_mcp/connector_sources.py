@@ -9,9 +9,6 @@ from __future__ import annotations
 from typing import Any
 
 from agent_connector_sdk.ingest.live_declaration import source_meta
-from agent_connector_sdk.ingest.sources import IngestSourceDeclaration, IngestSourceSpec
-
-CONNECTOR: str = "firefly-iii-mcp"
 
 SOURCES: tuple[Any, ...] = (
     source_meta(
@@ -94,149 +91,59 @@ SOURCES: tuple[Any, ...] = (
     ),
 )
 
+SCHEMA_VERSION = 2
+
+FIELD_SETS: dict[str, dict[str, str]] = {
+    "fields_1": {
+        "accountRole": "xsd:string",
+        "accountType": "xsd:string",
+        "active": "xsd:boolean",
+        "amount": "xsd:string",
+        "code": "xsd:string",
+        "currencyCode": "xsd:string",
+        "currentBalance": "xsd:string",
+        "date": "xsd:dateTime",
+        "externalToolId": "xsd:string",
+        "iban": "xsd:string",
+        "transactionType": "xsd:string",
+    },
+}
+
 SCHEMA_MAPPINGS: dict[str, Any] = {
     "Account": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Bill": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Budget": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "BudgetLimit": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Category": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Currency": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "PiggyBank": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Tag": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
     "Transaction": {
-        "fields": {
-            "accountRole": "xsd:string",
-            "accountType": "xsd:string",
-            "active": "xsd:boolean",
-            "amount": "xsd:string",
-            "code": "xsd:string",
-            "currencyCode": "xsd:string",
-            "currentBalance": "xsd:string",
-            "date": "xsd:dateTime",
-            "externalToolId": "xsd:string",
-            "iban": "xsd:string",
-            "transactionType": "xsd:string",
-        },
+        "field_sets": ["fields_1"],
         "ontology_class": None,
     },
 }
@@ -288,23 +195,3 @@ RESOURCES: tuple[dict[str, str], ...] = (
         "name": "Transaction",
     },
 )
-
-
-def declaration() -> IngestSourceDeclaration:
-    """The declaration the server assembles from this module."""
-    specs: list[IngestSourceSpec] = []
-    for item in SOURCES:
-        for entry in item["connector_sources"]:
-            body: dict[str, Any] = {
-                k: v for k, v in entry.items() if k not in ("tool", "mapping")
-            }
-            spec = {**body, "tools": (entry["tool"],)}
-            specs.append(IngestSourceSpec.model_validate(spec))
-    return IngestSourceDeclaration.model_validate(
-        {
-            "connector": CONNECTOR,
-            "sources": specs,
-            "schema_mappings": SCHEMA_MAPPINGS,
-            "resources": RESOURCES,
-        }
-    )

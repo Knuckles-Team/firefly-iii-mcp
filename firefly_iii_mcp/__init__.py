@@ -51,3 +51,15 @@ for module_name, extra_name in OPTIONAL_MODULES.items():
         globals()[f"_{extra_name.upper()}_AVAILABLE"] = False
 
 __all__.extend(["_MCP_AVAILABLE"])
+
+from agent_connector_sdk.connector import Connector
+
+from firefly_iii_mcp.api import ApiClientFireflyIii
+from firefly_iii_mcp.auth import get_client
+
+connector = Connector(
+    api=ApiClientFireflyIii,
+    get_client=get_client,
+    tools="firefly_iii_mcp.mcp",
+    instructions="Firefly III MCP MCP Server — condensed and verbose tool surfaces.",
+)
