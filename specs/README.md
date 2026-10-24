@@ -13,3 +13,4 @@ Read the existing specs first. Extend the spec that owns the behavior. Create a 
 ## Local specifications
 
 - [`CONN-FIREFLY-III-MCP-SDK-CENTRALIZATION`](sdk-centralization/spec.md) — Move HTTP transport and pagination onto the shared SDK.
+- [`CONN-FIREFLY-III-MCP-CONNECTOR-CONTENT`](connector-content/spec.md) — The connector serves its packaged content.

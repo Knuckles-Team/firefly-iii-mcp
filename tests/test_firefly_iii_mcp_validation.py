@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from firefly_iii_mcp.mcp_server import get_mcp_instance
+from agent_connector_sdk.connector import build_server
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,7 +14,7 @@ def test_mcp_instance_registration(monkeypatch):
     CONCEPT:FF-OS.config.ff
     """
     monkeypatch.setattr("sys.argv", ["firefly-iii-mcp"])
-    mcp, args, middlewares = get_mcp_instance()
+    _, mcp = build_server("firefly_iii_mcp", command_args=[])
     assert mcp is not None
 
 
