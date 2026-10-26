@@ -27,6 +27,7 @@ def test_provider_has_one_current_skill():
         "firefly-iii-account-management",
         "firefly-iii-budgeting",
         "firefly-iii-finance-operations",
+        "firefly-iii-mcp-development",
         "firefly-iii-transaction-ledger",
     ]
     assert (root / "firefly-iii-finance-operations" / "agents" / "openai.yaml").is_file()
