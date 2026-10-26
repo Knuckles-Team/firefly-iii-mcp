@@ -49,9 +49,7 @@ def _to_entity(record: dict[str, Any]) -> Entity:
 
 def _to_relationship(record: dict[str, Any]) -> Relationship:
     props = {
-        k: v
-        for k, v in record.items()
-        if k not in ("source", "target", "relationship")
+        k: v for k, v in record.items() if k not in ("source", "target", "relationship")
     }
     return Relationship(
         source=record["source"],
@@ -113,9 +111,7 @@ async def ingest_documents(
                 properties={
                     "text": d.get("text") or d.get("content"),
                     **{
-                        k: v
-                        for k, v in d.items()
-                        if k not in ("id", "text", "content")
+                        k: v for k, v in d.items() if k not in ("id", "text", "content")
                     },
                 },
             )

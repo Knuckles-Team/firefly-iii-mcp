@@ -34,3 +34,6 @@ Endpoints, credentials, private trust, and finance records are never packaged va
 - :material-graph: **[Concepts](concepts.md)** — the CONCEPT ID registry.
 
 </div>
+
+The generated [spec-delivery dashboard](spec-delivery/) records the connector's
+current delivery contracts and source status.
