@@ -23,7 +23,6 @@ def _actions_on(workflow: dict):
 
 def test_pages_publishes_spec_dashboard_and_supports_manual_refresh():
 
-
     config = json.loads((ROOT / ".config/spec-dashboard.json").read_text())
     assert config == {
         "version": 1,
