@@ -32,7 +32,9 @@ class _FakeTransport:
         self.requests: list[Any] = []
 
     async def source_status(self, connector: str, stream: str) -> Any:
-        return SimpleNamespace(accepted_checkpoint=None)
+        return SimpleNamespace(
+            connector=connector, stream=stream, accepted_checkpoint=None
+        )
 
     async def submit(self, request: Any) -> Any:
         self.requests.append(request)
@@ -217,7 +219,9 @@ async def test_ingest_rejects_retired_structural_alias_as_noop(ingest):
     # record (the retired ``type`` alias instead of canonical ``node_type``) is
     # reported back as a clean no-op rather than propagating IngestError.
     service, transport = ingest
-    assert await ingest_entities([{"id": "a", "type": "Account"}], ingest=service) is None
+    assert (
+        await ingest_entities([{"id": "a", "type": "Account"}], ingest=service) is None
+    )
     assert transport.requests == []
 
 
