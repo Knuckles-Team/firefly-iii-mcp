@@ -50,7 +50,7 @@ def test_development_skill_has_real_delivery_contract_and_actual_tests():
         assert test_path in content
         assert (ROOT / test_path).exists()
     assert "FIREFLY_III_URL" in content
-    assert "agent_connector_sdk" in content
+    assert "scion_sdk" in content
     assert "condensed/verbose" in content
 
 

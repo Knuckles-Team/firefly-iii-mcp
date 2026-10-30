@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from agent_connector_sdk.connector import build_server
+from scion_sdk.connector import build_server
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -38,4 +38,4 @@ def test_direct_graph_write_surface_is_absent():
     """Graph writes go only through the SDK's generated source-ingest client."""
     package = ROOT / "firefly_iii_mcp"
     source = (package / "kg_ingest.py").read_text(encoding="utf-8")
-    assert "agent_connector_sdk.ingest" in source
+    assert "scion_sdk.ingest" in source

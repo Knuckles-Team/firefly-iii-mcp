@@ -13,7 +13,7 @@ description: >-
 license: MIT
 tags: [firefly-iii, accounts, currencies, personal-finance, rest-api, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # Firefly III Account Management

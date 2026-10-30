@@ -10,7 +10,7 @@ license: MIT
 tags: [firefly-iii, development, connector, test, gates]
 tier: repository
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 
@@ -18,7 +18,7 @@ metadata:
 
 This repository owns the Firefly III API client, action-routed MCP tools, and
 connector content. Shared MCP contracts, transports, and source-ingest clients
-belong to `agent-connector-sdk`; admission, serving, and durable graph state
+belong to `scion-sdk`; admission, serving, and durable graph state
 belong to their owning repositories. Read `AGENTS.md` before changing code and
 keep provider credentials, customer data, private endpoints, and ledger values
 out of source, logs, prompts, and packaged skill content.
@@ -60,7 +60,7 @@ uv run --all-extras pytest tests/test_auth.py tests/test_api_wrapper.py -q
 
 The external Firefly III API is never called by local tests. Keep credentials
 out of fixtures. `FIREFLY_III_URL` and `FIREFLY_III_TOKEN` are runtime inputs;
-`agent_connector_sdk` owns their configuration, TLS, and delegation helpers.
+`scion_sdk` owns their configuration, TLS, and delegation helpers.
 Preserve HTTPS-only endpoints, resolved TLS profiles, OIDC delegation,
 fixed-token redaction, and the condensed/verbose tool surfaces when changing the
 client or tool modules.

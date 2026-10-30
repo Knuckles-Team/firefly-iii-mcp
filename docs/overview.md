@@ -1,7 +1,7 @@
 # firefly-iii-mcp — Concept Overview
 
 > **Category**: Integration | **Ecosystem Role**: MCP Server + A2A Agent
-> Built on [`agent-connector-sdk`](https://github.com/Knuckles-Team/agent-connector-sdk) — the unified AGI Harness.
+> Built on [`scion-sdk`](https://github.com/Knuckles-Team/scion-sdk) — the unified AGI Harness.
 
 ## Description
 
@@ -29,7 +29,7 @@ This project implements or inherits the following ecosystem concepts:
 
 | Concept ID | Description | Source |
 |:-----------|:------------|:-------|
-| ECO-4.1 | MCP & Universal Skills | `agent-connector-sdk` (inherited) |
-| AU-ECO.toolkit.journey-map-narrative | A2A Network & Consensus | `agent-connector-sdk` (inherited) |
+| ECO-4.1 | MCP & Universal Skills | `scion-sdk` (inherited) |
+| AU-ECO.toolkit.journey-map-narrative | A2A Network & Consensus | `scion-sdk` (inherited) |
 
-> 📖 **Full Registry**: See [`agent-connector-sdk/docs/overview.md`](https://github.com/Knuckles-Team/agent-connector-sdk/blob/main/docs/overview.md) for the complete 5-Pillar concept index.
+> 📖 **Full Registry**: See [`scion-sdk/docs/overview.md`](https://github.com/Knuckles-Team/scion-sdk/blob/main/docs/overview.md) for the complete 5-Pillar concept index.

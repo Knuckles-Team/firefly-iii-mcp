@@ -4,7 +4,7 @@ CONCEPT:AU-KG.ingest.enterprise-source-extractor. This is the record-source twin
 media-downloader's blob ingestion: the package natively pushes its personal-finance
 data into the ONE epistemic-graph knowledge graph as **typed OWL nodes**
 (``:Account``, ``:Transaction``, ``:Budget``, ``:Category``, ``:Bill``, ``:PiggyBank``,
-``:Tag``, ``:Currency``) plus links, through the ``agent_connector_sdk.ingest`` facade
+``:Tag``, ``:Currency``) plus links, through the ``scion_sdk.ingest`` facade
 — the one connector write path; there is no self-contained fallback transaction here.
 
 The MCP tool surface exposes these as best-effort tools that must never raise on an
@@ -20,7 +20,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from agent_connector_sdk.ingest import (
+from scion_sdk.ingest import (
     ChangeSet,
     Entity,
     IngestBinding,

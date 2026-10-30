@@ -5,22 +5,22 @@
 Priority:
 1. **OIDC Delegation** (RFC 8693 Token Exchange) — when ``ENABLE_DELEGATION`` is
    active, exchanges the IdP-issued user token for a downstream access token via
-   ``agent_connector_sdk.auth.delegation``.
+   ``scion_sdk.auth.delegation``.
 2. **Fixed credentials** — falls back to the ``FIREFLY_III_TOKEN`` env var.
 
 Endpoint and credential values are resolved at runtime through the shared
 AgentConfig projection. TLS trust is a mandatory-verification profile resolved by
-``agent_connector_sdk.tls.resolve``; this package never stores certificate
+``scion_sdk.tls.resolve``; this package never stores certificate
 material or a machine-specific trust path.
 """
 
 import logging
 from typing import Any
 
-from agent_connector_sdk.config import setting
-from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
-from agent_connector_sdk.tls.profile import ResolvedTLSProfile
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
+from scion_sdk.config import setting
+from scion_sdk.exceptions import AuthError, UnauthorizedError
+from scion_sdk.tls.profile import ResolvedTLSProfile
+from scion_sdk.tls.resolve import resolve_tls_profile
 
 from .api import ApiClientFireflyIii
 
@@ -50,11 +50,11 @@ def _is_delegation_enabled(config: dict[str, Any] | None) -> bool:
 
     An explicit ``config`` dict (test injection only -- no production caller
     passes one) wins outright; otherwise reads the real ``ENABLE_DELEGATION``
-    setting through ``agent_connector_sdk.auth.delegation.DelegationSettings``.
+    setting through ``scion_sdk.auth.delegation.DelegationSettings``.
     """
     if config is not None:
         return bool(config.get("enable_delegation", False))
-    from agent_connector_sdk.auth.delegation import DelegationSettings
+    from scion_sdk.auth.delegation import DelegationSettings
 
     return DelegationSettings.from_settings().enabled
 
@@ -68,19 +68,19 @@ def _build_delegated_client(
 
     Reads delegation settings (``OIDC_TOKEN_URL``/``OIDC_CLIENT_ID``/
     ``OIDC_CLIENT_SECRET_REF``/``AUDIENCE``/``DELEGATED_SCOPES``) from the
-    process settings via ``agent_connector_sdk.auth.delegation.DelegationSettings``;
-    unlike the old ``agent_connector_sdk`` helper, this has no per-call override for
+    process settings via ``scion_sdk.auth.delegation.DelegationSettings``;
+    unlike the old ``scion_sdk`` helper, this has no per-call override for
     those fields, only for whether delegation is attempted at all (see
     :func:`_is_delegation_enabled`).
     """
-    from agent_connector_sdk.auth.delegation import (
+    from scion_sdk.auth.delegation import (
         DelegationSettings,
         current_user_token,
         exchange_token,
     )
-    from agent_connector_sdk.exceptions import LoginRequiredError
-    from agent_connector_sdk.http.client import create_http_client
-    from agent_connector_sdk.http.options import HttpClientOptions
+    from scion_sdk.exceptions import LoginRequiredError
+    from scion_sdk.http.client import create_http_client
+    from scion_sdk.http.options import HttpClientOptions
 
     try:
         delegation_settings = DelegationSettings.from_settings()
