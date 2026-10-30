@@ -1,6 +1,6 @@
 # firefly-iii-mcp
 
-Firefly III MCP **API + MCP Server + A2A Agent** for the agent-connector-sdk ecosystem — a
+Firefly III MCP **API + MCP Server + A2A Agent** for the scion-sdk ecosystem — a
 typed, action-routed connector.
 
 !!! info "Official documentation"

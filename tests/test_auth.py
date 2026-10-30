@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_connector_sdk.exceptions import AuthError
+from scion_sdk.exceptions import AuthError
 
 import firefly_iii_mcp.auth as auth_module
 from firefly_iii_mcp.auth import get_client
@@ -91,15 +91,15 @@ def test_get_client_delegated_uses_exchanged_token():
     with (
         patch("firefly_iii_mcp.auth.ApiClientFireflyIii") as mock_client_cls,
         patch(
-            "agent_connector_sdk.auth.delegation.current_user_token",
+            "scion_sdk.auth.delegation.current_user_token",
             return_value="caller-token",
         ),
         patch(
-            "agent_connector_sdk.auth.delegation.exchange_token",
+            "scion_sdk.auth.delegation.exchange_token",
             return_value=fake_access_token,
         ),
-        patch("agent_connector_sdk.http.client.create_http_client"),
-        patch("agent_connector_sdk.http.options.HttpClientOptions"),
+        patch("scion_sdk.http.client.create_http_client"),
+        patch("scion_sdk.http.options.HttpClientOptions"),
     ):
         get_client(
             url="https://service.example.invalid",
@@ -121,11 +121,11 @@ def test_get_client_delegated_failure_cleans_up_profile():
     profile = MagicMock()
     with (
         patch(
-            "agent_connector_sdk.auth.delegation.current_user_token",
+            "scion_sdk.auth.delegation.current_user_token",
             return_value="caller-token",
         ),
         patch(
-            "agent_connector_sdk.auth.delegation.exchange_token",
+            "scion_sdk.auth.delegation.exchange_token",
             side_effect=RuntimeError("exchange failed"),
         ),
     ):

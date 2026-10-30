@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
+from scion_sdk.tls.resolve import resolve_tls_profile
 
 from firefly_iii_mcp.api import ApiClientBase
 

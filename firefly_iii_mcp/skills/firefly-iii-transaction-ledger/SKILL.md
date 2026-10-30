@@ -12,7 +12,7 @@ description: >-
 license: MIT
 tags: [firefly-iii, transactions, ledger, double-entry, rest-api, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # Firefly III Transaction Ledger

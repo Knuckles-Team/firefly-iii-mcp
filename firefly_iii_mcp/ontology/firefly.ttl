@@ -175,4 +175,4 @@
     rdfs:comment """Firefly III personal-finance model — accounts, double-entry
     transactions, budgets, budget limits, categories, bills, piggy banks, tags and
     currencies, with their booking and savings relationships — federated into the
-    agent-connector-sdk knowledge-graph hub.""" .
+    scion-sdk knowledge-graph hub.""" .

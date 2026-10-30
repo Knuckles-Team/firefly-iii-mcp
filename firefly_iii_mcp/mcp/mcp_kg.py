@@ -10,10 +10,10 @@ when no engine is reachable.
 
 import json
 
-from agent_connector_sdk.mcp.concurrency import run_blocking
 from fastmcp import Context, FastMCP
 from fastmcp.dependencies import Depends
 from pydantic import Field
+from scion_sdk.mcp.concurrency import run_blocking
 
 from ..auth import get_client
 
