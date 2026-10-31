@@ -484,7 +484,7 @@ server = [
 
 [[package]]
 name = "firefly-iii-mcp"
-version = "2.3.6"
+version = "2.3.7"
 source = { editable = "." }
 dependencies = [
     { name = "scion-sdk", extra = ["mcp"] },
