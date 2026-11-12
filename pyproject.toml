@@ -25,7 +25,7 @@ test = [
 firefly-iii-mcp = "scion_sdk.cli:serve"
 
 # Fleet contribution (CONCEPT:OS-5.52): advertise this package's skills and
-# system-prompt blueprints so scion-sdk>=0.11.0,<0.12' skill-installer and KG prompt
+# system-prompt blueprints so scion-sdk' skill-installer and KG prompt
 # library discover them without importing this package's agent code.
 
 # The one declared connector identity: the fleet name (SCION-CONNECTOR-CONTROL-R071).
