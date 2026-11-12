@@ -11,10 +11,9 @@ Firefly III API + MCP Server + A2A Agent — personal finance manager
 
 This project follows the standardized agent-package pattern:
 
-- **Modular Design**: split into `api/` (client mixins) and `mcp/` (action-routed
-  tool modules) for cleaner organization.
-- **Dynamic Tool Registration**: action-routed dynamic tool tags, strictly
-  lowercase, each togglable with a `*TOOL` environment flag.
+- **Modular Design**: the `api/` client mixins; the SDK derives one typed tool per
+  client method.
+- **Typed tools**: every tool is one Firefly III operation with typed arguments.
 - **A2A Agent Server**: a Pydantic-AI graph agent (console script `firefly-iii-agent`)
   that calls the MCP tool surface and exposes an AG-UI web interface.
 - **Verified Transport**: the client resolves a mandatory TLS profile from AgentConfig;
