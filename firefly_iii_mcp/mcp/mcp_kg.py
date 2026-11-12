@@ -2,7 +2,7 @@
 
 CONCEPT:AU-KG.ingest.enterprise-source-extractor. Registers ``firefly_ingest_*``
 tools that list the real Firefly III records via the API client and push them into
-the epistemic-graph knowledge graph as typed OWL nodes (``:Account`` / ``:Transaction``
+the medulla knowledge graph as typed OWL nodes (``:Account`` / ``:Transaction``
 / ``:Budget`` + links). Auto-discovered by ``register_tool_surface`` (tag ``kg``,
 gated by ``setting("KGTOOL", True)``); best-effort — returns ``{"ingested": None}``
 when no engine is reachable.
@@ -40,7 +40,7 @@ def register_kg_tools(mcp: FastMCP):
         client=Depends(get_client),
         ctx: Context | None = None,
     ) -> dict:
-        """Natively ingest Firefly III accounts into epistemic-graph as typed :Account nodes.
+        """Natively ingest Firefly III accounts into medulla as typed :Account nodes.
 
         Lists accounts via the API and pushes them (with their :Currency + :denominatedIn
         links) into the knowledge graph via the fast engine client. CONCEPT:AU-KG.ingest.enterprise-source-extractor.
@@ -63,7 +63,7 @@ def register_kg_tools(mcp: FastMCP):
         client=Depends(get_client),
         ctx: Context | None = None,
     ) -> dict:
-        """Natively ingest Firefly III transactions into epistemic-graph as typed :Transaction nodes.
+        """Natively ingest Firefly III transactions into medulla as typed :Transaction nodes.
 
         Lists transactions via the API and pushes them (with :sourceAccount /
         :destinationAccount / :inBudget / :inCategory links) into the knowledge graph.
@@ -87,7 +87,7 @@ def register_kg_tools(mcp: FastMCP):
         client=Depends(get_client),
         ctx: Context | None = None,
     ) -> dict:
-        """Natively ingest Firefly III budgets into epistemic-graph as typed :Budget nodes.
+        """Natively ingest Firefly III budgets into medulla as typed :Budget nodes.
 
         CONCEPT:AU-KG.ingest.enterprise-source-extractor.
         """

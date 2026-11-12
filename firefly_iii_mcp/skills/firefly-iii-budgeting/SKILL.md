@@ -102,4 +102,4 @@ Open a piggy bank toward a $5,000 vacation on account 14:
   and categories, and settle bills.
 - **`firefly-iii-account-management`** — the asset accounts piggy banks attach to.
 - Native KG ingestion: `firefly_ingest_budgets` pushes budgets into the
-  epistemic-graph as typed `:Budget` nodes.
+  medulla as typed `:Budget` nodes.
