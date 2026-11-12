@@ -94,7 +94,7 @@ Create a transaction only after the execution-safety checks:
 
 ## Use governed graph synchronization
 
-Do not write Firefly III records directly into epistemic-graph. This provider supplies
+Do not write Firefly III records directly into medulla. This provider supplies
 neutral source presets and an ontology as human-reviewed compiler inputs; it does not
 ship live tool-schema fingerprints or a signed capability bundle. Use the Arbora
 source-sync path only after the central compiler has generated the current schema-v2

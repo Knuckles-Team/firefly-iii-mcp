@@ -97,5 +97,5 @@ Get one transaction group by id:
 - **`firefly-iii-account-management`** — the accounts each split references.
 - **`firefly-iii-budgeting`** — the budgets/categories a split books against.
 - Native KG ingestion: `firefly_ingest_transactions` pushes transactions into the
-  epistemic-graph as typed `:Transaction` nodes with `:sourceAccount` /
+  medulla as typed `:Transaction` nodes with `:sourceAccount` /
   `:destinationAccount` / `:inBudget` / `:inCategory` links.

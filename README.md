@@ -98,7 +98,7 @@ Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `firefly-iii-mcp[mcp]` | MCP server (`scion-sdk`) plus the mandatory full epistemic-graph base runtime | The operator run the **MCP server** |
+| `firefly-iii-mcp[mcp]` | MCP server (`scion-sdk`) plus the mandatory full medulla base runtime | The operator run the **MCP server** |
 | `firefly-iii-mcp[all]` | MCP + test tooling | Development |
 
 ### Install with `uvx` (no install — run on demand)
@@ -123,7 +123,7 @@ One multi-stage `docker/Dockerfile` builds the MCP-only image (`--target mcp`):
 
 | Image tag | Build target | Contents | Entrypoint |
 |-----------|--------------|----------|------------|
-| `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full epistemic-graph base dependency | `firefly-iii-mcp` |
+| `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full medulla base dependency | `firefly-iii-mcp` |
 
 ```bash
 docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
@@ -131,13 +131,13 @@ docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
 
 agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
-### Knowledge-graph database (`epistemic-graph`)
+### Knowledge-graph database (`medulla`)
 
-Every install receives `epistemic-graph[full]` through the current Scion SDK base
+Every install receives `medulla[full]` through the current Scion SDK base
 dependency. The connector does not open an insecure engine listener or silently select a
 machine-specific engine. Deployment topology and identity are resolved by AgentConfig. For a
 shared production authority, follow the
-[epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
+[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
 
 ### Console scripts
 
@@ -190,7 +190,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 > **Install the MCP-only `[mcp]` extra.** All MCP examples below install
 > `firefly-iii-mcp[mcp]` — the MCP-server extra that adds the FastMCP / FastAPI
 > tooling (`scion-sdk`) to the shared base. The integrated Pydantic-AI
-> and UI runtime is separate, while full epistemic-graph remains mandatory.
+> and UI runtime is separate, while full medulla remains mandatory.
 > (see [Installation](#installation)).
 
 ### MCP Configuration Examples
@@ -199,7 +199,7 @@ Tools are action-routed — pass an `action` plus a JSON `params_json` string:
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `firefly-iii-mcp[mcp]` to add
 > FastMCP / FastAPI through `scion-sdk`; the required Scion SDK core
-> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
+> still carries `medulla[full]`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)

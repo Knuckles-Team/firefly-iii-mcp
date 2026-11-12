@@ -99,5 +99,5 @@ Read an account's recent transactions:
   these accounts.
 - **`firefly-iii-budgeting`** — envelopes, bills and savings goals.
 - Native KG ingestion: the `firefly_ingest_accounts` tool pushes accounts into the
-  epistemic-graph as typed `:Account` nodes (with `:Currency` + `:denominatedIn`
+  medulla as typed `:Account` nodes (with `:Currency` + `:denominatedIn`
   links). Use it for graph population, not day-to-day account CRUD.
