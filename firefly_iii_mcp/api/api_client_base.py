@@ -2,7 +2,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 from scion_sdk.auth.static import BearerAuth
-from scion_sdk.http.client import create_http_client
+from scion_sdk.http.client import build_http_client
 from scion_sdk.http.options import HttpClientOptions
 from scion_sdk.tls.profile import ResolvedTLSProfile
 from scion_sdk.tls.resolve import resolve_tls_profile
@@ -59,7 +59,7 @@ class ApiClientBase:
         self.base_url = _validate_firefly_base_url(base_url)
         _validate_firefly_token(token)
         self.tls_profile = tls_profile or resolve_tls_profile("firefly_iii")
-        self.session = create_http_client(
+        self.session = build_http_client(
             HttpClientOptions(
                 base_url=self.base_url,
                 tls=self.tls_profile,

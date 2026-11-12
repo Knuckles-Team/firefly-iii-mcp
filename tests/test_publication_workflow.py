@@ -51,7 +51,7 @@ def test_development_skill_has_real_delivery_contract_and_actual_tests():
         assert (ROOT / test_path).exists()
     assert "FIREFLY_III_URL" in content
     assert "scion_sdk" in content
-    assert "condensed/verbose" in content
+    assert "typed tool surface" in content
 
 
 def test_packaged_skill_and_version_lock_are_coherent():
