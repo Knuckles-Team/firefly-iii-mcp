@@ -33,7 +33,7 @@ Prefer these tools over raw HTTP; they return JSON:API resources
 - Creating the accounts money flows between → `firefly-iii-account-management`.
 - Booking/editing the actual transactions that consume a budget →
   `firefly-iii-transaction-ledger` (reference the `budget_id`/`category_id` there).
-- Bulk-loading budgets into the knowledge graph → `firefly_ingest_budgets` (Related).
+- Bulk-loading budgets into the knowledge graph → governed source sync (Related).
 
 ## Prerequisites & environment
 Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
@@ -44,18 +44,15 @@ Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
 | `FIREFLY_III_TOKEN` | ✅ | Personal Access Token (Bearer) |
 | `FIREFLY_III_SSL_VERIFY` | optional | TLS verification toggle |
 
-`MCP_TOOL_MODE` (`condensed`|`verbose`|`both`) selects the condensed surface (below)
-vs. the 1:1 verbose tools.
 
-## Tools & actions
-Prefer the **condensed** tools; each takes `action` + a `params_json` **JSON string**.
+## Tools
+One typed tool per operation, each taking the path argument `id`, a `data` body object and/or a `params` query object.
 
-| Condensed tool | Actions |
-|----------------|---------|
-| `budgets_operations` | `list_budget`, `get_budget`, `store_budget`, `update_budget`, `delete_budget`, `list_budget_limit`, `store_budget_limit`, `get_budget_limit`, `list_transaction_by_budget`, `list_transaction_without_budget` |
-| `categories_operations` | `list_category`, `get_category`, `store_category`, `update_category`, `delete_category`, `list_transaction_by_category` |
-| `bills_operations` | `list_bill`, `get_bill`, `store_bill`, `update_bill`, `delete_bill`, `list_transaction_by_bill` |
-| `piggy_banks_operations` | `list_piggy_bank`, `get_piggy_bank`, `store_piggy_bank`, `update_piggy_bank`, `delete_piggy_bank`, `list_event_by_piggy_bank` |
+- Budgets and limits: `firefly_iii_delete_budget`, `firefly_iii_delete_budget_limit`, `firefly_iii_get_available_budget`, `firefly_iii_get_budget`, `firefly_iii_get_budget_limit`, `firefly_iii_list_available_budget_by_currency`, `firefly_iii_list_available_budgets`, `firefly_iii_list_budget`, `firefly_iii_list_budget_limit`, `firefly_iii_list_budget_limit_by_budget`, `firefly_iii_list_budget_limit_by_currency`, `firefly_iii_store_budget`, `firefly_iii_store_budget_limit`, `firefly_iii_update_budget`, `firefly_iii_update_budget_limit`.
+- Bills: `firefly_iii_delete_bill`, `firefly_iii_get_bill`, `firefly_iii_list_bill`, `firefly_iii_list_bill_by_currency`, `firefly_iii_list_bill_by_object_group`, `firefly_iii_store_bill`, `firefly_iii_update_bill`.
+- Categories: `firefly_iii_delete_category`, `firefly_iii_get_category`, `firefly_iii_list_category`, `firefly_iii_store_category`, `firefly_iii_update_category`.
+- Tags: `firefly_iii_delete_tag`, `firefly_iii_get_tag`, `firefly_iii_list_tag`, `firefly_iii_store_tag`, `firefly_iii_update_tag`.
+- Savings goals: `firefly_iii_delete_piggy_bank`, `firefly_iii_get_piggy_bank`, `firefly_iii_list_event_by_piggy_bank`, `firefly_iii_list_piggy_bank`, `firefly_iii_list_piggy_bank_by_account`, `firefly_iii_list_piggy_bank_by_object_group`, `firefly_iii_store_piggy_bank`, `firefly_iii_update_piggy_bank`.
 
 ### Key parameters
 - `id` — required for `get_*`/`update_*`/`delete_*` and the `*_by_*` reads; budget
@@ -63,7 +60,7 @@ Prefer the **condensed** tools; each takes `action` + a `params_json` **JSON str
 - `data` — field→value body for the `store_*`/`update_*` actions.
 - `params` — query dict (`start`, `end`, `page`, `limit`).
 
-## Recipes (`params_json`)
+## Recipes (tool arguments)
 Create a "Groceries" budget:
 ```json
 {"data":{"name":"Groceries","active":true}}
@@ -86,7 +83,6 @@ Open a piggy bank toward a $5,000 vacation on account 14:
 ```
 
 ## Gotchas
-- `params_json` is a **string** of JSON — serialize it.
 - Money fields (`amount`, `amount_min`, `target_amount`) are **strings**.
 - A **budget** is the envelope; the **budget limit** is the per-period cap — creating
   a budget alone does not cap spending, you must `store_budget_limit` with a
@@ -101,5 +97,4 @@ Open a piggy bank toward a $5,000 vacation on account 14:
 - **`firefly-iii-transaction-ledger`** — book the transactions that consume budgets
   and categories, and settle bills.
 - **`firefly-iii-account-management`** — the asset accounts piggy banks attach to.
-- Native KG ingestion: `firefly_ingest_budgets` pushes budgets into the
-  epistemic-graph as typed `:Budget` nodes.
+- Graph population goes through the governed source-sync path described in `firefly-iii-finance-operations`.

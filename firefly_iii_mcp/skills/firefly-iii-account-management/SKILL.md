@@ -33,7 +33,7 @@ and return JSON:API account resources (`{"id":..,"attributes":{..}}`).
 - Budgets, budget limits, bills, categories, piggy banks →
   `firefly-iii-budgeting`.
 - Pushing accounts into the knowledge graph as typed nodes → the native
-  `firefly_ingest_accounts` tool (see Related), not the CRUD surface below.
+  governed source sync (see Related), not the CRUD surface below.
 
 ## Prerequisites & environment
 Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
@@ -45,19 +45,13 @@ Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
 | `FIREFLY_III_SSL_VERIFY` | optional | TLS verification toggle (default true) |
 
 OIDC token-exchange delegation is used automatically when `ENABLE_DELEGATION` is
-active; otherwise the fixed `FIREFLY_III_TOKEN` is used. `MCP_TOOL_MODE`
-(`condensed`|`verbose`|`both`) selects the condensed surface (used below) vs. the
-1:1 verbose tools.
+active; otherwise the fixed `FIREFLY_III_TOKEN` is used.
 
-## Tools & actions
-Prefer the **condensed** tool; it takes `action` + a `params_json` **JSON string**
-whose keys are passed straight to the client method (path params, a `data` body dict,
-and a `params` query dict).
+## Tools
+One typed tool per operation, each taking the path argument `id` (or `code` for currencies), a `data` body object and/or a `params` query object.
 
-| Condensed tool | Actions |
-|----------------|---------|
-| `accounts_operations` | `list_account`, `get_account`, `store_account`, `update_account`, `delete_account`, `list_transaction_by_account`, `list_attachment_by_account`, `list_piggy_bank_by_account` |
-| `currencies_operations` | `list_currency`, `get_currency`, `store_currency`, … |
+- Accounts: `firefly_iii_delete_account`, `firefly_iii_get_account`, `firefly_iii_list_account`, `firefly_iii_list_account_by_currency`, `firefly_iii_store_account`, `firefly_iii_update_account`.
+- Currencies and exchange rates: `firefly_iii_delete_currency`, `firefly_iii_delete_specific_currency_exchange_rate`, `firefly_iii_delete_specific_currency_exchange_rate_on_date`, `firefly_iii_delete_specific_currency_exchange_rates`, `firefly_iii_disable_currency`, `firefly_iii_enable_currency`, `firefly_iii_get_currency`, `firefly_iii_get_primary_currency`, `firefly_iii_list_currency`, `firefly_iii_list_currency_exchange_rates`, `firefly_iii_list_specific_currency_exchange_rate`, `firefly_iii_list_specific_currency_exchange_rate_on_date`, `firefly_iii_list_specific_currency_exchange_rates`, `firefly_iii_primary_currency`, `firefly_iii_store_currency`, `firefly_iii_store_currency_exchange_rate`, `firefly_iii_store_currency_exchange_rates_by_date`, `firefly_iii_store_currency_exchange_rates_by_pair`, `firefly_iii_update_currency`, `firefly_iii_update_currency_exchange_rate`, `firefly_iii_update_currency_exchange_rate_by_date`.
 
 ### Key parameters
 - `id` — required for `get_account`, `update_account`, `delete_account`, and the
@@ -66,7 +60,7 @@ and a `params` query dict).
   (`name`, `type`, `account_role`, `currency_code`, `opening_balance`, `iban`, …).
 - `params` — query dict (`type`, `page`, `limit`, `start`, `end`).
 
-## Recipes (`params_json`)
+## Recipes (tool arguments)
 List active asset accounts:
 ```json
 {"params":{"type":"asset"}}
@@ -85,7 +79,6 @@ Read an account's recent transactions:
 ```
 
 ## Gotchas
-- `params_json` is a **string** of JSON, not an object — serialize it.
 - Firefly returns **JSON:API** — the real fields live under `attributes`, and money
   values (`current_balance`, `opening_balance`) are **strings**, not numbers.
 - `type` must be a valid Firefly account type (`asset`, `expense`, `revenue`,
@@ -98,6 +91,4 @@ Read an account's recent transactions:
 - **`firefly-iii-transaction-ledger`** — book and manage the transactions that hit
   these accounts.
 - **`firefly-iii-budgeting`** — envelopes, bills and savings goals.
-- Native KG ingestion: the `firefly_ingest_accounts` tool pushes accounts into the
-  epistemic-graph as typed `:Account` nodes (with `:Currency` + `:denominatedIn`
-  links). Use it for graph population, not day-to-day account CRUD.
+- Graph population goes through the governed source-sync path described in `firefly-iii-finance-operations`, not through account CRUD.

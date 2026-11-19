@@ -60,6 +60,5 @@ from firefly_iii_mcp.auth import get_client
 connector = Connector(
     api=ApiClientFireflyIii,
     get_client=get_client,
-    tools="firefly_iii_mcp.mcp",
     instructions="Firefly III MCP MCP Server — condensed and verbose tool surfaces.",
 )

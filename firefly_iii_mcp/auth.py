@@ -79,7 +79,7 @@ def _build_delegated_client(
         exchange_token,
     )
     from scion_sdk.exceptions import LoginRequiredError
-    from scion_sdk.http.client import create_http_client
+    from scion_sdk.http.client import build_http_client
     from scion_sdk.http.options import HttpClientOptions
 
     try:
@@ -87,7 +87,7 @@ def _build_delegated_client(
         subject_token = current_user_token()
         if not subject_token:
             raise LoginRequiredError("no verified caller token to delegate")
-        with create_http_client(
+        with build_http_client(
             HttpClientOptions(base_url=delegation_settings.token_endpoint, tls=profile)
         ) as http_client:
             access_token = exchange_token(

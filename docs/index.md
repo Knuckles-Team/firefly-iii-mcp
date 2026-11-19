@@ -1,7 +1,7 @@
 # firefly-iii-mcp
 
 Firefly III MCP **API + MCP Server + A2A Agent** for the scion-sdk ecosystem — a
-typed, action-routed connector.
+typed connector.
 
 !!! info "Official documentation"
     This site is the canonical reference for `firefly-iii-mcp`, maintained alongside
@@ -30,7 +30,7 @@ Endpoints, credentials, private trust, and finance records are never packaged va
 - :material-server-network: **[Deployment](deployment.md)** — run the MCP and agent servers with runtime-injected configuration.
 - :material-console: **[Usage](usage.md)** — the MCP tools, the Python client, and the CLI.
 - :material-database-cog: **[Backing Platform](platform.md)** — connect an operator-managed Firefly III service.
-- :material-sitemap: **[Overview](overview.md)** — the action-routed tool surface and architecture.
+- :material-sitemap: **[Overview](overview.md)** — the typed tool surface and architecture.
 - :material-graph: **[Concepts](concepts.md)** — the CONCEPT ID registry.
 
 </div>

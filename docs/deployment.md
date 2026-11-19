@@ -19,7 +19,6 @@ those environment entries and inject the runtime values itself.
       "command": "uvx",
       "args": ["--from", "firefly-iii-mcp[mcp]", "firefly-iii-mcp"],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
         "FIREFLY_III_URL": "env://FIREFLY_III_URL",
         "FIREFLY_III_TOKEN": "env://FIREFLY_III_TOKEN"
       }

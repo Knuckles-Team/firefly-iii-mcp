@@ -98,7 +98,7 @@ def test_get_client_delegated_uses_exchanged_token():
             "scion_sdk.auth.delegation.exchange_token",
             return_value=fake_access_token,
         ),
-        patch("scion_sdk.http.client.create_http_client"),
+        patch("scion_sdk.http.client.build_http_client"),
         patch("scion_sdk.http.options.HttpClientOptions"),
     ):
         get_client(

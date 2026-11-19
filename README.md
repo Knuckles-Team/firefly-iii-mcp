@@ -51,46 +51,28 @@ This repository is actively maintained - Contributions are welcome!
 
 ## Available MCP Tools
 
-Each tool is **action-routed**: pass an `action` and a JSON `params_json` payload. Tool
-domains can be toggled on or off with the listed environment variable. The table below is
-**auto-generated from the live server** by the `mcp-readme-table` pre-commit hook
-(`python -m scion_sdk.mcp.readme_tools`) — do not edit it by hand.
+One typed tool per Firefly III operation, named `firefly_iii_<operation>` (230 tools). Each takes the path argument `id` (or `code`), a `data` body object and/or a `params` query object. No tool takes an `action`.
 
-<!-- MCP-TOOLS-TABLE:START -->
+| Task | Tools |
+|------|-------|
+| administer users and groups | `firefly_iii_delete_object_group`, `firefly_iii_delete_user`, `firefly_iii_get_current_user`, `firefly_iii_get_object_group`, `firefly_iii_get_user`, `firefly_iii_get_user_group`, `firefly_iii_list_object_groups`, `firefly_iii_list_user`, `firefly_iii_list_user_groups`, `firefly_iii_store_user`, `firefly_iii_update_object_group`, `firefly_iii_update_user`, `firefly_iii_update_user_group` |
+| analyse spending and income | `firefly_iii_get_basic_summary`, `firefly_iii_get_chart_account_overview`, `firefly_iii_get_chart_balance`, `firefly_iii_get_chart_budget_overview`, `firefly_iii_get_chart_category_overview`, `firefly_iii_insight_expense_asset`, `firefly_iii_insight_expense_bill`, `firefly_iii_insight_expense_budget`, `firefly_iii_insight_expense_category`, `firefly_iii_insight_expense_expense`, `firefly_iii_insight_expense_no_bill`, `firefly_iii_insight_expense_no_budget`, `firefly_iii_insight_expense_no_category`, `firefly_iii_insight_expense_no_tag`, `firefly_iii_insight_expense_tag`, `firefly_iii_insight_expense_total`, `firefly_iii_insight_income_asset`, `firefly_iii_insight_income_category`, `firefly_iii_insight_income_no_category`, `firefly_iii_insight_income_no_tag`, `firefly_iii_insight_income_revenue`, `firefly_iii_insight_income_tag`, `firefly_iii_insight_income_total`, `firefly_iii_insight_transfer_category`, `firefly_iii_insight_transfer_no_category`, `firefly_iii_insight_transfer_no_tag`, `firefly_iii_insight_transfer_tag`, `firefly_iii_insight_transfer_total`, `firefly_iii_insight_transfers` |
+| automate with rules | `firefly_iii_delete_rule`, `firefly_iii_delete_rule_group`, `firefly_iii_fire_rule`, `firefly_iii_fire_rule_group`, `firefly_iii_get_rule`, `firefly_iii_get_rule_group`, `firefly_iii_list_rule`, `firefly_iii_list_rule_by_bill`, `firefly_iii_list_rule_by_currency`, `firefly_iii_list_rule_by_group`, `firefly_iii_list_rule_group`, `firefly_iii_store_rule`, `firefly_iii_store_rule_group`, `firefly_iii_test_rule`, `firefly_iii_test_rule_group`, `firefly_iii_update_rule`, `firefly_iii_update_rule_group` |
+| configure instance | `firefly_iii_get_about`, `firefly_iii_get_configuration`, `firefly_iii_get_cron`, `firefly_iii_get_preference`, `firefly_iii_get_single_configuration`, `firefly_iii_list_preference`, `firefly_iii_set_configuration`, `firefly_iii_store_preference`, `firefly_iii_update_preference` |
+| export and purge data | `firefly_iii_destroy_data`, `firefly_iii_export_accounts`, `firefly_iii_export_bills`, `firefly_iii_export_budgets`, `firefly_iii_export_categories`, `firefly_iii_export_piggies`, `firefly_iii_export_recurring`, `firefly_iii_export_rules`, `firefly_iii_export_tags`, `firefly_iii_export_transactions`, `firefly_iii_purge_data` |
+| find records | `firefly_iii_get_accounts_ac`, `firefly_iii_get_bills_ac`, `firefly_iii_get_budgets_ac`, `firefly_iii_get_categories_ac`, `firefly_iii_get_currencies_ac`, `firefly_iii_get_currencies_code_ac`, `firefly_iii_get_object_groups_ac`, `firefly_iii_get_piggies_ac`, `firefly_iii_get_piggies_balance_ac`, `firefly_iii_get_recurring_ac`, `firefly_iii_get_rule_groups_ac`, `firefly_iii_get_rules_ac`, `firefly_iii_get_subscriptions_ac`, `firefly_iii_get_tag_ac`, `firefly_iii_get_transaction_types_ac`, `firefly_iii_get_transactions_ac`, `firefly_iii_get_transactions_idac`, `firefly_iii_search_accounts`, `firefly_iii_search_transactions` |
+| manage accounts | `firefly_iii_delete_account`, `firefly_iii_get_account`, `firefly_iii_list_account`, `firefly_iii_list_account_by_currency`, `firefly_iii_store_account`, `firefly_iii_update_account` |
+| manage attachments | `firefly_iii_delete_attachment`, `firefly_iii_download_attachment`, `firefly_iii_get_attachment`, `firefly_iii_list_attachment`, `firefly_iii_list_attachment_by_account`, `firefly_iii_list_attachment_by_bill`, `firefly_iii_list_attachment_by_budget`, `firefly_iii_list_attachment_by_category`, `firefly_iii_list_attachment_by_piggy_bank`, `firefly_iii_list_attachment_by_tag`, `firefly_iii_list_attachment_by_transaction`, `firefly_iii_store_attachment`, `firefly_iii_update_attachment`, `firefly_iii_upload_attachment` |
+| manage bills | `firefly_iii_delete_bill`, `firefly_iii_get_bill`, `firefly_iii_list_bill`, `firefly_iii_list_bill_by_currency`, `firefly_iii_list_bill_by_object_group`, `firefly_iii_store_bill`, `firefly_iii_update_bill` |
+| manage budgets | `firefly_iii_delete_budget`, `firefly_iii_delete_budget_limit`, `firefly_iii_get_available_budget`, `firefly_iii_get_budget`, `firefly_iii_get_budget_limit`, `firefly_iii_list_available_budget_by_currency`, `firefly_iii_list_available_budgets`, `firefly_iii_list_budget`, `firefly_iii_list_budget_limit`, `firefly_iii_list_budget_limit_by_budget`, `firefly_iii_list_budget_limit_by_currency`, `firefly_iii_store_budget`, `firefly_iii_store_budget_limit`, `firefly_iii_update_budget`, `firefly_iii_update_budget_limit` |
+| manage categories | `firefly_iii_delete_category`, `firefly_iii_get_category`, `firefly_iii_list_category`, `firefly_iii_store_category`, `firefly_iii_update_category` |
+| manage currencies | `firefly_iii_delete_currency`, `firefly_iii_delete_specific_currency_exchange_rate`, `firefly_iii_delete_specific_currency_exchange_rate_on_date`, `firefly_iii_delete_specific_currency_exchange_rates`, `firefly_iii_disable_currency`, `firefly_iii_enable_currency`, `firefly_iii_get_currency`, `firefly_iii_get_primary_currency`, `firefly_iii_list_currency`, `firefly_iii_list_currency_exchange_rates`, `firefly_iii_list_specific_currency_exchange_rate`, `firefly_iii_list_specific_currency_exchange_rate_on_date`, `firefly_iii_list_specific_currency_exchange_rates`, `firefly_iii_primary_currency`, `firefly_iii_store_currency`, `firefly_iii_store_currency_exchange_rate`, `firefly_iii_store_currency_exchange_rates_by_date`, `firefly_iii_store_currency_exchange_rates_by_pair`, `firefly_iii_update_currency`, `firefly_iii_update_currency_exchange_rate`, `firefly_iii_update_currency_exchange_rate_by_date` |
+| manage recurring transactions | `firefly_iii_delete_recurrence`, `firefly_iii_get_recurrence`, `firefly_iii_list_recurrence`, `firefly_iii_list_recurrence_by_currency`, `firefly_iii_list_transaction_by_recurrence`, `firefly_iii_store_recurrence`, `firefly_iii_trigger_recurrence_recurrence`, `firefly_iii_update_recurrence` |
+| manage savings goals | `firefly_iii_delete_piggy_bank`, `firefly_iii_get_piggy_bank`, `firefly_iii_list_event_by_piggy_bank`, `firefly_iii_list_piggy_bank`, `firefly_iii_list_piggy_bank_by_account`, `firefly_iii_list_piggy_bank_by_object_group`, `firefly_iii_store_piggy_bank`, `firefly_iii_update_piggy_bank` |
+| manage tags | `firefly_iii_delete_tag`, `firefly_iii_get_tag`, `firefly_iii_list_tag`, `firefly_iii_store_tag`, `firefly_iii_update_tag` |
+| manage webhooks | `firefly_iii_delete_webhook`, `firefly_iii_delete_webhook_message`, `firefly_iii_delete_webhook_message_attempt`, `firefly_iii_get_single_webhook_message`, `firefly_iii_get_single_webhook_message_attempt`, `firefly_iii_get_webhook`, `firefly_iii_get_webhook_message_attempts`, `firefly_iii_get_webhook_messages`, `firefly_iii_list_webhook`, `firefly_iii_store_webhook`, `firefly_iii_submit_webhook`, `firefly_iii_trigger_transaction_webhook`, `firefly_iii_update_webhook` |
+| record transactions | `firefly_iii_bulk_update_transactions`, `firefly_iii_delete_link_type`, `firefly_iii_delete_transaction`, `firefly_iii_delete_transaction_journal`, `firefly_iii_delete_transaction_link`, `firefly_iii_finish_batch`, `firefly_iii_get_link_type`, `firefly_iii_get_transaction`, `firefly_iii_get_transaction_by_journal`, `firefly_iii_get_transaction_link`, `firefly_iii_list_event_by_transaction`, `firefly_iii_list_link_type`, `firefly_iii_list_links_by_journal`, `firefly_iii_list_transaction`, `firefly_iii_list_transaction_by_account`, `firefly_iii_list_transaction_by_bill`, `firefly_iii_list_transaction_by_budget`, `firefly_iii_list_transaction_by_budget_limit`, `firefly_iii_list_transaction_by_category`, `firefly_iii_list_transaction_by_currency`, `firefly_iii_list_transaction_by_link_type`, `firefly_iii_list_transaction_by_tag`, `firefly_iii_list_transaction_link`, `firefly_iii_list_transaction_without_budget`, `firefly_iii_store_link_type`, `firefly_iii_store_transaction`, `firefly_iii_store_transaction_link`, `firefly_iii_update_link_type`, `firefly_iii_update_transaction`, `firefly_iii_update_transaction_link` |
 
-| MCP Tool | Toggle Env Var | Description |
-|----------|----------------|-------------|
-| `about_operations` | `ABOUTTOOL` | Manage Firefly III `about` operations. CONCEPT:FF-OS.config.ff |
-| `accounts_operations` | `ACCOUNTSTOOL` | Manage Firefly III `accounts` operations. CONCEPT:FF-OS.config.ff |
-| `attachments_operations` | `ATTACHMENTSTOOL` | Manage Firefly III `attachments` operations. CONCEPT:FF-OS.config.ff |
-| `autocomplete_operations` | `AUTOCOMPLETETOOL` | Manage Firefly III `autocomplete` operations. CONCEPT:FF-OS.config.ff |
-| `available_budgets_operations` | `AVAILABLE_BUDGETSTOOL` | Manage Firefly III `available_budgets` operations. CONCEPT:FF-OS.config.ff |
-| `bills_operations` | `BILLSTOOL` | Manage Firefly III `bills` operations. CONCEPT:FF-OS.config.ff |
-| `budgets_operations` | `BUDGETSTOOL` | Manage Firefly III `budgets` operations. CONCEPT:FF-OS.config.ff |
-| `categories_operations` | `CATEGORIESTOOL` | Manage Firefly III `categories` operations. CONCEPT:FF-OS.config.ff |
-| `charts_operations` | `CHARTSTOOL` | Manage Firefly III `charts` operations. CONCEPT:FF-OS.config.ff |
-| `configuration_operations` | `CONFIGURATIONTOOL` | Manage Firefly III `configuration` operations. CONCEPT:FF-OS.config.ff |
-| `currencies_operations` | `CURRENCIESTOOL` | Manage Firefly III `currencies` operations. CONCEPT:FF-OS.config.ff |
-| `currency_exchange_rates_operations` | `CURRENCY_EXCHANGE_RATESTOOL` | Manage Firefly III `currency_exchange_rates` operations. CONCEPT:FF-OS.config.ff |
-| `data_operations` | `DATATOOL` | Manage Firefly III `data` operations. CONCEPT:FF-OS.config.ff |
-| `insight_operations` | `INSIGHTTOOL` | Manage Firefly III `insight` operations. CONCEPT:FF-OS.config.ff |
-| `links_operations` | `LINKSTOOL` | Manage Firefly III `links` operations. CONCEPT:FF-OS.config.ff |
-| `object_groups_operations` | `OBJECT_GROUPSTOOL` | Manage Firefly III `object_groups` operations. CONCEPT:FF-OS.config.ff |
-| `piggy_banks_operations` | `PIGGY_BANKSTOOL` | Manage Firefly III `piggy_banks` operations. CONCEPT:FF-OS.config.ff |
-| `preferences_operations` | `PREFERENCESTOOL` | Manage Firefly III `preferences` operations. CONCEPT:FF-OS.config.ff |
-| `recurrences_operations` | `RECURRENCESTOOL` | Manage Firefly III `recurrences` operations. CONCEPT:FF-OS.config.ff |
-| `rule_groups_operations` | `RULE_GROUPSTOOL` | Manage Firefly III `rule_groups` operations. CONCEPT:FF-OS.config.ff |
-| `rules_operations` | `RULESTOOL` | Manage Firefly III `rules` operations. CONCEPT:FF-OS.config.ff |
-| `search_operations` | `SEARCHTOOL` | Manage Firefly III `search` operations. CONCEPT:FF-OS.config.ff |
-| `summary_operations` | `SUMMARYTOOL` | Manage Firefly III `summary` operations. CONCEPT:FF-OS.config.ff |
-| `tags_operations` | `TAGSTOOL` | Manage Firefly III `tags` operations. CONCEPT:FF-OS.config.ff |
-| `transactions_operations` | `TRANSACTIONSTOOL` | Manage Firefly III `transactions` operations. CONCEPT:FF-OS.config.ff |
-| `user_groups_operations` | `USER_GROUPSTOOL` | Manage Firefly III `user_groups` operations. CONCEPT:FF-OS.config.ff |
-| `users_operations` | `USERSTOOL` | Manage Firefly III `users` operations. CONCEPT:FF-OS.config.ff |
-| `webhooks_operations` | `WEBHOOKSTOOL` | Manage Firefly III `webhooks` operations. CONCEPT:FF-OS.config.ff |
-
-_28 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
-<!-- MCP-TOOLS-TABLE:END -->
 
 ## Installation
 
