@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The unregistered action-routed tool modules (`*_operations`, `firefly_ingest_*`). Every operation is a typed per-operation tool (`firefly_iii_list_account`, `firefly_iii_store_transaction`, ...); graph population goes through the governed source-sync path.
 
 ### Changed
-- Connector surface: tool-use contracts for all 230 tools, links, data locations, three business roles, an operator prompt and three business-role prompts, ontology classes rooted in core classes, skills rewritten for the typed tools.
-- Require `scion-sdk>=0.9.0,<1.0.0` and use its `build_http_client`.
+- Connector surface: tool-use contracts for all 230 tools, links, data locations, three business roles, an operator prompt and three business-role prompts, ontology moved to the connector namespace with every class rooted in a core class, skills rewritten for the typed tools.
+- Require `scion-sdk>=0.11.2,<0.12` and use its `build_http_client`.
 
 ## [2.3.7] - 2026-10-30
 

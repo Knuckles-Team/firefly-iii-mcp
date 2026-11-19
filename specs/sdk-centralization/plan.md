@@ -4,7 +4,7 @@ Governing spec: [spec.md](spec.md). Rows: [requirements.md](requirements.md).
 
 ## Summary
 
-The connector reuses `scion_sdk.http.create_http_client` for all vendor requests. The SDK retry policy replaces connector-local retry handling.
+The connector reuses `scion_sdk.http.client.build_http_client` for all vendor requests. The SDK retry policy replaces connector-local retry handling.
 
 ## Technical Context
 
@@ -69,7 +69,7 @@ The repository pre-commit hooks apply: `ruff-format`, `connector-standard`, `sec
 
 ## Production caller chain
 
-1. `CONN-FIREFLY-III-MCP-SDK-CENTRALIZATION-R001`: any Firefly tool (`firefly_iii_mcp/mcp/mcp_*.py`) -> `get_client` (`firefly_iii_mcp/auth.py` line 141) -> `ApiClientBase` (`firefly_iii_mcp/api/api_client_base.py` line 50) -> `create_http_client` (line 62) from `scion_sdk.http.client`.
+1. `CONN-FIREFLY-III-MCP-SDK-CENTRALIZATION-R001`: any typed Firefly tool the SDK builds from `ApiClientFireflyIii` -> `get_client` (`firefly_iii_mcp/auth.py` line 141) -> `ApiClientBase` (`firefly_iii_mcp/api/api_client_base.py` line 50) -> `build_http_client` (line 62) from `scion_sdk.http.client`.
 
 ## Cross-repo seams
 

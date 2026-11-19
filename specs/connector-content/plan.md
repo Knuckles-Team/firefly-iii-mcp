@@ -54,6 +54,7 @@ The repository pre-commit hooks apply: `ruff-format`, `connector-standard`, `sec
 ## Production caller chain
 
 1. `CONN-FIREFLY-III-MCP-CONNECTOR-CONTENT-R001`: the `firefly-iii-mcp = scion_sdk.cli:serve` console script in `pyproject.toml` -> entry point `firefly_iii_mcp:connector` (`firefly_iii_mcp/__init__.py` line 60) -> SDK-built server serving the packaged `firefly_iii_mcp/skills` and `ontology` content.
+2. `CONN-FIREFLY-III-MCP-CONNECTOR-CONTENT-R002`: the `scion_sdk.connector` entry point `firefly-iii-mcp` resolves to `firefly_iii_mcp/__init__.py::connector`, which serves `firefly_iii_mcp/ontology/firefly.ttl`, `firefly_iii_mcp/prompts` and the declarations of `firefly_iii_mcp/connector_contracts.py`.
 
 ## Cross-repo seams
 
