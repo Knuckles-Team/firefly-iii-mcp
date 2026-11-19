@@ -18,12 +18,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_bulk_update_transactions",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -47,9 +43,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -77,9 +71,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -107,9 +99,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -137,9 +127,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -168,9 +156,7 @@ CONTRACTS = (
                     "limit_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -198,9 +184,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -228,9 +212,7 @@ CONTRACTS = (
                     "confirm",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -258,9 +240,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -288,9 +268,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -318,9 +296,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -348,9 +324,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -378,9 +352,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -408,9 +380,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -438,9 +408,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -470,9 +438,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -501,9 +467,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -531,9 +495,7 @@ CONTRACTS = (
                     "params",
                     "tag",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -561,9 +523,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -591,9 +551,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -621,9 +579,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -651,9 +607,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -681,9 +635,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -712,9 +664,7 @@ CONTRACTS = (
                     "message_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -744,9 +694,7 @@ CONTRACTS = (
                     "message_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -773,9 +721,7 @@ CONTRACTS = (
                     "confirm",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -802,9 +748,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -827,9 +771,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -852,9 +794,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -873,12 +813,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_accounts",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -897,12 +833,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_bills",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -921,12 +853,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_budgets",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -945,12 +873,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_categories",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -969,12 +893,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_piggies",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -993,12 +913,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_recurring",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1017,12 +933,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_rules",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1041,12 +953,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_tags",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1065,12 +973,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_export_transactions",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1089,12 +993,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_finish_batch",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1117,9 +1017,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1142,9 +1040,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1163,12 +1059,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_about",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1191,9 +1083,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1212,12 +1102,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_accounts_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1240,9 +1126,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1265,9 +1149,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1286,12 +1168,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_basic_summary",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1314,9 +1192,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1335,12 +1211,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_bills_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1363,9 +1235,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1389,9 +1259,7 @@ CONTRACTS = (
                     "limit_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1410,12 +1278,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_budgets_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1434,12 +1298,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_categories_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1462,9 +1322,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1483,12 +1341,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_chart_account_overview",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1507,12 +1361,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_chart_balance",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1531,12 +1381,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_chart_budget_overview",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1555,12 +1401,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_chart_category_overview",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1579,12 +1421,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_configuration",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1607,9 +1445,7 @@ CONTRACTS = (
                     "cli_token",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1628,12 +1464,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_currencies_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1652,12 +1484,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_currencies_code_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1680,9 +1508,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1701,12 +1527,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_current_user",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1729,9 +1551,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1754,9 +1574,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1775,12 +1593,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_object_groups_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1799,12 +1613,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_piggies_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1823,12 +1633,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_piggies_balance_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1851,9 +1657,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1876,9 +1680,7 @@ CONTRACTS = (
                     "name",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1897,12 +1699,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_primary_currency",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1925,9 +1723,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1946,12 +1742,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_recurring_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1974,9 +1766,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -1999,9 +1789,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2020,12 +1808,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_rule_groups_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2044,12 +1828,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_rules_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2072,9 +1852,7 @@ CONTRACTS = (
                     "name",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2098,9 +1876,7 @@ CONTRACTS = (
                     "message_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2125,9 +1901,7 @@ CONTRACTS = (
                     "message_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2146,12 +1920,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_subscriptions_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2174,9 +1944,7 @@ CONTRACTS = (
                     "params",
                     "tag",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2195,12 +1963,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_tag_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2223,9 +1987,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2248,9 +2010,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2273,9 +2033,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2294,12 +2052,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_transaction_types_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2318,12 +2072,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_transactions_ac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2342,12 +2092,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_get_transactions_idac",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2370,9 +2116,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2395,9 +2139,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2420,9 +2162,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2446,9 +2186,7 @@ CONTRACTS = (
                     "message_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2471,9 +2209,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2492,12 +2228,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_asset",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2516,12 +2248,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_bill",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2540,12 +2268,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_budget",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2564,12 +2288,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2588,12 +2308,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_expense",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2612,12 +2328,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_no_bill",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2636,12 +2348,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_no_budget",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2660,12 +2368,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_no_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2684,12 +2388,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_no_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2708,12 +2408,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2732,12 +2428,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_expense_total",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2756,12 +2448,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_asset",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2780,12 +2468,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2804,12 +2488,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_no_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2828,12 +2508,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_no_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2852,12 +2528,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_revenue",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2876,12 +2548,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2900,12 +2568,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_income_total",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2924,12 +2588,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfer_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2948,12 +2608,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfer_no_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2972,12 +2628,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfer_no_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -2996,12 +2648,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfer_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3020,12 +2668,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfer_total",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3044,12 +2688,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_insight_transfers",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3068,12 +2708,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_account",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3096,9 +2732,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3117,12 +2751,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_attachment",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3145,9 +2775,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3170,9 +2798,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3195,9 +2821,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3220,9 +2844,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3245,9 +2867,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3270,9 +2890,7 @@ CONTRACTS = (
                     "params",
                     "tag",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3295,9 +2913,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3320,9 +2936,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3341,12 +2955,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_available_budgets",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3365,12 +2975,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_bill",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3393,9 +2999,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3418,9 +3022,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3439,12 +3041,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_budget",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3463,12 +3061,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_budget_limit",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3491,9 +3085,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3516,9 +3108,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3537,12 +3127,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_category",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3561,12 +3147,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_currency",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3585,12 +3167,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_currency_exchange_rates",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3613,9 +3191,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3638,9 +3214,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3659,12 +3233,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_link_type",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3687,9 +3257,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3708,12 +3276,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_object_groups",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3732,12 +3296,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_piggy_bank",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3760,9 +3320,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3785,9 +3343,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3806,12 +3362,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_preference",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3830,12 +3382,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_recurrence",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3858,9 +3406,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3879,12 +3425,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_rule",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3907,9 +3449,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3932,9 +3472,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3957,9 +3495,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -3978,12 +3514,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_rule_group",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4006,9 +3538,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4033,9 +3563,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4059,9 +3587,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4080,12 +3606,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_tag",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4104,12 +3626,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_transaction",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4132,9 +3650,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4157,9 +3673,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4182,9 +3696,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4208,9 +3720,7 @@ CONTRACTS = (
                     "limit_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4233,9 +3743,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4258,9 +3766,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4283,9 +3789,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4308,9 +3812,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4333,9 +3835,7 @@ CONTRACTS = (
                     "params",
                     "tag",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4354,12 +3854,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_transaction_link",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4378,12 +3874,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_transaction_without_budget",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4402,12 +3894,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_user",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4426,12 +3914,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_user_groups",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4450,12 +3934,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_list_webhook",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4478,9 +3958,7 @@ CONTRACTS = (
                     "code",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4503,9 +3981,7 @@ CONTRACTS = (
                     "confirm",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4528,12 +4004,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_search_accounts",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4552,12 +4024,8 @@ CONTRACTS = (
         steps=(
             ToolStep(
                 tool="firefly_iii_search_transactions",
-                params=(
-                    "params",
-                ),
-                result=(
-                    "result",
-                ),
+                params=("params",),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4581,9 +4049,7 @@ CONTRACTS = (
                     "name",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4606,9 +4072,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4631,9 +4095,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4656,9 +4118,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4681,9 +4141,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4707,9 +4165,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4732,9 +4188,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4757,9 +4211,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4782,9 +4234,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4808,9 +4258,7 @@ CONTRACTS = (
                     "date",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4835,9 +4283,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4860,9 +4306,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4885,9 +4329,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4910,9 +4352,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4935,9 +4375,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4960,9 +4398,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -4985,9 +4421,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5010,9 +4444,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5035,9 +4467,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5060,9 +4490,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5085,9 +4513,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5110,9 +4536,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5135,9 +4559,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5160,9 +4582,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5185,9 +4605,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5210,9 +4628,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5236,9 +4652,7 @@ CONTRACTS = (
                     "params",
                     "transaction_id",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5262,9 +4676,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5288,9 +4700,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5314,9 +4724,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5340,9 +4748,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5367,9 +4773,7 @@ CONTRACTS = (
                     "limit_id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5393,9 +4797,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5419,9 +4821,7 @@ CONTRACTS = (
                     "data",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5445,9 +4845,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5473,9 +4871,7 @@ CONTRACTS = (
                     "params",
                     "to",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5499,9 +4895,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5525,9 +4919,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5551,9 +4943,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5577,9 +4967,7 @@ CONTRACTS = (
                     "name",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5603,9 +4991,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5629,9 +5015,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5655,9 +5039,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5681,9 +5063,7 @@ CONTRACTS = (
                     "params",
                     "tag",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5707,9 +5087,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5733,9 +5111,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5759,9 +5135,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5785,9 +5159,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5811,9 +5183,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -5837,9 +5207,7 @@ CONTRACTS = (
                     "id",
                     "params",
                 ),
-                result=(
-                    "result",
-                ),
+                result=("result",),
                 refusals=(
                     Refusal(
                         code="ACCESS_DENIED",
@@ -6090,9 +5458,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        prompts=(
-            "firefly-iii-mcp-firefly-iii-administrator",
-        ),
+        prompts=("firefly-iii-mcp-firefly-iii-administrator",),
     ),
     SurfaceLink(
         task="firefly-iii-mcp-operator",
@@ -6328,9 +5694,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        prompts=(
-            "firefly-iii-mcp-operator",
-        ),
+        prompts=("firefly-iii-mcp-operator",),
     ),
     SurfaceLink(
         task="firefly-iii-account-management",
@@ -6566,9 +5930,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        skills=(
-            "firefly-iii-account-management",
-        ),
+        skills=("firefly-iii-account-management",),
     ),
     SurfaceLink(
         task="firefly-iii-budgeting",
@@ -6804,9 +6166,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        skills=(
-            "firefly-iii-budgeting",
-        ),
+        skills=("firefly-iii-budgeting",),
     ),
     SurfaceLink(
         task="firefly-iii-finance-operations",
@@ -7042,9 +6402,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        skills=(
-            "firefly-iii-finance-operations",
-        ),
+        skills=("firefly-iii-finance-operations",),
     ),
     SurfaceLink(
         task="firefly-iii-mcp-development",
@@ -7280,9 +6638,7 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        skills=(
-            "firefly-iii-mcp-development",
-        ),
+        skills=("firefly-iii-mcp-development",),
     ),
     SurfaceLink(
         task="firefly-iii-transaction-ledger",
@@ -7518,34 +6874,26 @@ LINKS = (
             "firefly_iii_update_webhook",
             "firefly_iii_upload_attachment",
         ),
-        skills=(
-            "firefly-iii-transaction-ledger",
-        ),
+        skills=("firefly-iii-transaction-ledger",),
     ),
 )
 
 LOCATIONS = (
     DataLocation(
         name="firefly-accounts",
-        holds=(
-            "Account",
-        ),
+        holds=("Account",),
         instance="FIREFLY_III_URL",
         read_tool="firefly_iii_list_account",
     ),
     DataLocation(
         name="firefly-budgets",
-        holds=(
-            "Budget",
-        ),
+        holds=("Budget",),
         instance="FIREFLY_III_URL",
         read_tool="firefly_iii_list_budget",
     ),
     DataLocation(
         name="firefly-transactions",
-        holds=(
-            "Transaction",
-        ),
+        holds=("Transaction",),
         instance="FIREFLY_III_URL",
         read_tool="firefly_iii_list_transaction",
     ),
