@@ -17,7 +17,7 @@ pip install firefly-iii-mcp
 
 | Extra | Install | Pulls in |
 |---|---|---|
-| `mcp` | `pip install "firefly-iii-mcp[mcp]"` | MCP-server runtime plus the mandatory `epistemic-graph[full]` base dependency |
+| `mcp` | `pip install "firefly-iii-mcp[mcp]"` | MCP-server runtime plus the mandatory `medulla[full]` base dependency |
 | `all` | `pip install "firefly-iii-mcp[all]"` | Everything above |
 
 ## From source
