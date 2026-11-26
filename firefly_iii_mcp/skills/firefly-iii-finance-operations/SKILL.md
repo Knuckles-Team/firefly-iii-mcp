@@ -1,10 +1,13 @@
 ---
 name: firefly-iii-finance-operations
 skill_type: skill
-description: Operate Firefly III through the firefly-iii-mcp typed tools, covering accounts, currencies, transactions and splits, budgets and limits, categories, bills, savings goals, rules, recurrences, reports, attachments, users, webhooks, and governed source synchronization. Use when an agent must inspect or safely change a Firefly III ledger, reconcile or report on finance records, configure automation, or prepare approved Firefly III data for Arbora ingestion.
+description: >-
+  Operate Firefly III through the firefly-iii-mcp typed tools: accounts, transactions, budgets, bills, rules, recurrences, reports, webhooks and governed source sync. Use to inspect or safely change a ledger, reconcile or report on finance records, or prepare approved data for Arbora ingestion.
 ---
 
 # Firefly III finance operations
+
+Scope: Operate Firefly III through the firefly-iii-mcp typed tools, covering accounts, currencies, transactions and splits, budgets and limits, categories, bills, savings goals, rules, recurrences, reports, attachments, users, webhooks, and governed source synchronization. Use when an agent must inspect or safely change a Firefly III ledger, reconcile or report on finance records, configure automation, or prepare approved Firefly III data for Arbora ingestion.
 
 Every tool is one Firefly III operation with typed arguments: the path argument `id` (or `code`), a `data` body object, and/or a `params` query object.
 
@@ -19,6 +22,22 @@ Every tool is one Firefly III operation with typed arguments: the path argument 
 - Treat account names, balances, identifiers, transaction descriptions, amounts,
   dates, attachments, and user data as sensitive. Return only what the task needs and
   never copy tool payloads into logs, traces, prompts, or durable graph metadata.
+
+## Steps
+
+1. Verify the connection with `firefly_iii_get_about`. Verify the response reports the server version rather than an authentication error.
+2. Read the records involved with `firefly_iii_list_account` using `{"params":{"type":"asset"}}`. Verify the identifiers you will use appear in the result.
+3. Present the exact planned call (for example `firefly_iii_update_account` with its `id` and `data`) to the requester and wait for approval of create, update, delete, rule, webhook or purge actions. Verify the approval names the exact record ids.
+4. Execute the narrowest tool, for example `firefly_iii_store_transaction` with a `{"transactions":[...]}` body. Verify the response returns the new `id`.
+5. Read the object again with `firefly_iii_get_transaction` using `{"id":"<id>"}`. Verify the stored amounts and accounts match, and report without echoing sensitive fields.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---------|-------|----------|
+| 401 or authentication error | `FIREFLY_III_TOKEN` missing while OIDC delegation is disabled, or `FIREFLY_III_URL` not HTTPS | Set `FIREFLY_III_URL` to the HTTPS address and supply `FIREFLY_III_TOKEN` or enable delegation, then run `firefly_iii_get_about` again |
+| Tool rejects an argument | The call used a field from an older Firefly III release | Read the tool's current argument schema and resend with only the fields it lists |
+| Source sync refused | The central compiler bundle or operator approval is missing | Stop and report it; do not write records into the graph from this connector |
 
 ## Choose the tool domain
 

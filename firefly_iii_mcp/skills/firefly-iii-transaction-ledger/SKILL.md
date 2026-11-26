@@ -2,13 +2,7 @@
 name: firefly-iii-transaction-ledger
 skill_type: skill
 description: >-
-  Book and manage Firefly III transactions (withdrawals, deposits, transfers) via
-  the firefly-iii-mcp MCP server — list, read, create, update, and delete
-  double-entry transactions and their splits. Use when the agent must record a new
-  expense/income/transfer, look up a transaction by id, edit or split an existing
-  transaction, or reconcile the ledger. Do NOT use for creating accounts (use
-  firefly-iii-account-management) or for budgets, bills and categories setup (use
-  firefly-iii-budgeting).
+  Book and manage Firefly III transactions (withdrawals, deposits, transfers) via the firefly-iii-mcp MCP server — list, read, create, update, and delete double-entry transactions and their splits. Use when the agent must record a new expense/income/transfer, look up a transaction by id, edit or split an existing transaction, or reconcile the ledger.
 license: MIT
 tags: [firefly-iii, transactions, ledger, double-entry, rest-api, mcp]
 metadata:
@@ -16,6 +10,8 @@ metadata:
   version: '0.1.0'
 ---
 # Firefly III Transaction Ledger
+
+Scope: Book and manage Firefly III transactions (withdrawals, deposits, transfers) via the firefly-iii-mcp MCP server — list, read, create, update, and delete double-entry transactions and their splits. Use when the agent must record a new expense/income/transfer, look up a transaction by id, edit or split an existing transaction, or reconcile the ledger. Do NOT use for creating accounts (use firefly-iii-account-management) or for budgets, bills and categories setup (use firefly-iii-budgeting).
 
 Domain-typed access to Firefly III **transactions** — the double-entry ledger.
 Every transaction is a *group* of one or more *splits* (journals), each moving money
@@ -45,6 +41,22 @@ Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
 | `FIREFLY_III_TOKEN` | ✅ | Personal Access Token (Bearer) |
 | `FIREFLY_III_SSL_VERIFY` | optional | TLS verification toggle |
 
+
+## Steps
+
+1. Resolve the account ids with `firefly_iii_list_transaction_by_account` or the account list in `firefly-iii-account-management`. Verify the source and destination ids exist and match the account types for the transaction type.
+2. Check for a duplicate with `firefly_iii_list_transaction` using `{"params":{"start":"<date>","end":"<date>","type":"withdrawal"}}`. Verify no entry already has the same `amount` and `description`.
+3. Book it with `firefly_iii_store_transaction` using `{"data":{"transactions":[{"type":"withdrawal","date":"<iso-date>","amount":"42.50","description":"<text>","source_id":"<id>","destination_id":"<id>"}]}}`. Verify the response returns a group `id` with one split.
+4. Re-read with `firefly_iii_get_transaction` using `{"id":"<group-id>"}`. Verify `amount`, `source_id` and `destination_id` match the request.
+5. To remove a split call `firefly_iii_delete_transaction_journal`, or `firefly_iii_delete_transaction` for the whole group, only after approval. Verify a follow-up `firefly_iii_get_transaction` reports not found or the remaining splits.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---------|-------|----------|
+| 422 error from `firefly_iii_store_transaction` | Body not wrapped in `{"transactions":[...]}`, or `type` does not match the account pair | Wrap the split list, and use withdrawal for asset to expense, deposit for revenue to asset, transfer for asset to asset |
+| 401 or authentication error | `FIREFLY_III_TOKEN` or `FIREFLY_III_URL` missing or wrong | Check the Prerequisites table variables and report which is unset |
+| Transfer rejected | `source_id` or `destination_id` is not an existing asset account | Look up the asset account ids and resend with both ids; names only work for withdrawals and deposits |
 
 ## Tools
 One typed tool per operation, each taking the path argument `id`, a `data` body object and/or a `params` query object.

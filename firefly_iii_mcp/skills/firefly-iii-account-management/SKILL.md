@@ -2,14 +2,7 @@
 name: firefly-iii-account-management
 skill_type: skill
 description: >-
-  Manage Firefly III accounts (asset, expense, revenue, liability, cash) and their
-  currencies via the firefly-iii-mcp MCP server — list, read, create, and update
-  accounts and inspect their balances and transactions. Use when the agent must
-  enumerate the user's accounts, look up one account by id, open a new asset or
-  liability account, or read an account's balance and recent transactions. Do NOT
-  use for booking/editing individual transactions (use
-  firefly-iii-transaction-ledger) or for budgets, bills and savings goals (use
-  firefly-iii-budgeting).
+  Manage Firefly III accounts (asset, expense, revenue, liability, cash) and their currencies via the firefly-iii-mcp MCP server — list, read, create, and update accounts and inspect their balances and transactions. Use when the agent must enumerate the user's accounts, look up one account by id, open a new asset or liability account, or read an account's balance and recent transactions.
 license: MIT
 tags: [firefly-iii, accounts, currencies, personal-finance, rest-api, mcp]
 metadata:
@@ -17,6 +10,8 @@ metadata:
   version: '0.1.0'
 ---
 # Firefly III Account Management
+
+Scope: Manage Firefly III accounts (asset, expense, revenue, liability, cash) and their currencies via the firefly-iii-mcp MCP server — list, read, create, and update accounts and inspect their balances and transactions. Use when the agent must enumerate the user's accounts, look up one account by id, open a new asset or liability account, or read an account's balance and recent transactions. Do NOT use for booking/editing individual transactions (use firefly-iii-transaction-ledger) or for budgets, bills and savings goals (use firefly-iii-budgeting).
 
 Domain-typed access to Firefly III **accounts** and **currencies** for personal
 finance. Prefer these tools over raw HTTP — they carry the account field conventions
@@ -46,6 +41,22 @@ Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
 
 OIDC token-exchange delegation is used automatically when `ENABLE_DELEGATION` is
 active; otherwise the fixed `FIREFLY_III_TOKEN` is used.
+
+## Steps
+
+1. List the accounts with `firefly_iii_list_account` using `{"params":{"type":"asset"}}`. Verify the response is a JSON:API list whose `attributes` carry names and `current_balance`.
+2. Read the one you need with `firefly_iii_get_account` using `{"id":"<account-id>"}`. Verify the returned `id` equals the one requested.
+3. Before creating, confirm no duplicate exists in the step 1 result. Verify no account has the same `name` and `type`.
+4. Create it with `firefly_iii_store_account` using `{"data":{"name":"<name>","type":"asset","account_role":"defaultAsset","currency_code":"USD"}}`. Verify the response returns a new `id`.
+5. Re-read with `firefly_iii_get_account` using `{"id":"<new-id>"}`. Verify `name`, `type` and `currency_code` match what was requested.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---------|-------|----------|
+| 401 or authentication error | `FIREFLY_III_TOKEN` or `FIREFLY_III_URL` missing or wrong | Check the two variables in the Prerequisites table and report which is unset; do not guess values |
+| 422 validation error from `firefly_iii_store_account` | Invalid `type`, or an asset account without `account_role` | Resend with `type` one of `asset`, `expense`, `revenue`, `liability`, `cash`, and add `account_role` for assets |
+| `firefly_iii_get_account` returns not found | Wrong account `id` | Run `firefly_iii_list_account` again and copy the `id` from the matching record |
 
 ## Tools
 One typed tool per operation, each taking the path argument `id` (or `code` for currencies), a `data` body object and/or a `params` query object.
