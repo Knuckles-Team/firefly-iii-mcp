@@ -2,13 +2,7 @@
 name: firefly-iii-budgeting
 skill_type: skill
 description: >-
-  Plan and track spending in Firefly III via the firefly-iii-mcp MCP server —
-  manage budgets and per-period budget limits, categories, recurring bills, and
-  piggy-bank savings goals, and read what has been spent against each. Use when the
-  agent must create/inspect a budget envelope, set a monthly budget limit, categorize
-  spending, track a recurring bill, or fund a savings goal. Do NOT use for account
-  CRUD (use firefly-iii-account-management) or for booking individual transactions
-  (use firefly-iii-transaction-ledger).
+  Plan and track spending in Firefly III via the firefly-iii-mcp MCP server — manage budgets and per-period budget limits, categories, recurring bills, and piggy-bank savings goals, and read what has been spent against each. Use when the agent must create/inspect a budget envelope, set a monthly budget limit, categorize spending, track a recurring bill, or fund a savings goal.
 license: MIT
 tags: [firefly-iii, budgets, categories, bills, savings, personal-finance, mcp]
 metadata:
@@ -16,6 +10,8 @@ metadata:
   version: '0.1.0'
 ---
 # Firefly III Budgeting
+
+Scope: Plan and track spending in Firefly III via the firefly-iii-mcp MCP server — manage budgets and per-period budget limits, categories, recurring bills, and piggy-bank savings goals, and read what has been spent against each. Use when the agent must create/inspect a budget envelope, set a monthly budget limit, categorize spending, track a recurring bill, or fund a savings goal. Do NOT use for account CRUD (use firefly-iii-account-management) or for booking individual transactions (use firefly-iii-transaction-ledger).
 
 Domain-typed access to Firefly III **budgets & budget limits**, **categories**,
 **bills**, and **piggy banks** — the planning and tracking side of the ledger.
@@ -44,6 +40,22 @@ Connect via the `mcp-client` skill against the **`firefly-iii-mcp`** MCP server.
 | `FIREFLY_III_TOKEN` | ✅ | Personal Access Token (Bearer) |
 | `FIREFLY_III_SSL_VERIFY` | optional | TLS verification toggle |
 
+
+## Steps
+
+1. List the existing budgets with `firefly_iii_list_budget`. Verify whether a budget with the wanted name already exists before creating one.
+2. Create a missing budget with `firefly_iii_store_budget` using `{"data":{"name":"Groceries","active":true}}`. Verify the response returns a new budget `id`.
+3. Cap it with `firefly_iii_store_budget_limit` using `{"id":"<budget-id>","data":{"start":"2026-02-01","end":"2026-02-28","amount":"600.00","currency_code":"USD"}}`. Verify the response echoes the `start`, `end` and `amount` strings.
+4. Read spending with `firefly_iii_list_transaction_by_budget` using `{"id":"<budget-id>","params":{"start":"2026-02-01","end":"2026-02-28"}}`. Verify the returned transactions fall inside that range.
+5. For recurring costs call `firefly_iii_list_bill` first, and create a missing bill with `firefly_iii_store_bill` only if none matches. Verify the bill shows the intended `repeat_freq` and amount range.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---------|-------|----------|
+| 401 or authentication error | `FIREFLY_III_TOKEN` or `FIREFLY_III_URL` missing or wrong | Check the Prerequisites table variables and report which is unset |
+| Budget exists but spending is uncapped | Only the budget was created, with no budget limit | Call `firefly_iii_store_budget_limit` with a `start` and `end` range for the budget `id` |
+| 422 error on `firefly_iii_store_bill` | `repeat_freq` not one of `weekly`, `monthly`, `quarterly`, `half-year`, `yearly`, or amounts not strings | Resend with a valid `repeat_freq` and decimal strings for `amount_min` and `amount_max` |
 
 ## Tools
 One typed tool per operation, each taking the path argument `id`, a `data` body object and/or a `params` query object.

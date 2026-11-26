@@ -40,6 +40,22 @@ owning spec row in the commit trailer.
 - Put `Spec: <ID>` and the assisting agent trailer on consecutive final commit
   message lines.
 
+## Steps
+
+1. Find the owning spec row with `git grep -n "<term>" -- specs`. Verify at least one row matches before adding requirement text.
+2. Make the smallest connector-owned change. Verify `git diff --stat` touches only this connector's files.
+3. Run the focused tests with `uv run --all-extras pytest -q <test file>`. Verify the run exits 0.
+4. Run the gate with `uvx pre-commit run --all-files`. Verify every hook reports Passed.
+5. Stage reviewed paths with `git add -- <path>` and inspect `git diff --cached --name-status`. Verify no logs, notes or caches are listed.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---------|-------|----------|
+| `uv sync --locked` fails | `uv.lock` is stale against `pyproject.toml` | Revert the unplanned dependency edit, or refresh `uv.lock` through the normal release process |
+| A pre-commit hook fails | Formatting, spelling or skill-budget violation | Read the hook output, fix the named file, and re-run `uvx pre-commit run --all-files` |
+| No spec row matches the grep | The behavior is new to this connector | Extend the nearest spec row for this connector and cite it in the `Spec:` trailer |
+
 ## Setup and gates
 
 Use the pinned environment and run the shared gates from the checkout root:
