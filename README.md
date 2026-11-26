@@ -5,24 +5,24 @@
 ![MCP Server](https://badge.mcpx.dev?type=server 'MCP Server')
 ![PyPI - Downloads](https://img.shields.io/pypi/dd/firefly-iii-mcp)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Knuckles-Team/firefly-iii-mcp)
+![GitHub forks](https://img.shields.io/github/forks/Knuckles-Team/firefly-iii-mcp)
+![GitHub contributors](https://img.shields.io/github/contributors/Knuckles-Team/firefly-iii-mcp)
 ![PyPI - License](https://img.shields.io/pypi/l/firefly-iii-mcp)
+![GitHub](https://img.shields.io/github/license/Knuckles-Team/firefly-iii-mcp)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/firefly-iii-mcp)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/Knuckles-Team/firefly-iii-mcp)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Knuckles-Team/firefly-iii-mcp)
+![GitHub issues](https://img.shields.io/github/issues/Knuckles-Team/firefly-iii-mcp)
+![GitHub top language](https://img.shields.io/github/languages/top/Knuckles-Team/firefly-iii-mcp)
+![GitHub language count](https://img.shields.io/github/languages/count/Knuckles-Team/firefly-iii-mcp)
+![GitHub repo size](https://img.shields.io/github/repo-size/Knuckles-Team/firefly-iii-mcp)
+![GitHub repo file count (file type)](https://img.shields.io/github/directory-file-count/Knuckles-Team/firefly-iii-mcp)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/firefly-iii-mcp)
+![PyPI - Implementation](https://img.shields.io/pypi/implementation/firefly-iii-mcp)
 
-> **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
-> backing platform are maintained in the
+> **Documentation** — Installation, deployment, and usage across the API, CLI, MCP,
+> and A2A agent interfaces are maintained in the
 > [official documentation](https://knuckles-team.github.io/firefly-iii-mcp/).
-
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Available MCP Tools](#available-mcp-tools)
-- [Installation](#installation)
-- [Usage](#usage)
-- [MCP](#mcp)
-- [Documentation](#documentation)
 
 ---
 
@@ -33,6 +33,8 @@
 Firefly III API + MCP Server + A2A Agent — personal finance manager
 
 This repository is actively maintained - Contributions are welcome!
+
+---
 
 ## Key Features
 
@@ -49,123 +51,7 @@ This repository is actively maintained - Contributions are welcome!
 - **Per-tool toggles** — enable or disable each tool domain with environment switches.
 - **Enterprise-ready** — OTEL/Langfuse telemetry and optional Eunomia access governance.
 
-## Available MCP Tools
-
-One typed tool per Firefly III operation, named `firefly_iii_<operation>` (230 tools). Each takes the path argument `id` (or `code`), a `data` body object and/or a `params` query object. No tool takes an `action`.
-
-| Task | Tools |
-|------|-------|
-| administer users and groups | `firefly_iii_delete_object_group`, `firefly_iii_delete_user`, `firefly_iii_get_current_user`, `firefly_iii_get_object_group`, `firefly_iii_get_user`, `firefly_iii_get_user_group`, `firefly_iii_list_object_groups`, `firefly_iii_list_user`, `firefly_iii_list_user_groups`, `firefly_iii_store_user`, `firefly_iii_update_object_group`, `firefly_iii_update_user`, `firefly_iii_update_user_group` |
-| analyse spending and income | `firefly_iii_get_basic_summary`, `firefly_iii_get_chart_account_overview`, `firefly_iii_get_chart_balance`, `firefly_iii_get_chart_budget_overview`, `firefly_iii_get_chart_category_overview`, `firefly_iii_insight_expense_asset`, `firefly_iii_insight_expense_bill`, `firefly_iii_insight_expense_budget`, `firefly_iii_insight_expense_category`, `firefly_iii_insight_expense_expense`, `firefly_iii_insight_expense_no_bill`, `firefly_iii_insight_expense_no_budget`, `firefly_iii_insight_expense_no_category`, `firefly_iii_insight_expense_no_tag`, `firefly_iii_insight_expense_tag`, `firefly_iii_insight_expense_total`, `firefly_iii_insight_income_asset`, `firefly_iii_insight_income_category`, `firefly_iii_insight_income_no_category`, `firefly_iii_insight_income_no_tag`, `firefly_iii_insight_income_revenue`, `firefly_iii_insight_income_tag`, `firefly_iii_insight_income_total`, `firefly_iii_insight_transfer_category`, `firefly_iii_insight_transfer_no_category`, `firefly_iii_insight_transfer_no_tag`, `firefly_iii_insight_transfer_tag`, `firefly_iii_insight_transfer_total`, `firefly_iii_insight_transfers` |
-| automate with rules | `firefly_iii_delete_rule`, `firefly_iii_delete_rule_group`, `firefly_iii_fire_rule`, `firefly_iii_fire_rule_group`, `firefly_iii_get_rule`, `firefly_iii_get_rule_group`, `firefly_iii_list_rule`, `firefly_iii_list_rule_by_bill`, `firefly_iii_list_rule_by_currency`, `firefly_iii_list_rule_by_group`, `firefly_iii_list_rule_group`, `firefly_iii_store_rule`, `firefly_iii_store_rule_group`, `firefly_iii_test_rule`, `firefly_iii_test_rule_group`, `firefly_iii_update_rule`, `firefly_iii_update_rule_group` |
-| configure instance | `firefly_iii_get_about`, `firefly_iii_get_configuration`, `firefly_iii_get_cron`, `firefly_iii_get_preference`, `firefly_iii_get_single_configuration`, `firefly_iii_list_preference`, `firefly_iii_set_configuration`, `firefly_iii_store_preference`, `firefly_iii_update_preference` |
-| export and purge data | `firefly_iii_destroy_data`, `firefly_iii_export_accounts`, `firefly_iii_export_bills`, `firefly_iii_export_budgets`, `firefly_iii_export_categories`, `firefly_iii_export_piggies`, `firefly_iii_export_recurring`, `firefly_iii_export_rules`, `firefly_iii_export_tags`, `firefly_iii_export_transactions`, `firefly_iii_purge_data` |
-| find records | `firefly_iii_get_accounts_ac`, `firefly_iii_get_bills_ac`, `firefly_iii_get_budgets_ac`, `firefly_iii_get_categories_ac`, `firefly_iii_get_currencies_ac`, `firefly_iii_get_currencies_code_ac`, `firefly_iii_get_object_groups_ac`, `firefly_iii_get_piggies_ac`, `firefly_iii_get_piggies_balance_ac`, `firefly_iii_get_recurring_ac`, `firefly_iii_get_rule_groups_ac`, `firefly_iii_get_rules_ac`, `firefly_iii_get_subscriptions_ac`, `firefly_iii_get_tag_ac`, `firefly_iii_get_transaction_types_ac`, `firefly_iii_get_transactions_ac`, `firefly_iii_get_transactions_idac`, `firefly_iii_search_accounts`, `firefly_iii_search_transactions` |
-| manage accounts | `firefly_iii_delete_account`, `firefly_iii_get_account`, `firefly_iii_list_account`, `firefly_iii_list_account_by_currency`, `firefly_iii_store_account`, `firefly_iii_update_account` |
-| manage attachments | `firefly_iii_delete_attachment`, `firefly_iii_download_attachment`, `firefly_iii_get_attachment`, `firefly_iii_list_attachment`, `firefly_iii_list_attachment_by_account`, `firefly_iii_list_attachment_by_bill`, `firefly_iii_list_attachment_by_budget`, `firefly_iii_list_attachment_by_category`, `firefly_iii_list_attachment_by_piggy_bank`, `firefly_iii_list_attachment_by_tag`, `firefly_iii_list_attachment_by_transaction`, `firefly_iii_store_attachment`, `firefly_iii_update_attachment`, `firefly_iii_upload_attachment` |
-| manage bills | `firefly_iii_delete_bill`, `firefly_iii_get_bill`, `firefly_iii_list_bill`, `firefly_iii_list_bill_by_currency`, `firefly_iii_list_bill_by_object_group`, `firefly_iii_store_bill`, `firefly_iii_update_bill` |
-| manage budgets | `firefly_iii_delete_budget`, `firefly_iii_delete_budget_limit`, `firefly_iii_get_available_budget`, `firefly_iii_get_budget`, `firefly_iii_get_budget_limit`, `firefly_iii_list_available_budget_by_currency`, `firefly_iii_list_available_budgets`, `firefly_iii_list_budget`, `firefly_iii_list_budget_limit`, `firefly_iii_list_budget_limit_by_budget`, `firefly_iii_list_budget_limit_by_currency`, `firefly_iii_store_budget`, `firefly_iii_store_budget_limit`, `firefly_iii_update_budget`, `firefly_iii_update_budget_limit` |
-| manage categories | `firefly_iii_delete_category`, `firefly_iii_get_category`, `firefly_iii_list_category`, `firefly_iii_store_category`, `firefly_iii_update_category` |
-| manage currencies | `firefly_iii_delete_currency`, `firefly_iii_delete_specific_currency_exchange_rate`, `firefly_iii_delete_specific_currency_exchange_rate_on_date`, `firefly_iii_delete_specific_currency_exchange_rates`, `firefly_iii_disable_currency`, `firefly_iii_enable_currency`, `firefly_iii_get_currency`, `firefly_iii_get_primary_currency`, `firefly_iii_list_currency`, `firefly_iii_list_currency_exchange_rates`, `firefly_iii_list_specific_currency_exchange_rate`, `firefly_iii_list_specific_currency_exchange_rate_on_date`, `firefly_iii_list_specific_currency_exchange_rates`, `firefly_iii_primary_currency`, `firefly_iii_store_currency`, `firefly_iii_store_currency_exchange_rate`, `firefly_iii_store_currency_exchange_rates_by_date`, `firefly_iii_store_currency_exchange_rates_by_pair`, `firefly_iii_update_currency`, `firefly_iii_update_currency_exchange_rate`, `firefly_iii_update_currency_exchange_rate_by_date` |
-| manage recurring transactions | `firefly_iii_delete_recurrence`, `firefly_iii_get_recurrence`, `firefly_iii_list_recurrence`, `firefly_iii_list_recurrence_by_currency`, `firefly_iii_list_transaction_by_recurrence`, `firefly_iii_store_recurrence`, `firefly_iii_trigger_recurrence_recurrence`, `firefly_iii_update_recurrence` |
-| manage savings goals | `firefly_iii_delete_piggy_bank`, `firefly_iii_get_piggy_bank`, `firefly_iii_list_event_by_piggy_bank`, `firefly_iii_list_piggy_bank`, `firefly_iii_list_piggy_bank_by_account`, `firefly_iii_list_piggy_bank_by_object_group`, `firefly_iii_store_piggy_bank`, `firefly_iii_update_piggy_bank` |
-| manage tags | `firefly_iii_delete_tag`, `firefly_iii_get_tag`, `firefly_iii_list_tag`, `firefly_iii_store_tag`, `firefly_iii_update_tag` |
-| manage webhooks | `firefly_iii_delete_webhook`, `firefly_iii_delete_webhook_message`, `firefly_iii_delete_webhook_message_attempt`, `firefly_iii_get_single_webhook_message`, `firefly_iii_get_single_webhook_message_attempt`, `firefly_iii_get_webhook`, `firefly_iii_get_webhook_message_attempts`, `firefly_iii_get_webhook_messages`, `firefly_iii_list_webhook`, `firefly_iii_store_webhook`, `firefly_iii_submit_webhook`, `firefly_iii_trigger_transaction_webhook`, `firefly_iii_update_webhook` |
-| record transactions | `firefly_iii_bulk_update_transactions`, `firefly_iii_delete_link_type`, `firefly_iii_delete_transaction`, `firefly_iii_delete_transaction_journal`, `firefly_iii_delete_transaction_link`, `firefly_iii_finish_batch`, `firefly_iii_get_link_type`, `firefly_iii_get_transaction`, `firefly_iii_get_transaction_by_journal`, `firefly_iii_get_transaction_link`, `firefly_iii_list_event_by_transaction`, `firefly_iii_list_link_type`, `firefly_iii_list_links_by_journal`, `firefly_iii_list_transaction`, `firefly_iii_list_transaction_by_account`, `firefly_iii_list_transaction_by_bill`, `firefly_iii_list_transaction_by_budget`, `firefly_iii_list_transaction_by_budget_limit`, `firefly_iii_list_transaction_by_category`, `firefly_iii_list_transaction_by_currency`, `firefly_iii_list_transaction_by_link_type`, `firefly_iii_list_transaction_by_tag`, `firefly_iii_list_transaction_link`, `firefly_iii_list_transaction_without_budget`, `firefly_iii_store_link_type`, `firefly_iii_store_transaction`, `firefly_iii_store_transaction_link`, `firefly_iii_update_link_type`, `firefly_iii_update_transaction`, `firefly_iii_update_transaction_link` |
-
-
-## Installation
-
-Pick the extra that matches what the operator want to run:
-
-| Extra | Installs | Use when |
-|-------|----------|----------|
-| `firefly-iii-mcp[mcp]` | MCP server (`scion-sdk`) plus the mandatory full medulla base runtime | The operator run the **MCP server** |
-| `firefly-iii-mcp[all]` | MCP + test tooling | Development |
-
-### Install with `uvx` (no install — run on demand)
-
-```bash
-uvx --from "firefly-iii-mcp[mcp]" firefly-iii-mcp      # MCP server
-```
-
-### Install with `pip` / `uv`
-
-```bash
-# MCP server only (recommended for tool hosting)
-uv pip install "firefly-iii-mcp[mcp]"
-
-# Everything (development)
-uv pip install "firefly-iii-mcp[all]"      # or: python -m pip install "firefly-iii-mcp[all]"
-```
-
-### Container images (`:mcp`)
-
-One multi-stage `docker/Dockerfile` builds the MCP-only image (`--target mcp`):
-
-| Image tag | Build target | Contents | Entrypoint |
-|-----------|--------------|----------|------------|
-| `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full medulla base dependency | `firefly-iii-mcp` |
-
-```bash
-docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
-```
-
-agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
-
-### Knowledge-graph database (`medulla`)
-
-Every install receives `medulla[full]` through the current Scion SDK base
-dependency. The connector does not open an insecure engine listener or silently select a
-machine-specific engine. Deployment topology and identity are resolved by AgentConfig. For a
-shared production authority, follow the
-[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
-
-### Console scripts
-
-After installation the following entry points are available on the operator's `PATH`:
-
-| Command | Description |
-|---------|-------------|
-| `firefly-iii-mcp` | Start the MCP server |
-
-## Usage
-
-### As a Python API client
-
-```python
-from firefly_iii_mcp.auth import get_client
-
-client = get_client()
-try:
-    print(client.get_about())
-finally:
-    client.close()
-```
-
-### As an MCP server (CLI)
-
-```bash
-# Local stdio (for IDEs)
-firefly-iii-mcp
-
-# Networked streamable-http
-firefly-iii-mcp --transport streamable-http --host 127.0.0.1 --port 8000
-```
-
-### Calling an MCP tool
-
-Tools are action-routed — pass an `action` plus a JSON `params_json` string:
-
-```json
-{
-  "tool": "about_operations",
-  "arguments": {
-    "action": "get_about",
-    "params_json": "{}"
-  }
-}
-```
+---
 
 ## MCP
 
@@ -369,42 +255,31 @@ the detailed transport contract.
   `MCP_ALLOWED_HOSTS` in `AgentConfig`.
 <!-- END GENERATED: additional-deployment-options -->
 
-## Install Python Package
+### Available MCP Tools
 
-```bash
-python -m pip install firefly-iii-mcp
-```
+One typed tool per Firefly III operation, named `firefly_iii_<operation>` (230 tools). Each takes the path argument `id` (or `code`), a `data` body object and/or a `params` query object. No tool takes an `action`.
 
-## Documentation
+| Task | Tools |
+|------|-------|
+| administer users and groups | `firefly_iii_delete_object_group`, `firefly_iii_delete_user`, `firefly_iii_get_current_user`, `firefly_iii_get_object_group`, `firefly_iii_get_user`, `firefly_iii_get_user_group`, `firefly_iii_list_object_groups`, `firefly_iii_list_user`, `firefly_iii_list_user_groups`, `firefly_iii_store_user`, `firefly_iii_update_object_group`, `firefly_iii_update_user`, `firefly_iii_update_user_group` |
+| analyse spending and income | `firefly_iii_get_basic_summary`, `firefly_iii_get_chart_account_overview`, `firefly_iii_get_chart_balance`, `firefly_iii_get_chart_budget_overview`, `firefly_iii_get_chart_category_overview`, `firefly_iii_insight_expense_asset`, `firefly_iii_insight_expense_bill`, `firefly_iii_insight_expense_budget`, `firefly_iii_insight_expense_category`, `firefly_iii_insight_expense_expense`, `firefly_iii_insight_expense_no_bill`, `firefly_iii_insight_expense_no_budget`, `firefly_iii_insight_expense_no_category`, `firefly_iii_insight_expense_no_tag`, `firefly_iii_insight_expense_tag`, `firefly_iii_insight_expense_total`, `firefly_iii_insight_income_asset`, `firefly_iii_insight_income_category`, `firefly_iii_insight_income_no_category`, `firefly_iii_insight_income_no_tag`, `firefly_iii_insight_income_revenue`, `firefly_iii_insight_income_tag`, `firefly_iii_insight_income_total`, `firefly_iii_insight_transfer_category`, `firefly_iii_insight_transfer_no_category`, `firefly_iii_insight_transfer_no_tag`, `firefly_iii_insight_transfer_tag`, `firefly_iii_insight_transfer_total`, `firefly_iii_insight_transfers` |
+| automate with rules | `firefly_iii_delete_rule`, `firefly_iii_delete_rule_group`, `firefly_iii_fire_rule`, `firefly_iii_fire_rule_group`, `firefly_iii_get_rule`, `firefly_iii_get_rule_group`, `firefly_iii_list_rule`, `firefly_iii_list_rule_by_bill`, `firefly_iii_list_rule_by_currency`, `firefly_iii_list_rule_by_group`, `firefly_iii_list_rule_group`, `firefly_iii_store_rule`, `firefly_iii_store_rule_group`, `firefly_iii_test_rule`, `firefly_iii_test_rule_group`, `firefly_iii_update_rule`, `firefly_iii_update_rule_group` |
+| configure instance | `firefly_iii_get_about`, `firefly_iii_get_configuration`, `firefly_iii_get_cron`, `firefly_iii_get_preference`, `firefly_iii_get_single_configuration`, `firefly_iii_list_preference`, `firefly_iii_set_configuration`, `firefly_iii_store_preference`, `firefly_iii_update_preference` |
+| export and purge data | `firefly_iii_destroy_data`, `firefly_iii_export_accounts`, `firefly_iii_export_bills`, `firefly_iii_export_budgets`, `firefly_iii_export_categories`, `firefly_iii_export_piggies`, `firefly_iii_export_recurring`, `firefly_iii_export_rules`, `firefly_iii_export_tags`, `firefly_iii_export_transactions`, `firefly_iii_purge_data` |
+| find records | `firefly_iii_get_accounts_ac`, `firefly_iii_get_bills_ac`, `firefly_iii_get_budgets_ac`, `firefly_iii_get_categories_ac`, `firefly_iii_get_currencies_ac`, `firefly_iii_get_currencies_code_ac`, `firefly_iii_get_object_groups_ac`, `firefly_iii_get_piggies_ac`, `firefly_iii_get_piggies_balance_ac`, `firefly_iii_get_recurring_ac`, `firefly_iii_get_rule_groups_ac`, `firefly_iii_get_rules_ac`, `firefly_iii_get_subscriptions_ac`, `firefly_iii_get_tag_ac`, `firefly_iii_get_transaction_types_ac`, `firefly_iii_get_transactions_ac`, `firefly_iii_get_transactions_idac`, `firefly_iii_search_accounts`, `firefly_iii_search_transactions` |
+| manage accounts | `firefly_iii_delete_account`, `firefly_iii_get_account`, `firefly_iii_list_account`, `firefly_iii_list_account_by_currency`, `firefly_iii_store_account`, `firefly_iii_update_account` |
+| manage attachments | `firefly_iii_delete_attachment`, `firefly_iii_download_attachment`, `firefly_iii_get_attachment`, `firefly_iii_list_attachment`, `firefly_iii_list_attachment_by_account`, `firefly_iii_list_attachment_by_bill`, `firefly_iii_list_attachment_by_budget`, `firefly_iii_list_attachment_by_category`, `firefly_iii_list_attachment_by_piggy_bank`, `firefly_iii_list_attachment_by_tag`, `firefly_iii_list_attachment_by_transaction`, `firefly_iii_store_attachment`, `firefly_iii_update_attachment`, `firefly_iii_upload_attachment` |
+| manage bills | `firefly_iii_delete_bill`, `firefly_iii_get_bill`, `firefly_iii_list_bill`, `firefly_iii_list_bill_by_currency`, `firefly_iii_list_bill_by_object_group`, `firefly_iii_store_bill`, `firefly_iii_update_bill` |
+| manage budgets | `firefly_iii_delete_budget`, `firefly_iii_delete_budget_limit`, `firefly_iii_get_available_budget`, `firefly_iii_get_budget`, `firefly_iii_get_budget_limit`, `firefly_iii_list_available_budget_by_currency`, `firefly_iii_list_available_budgets`, `firefly_iii_list_budget`, `firefly_iii_list_budget_limit`, `firefly_iii_list_budget_limit_by_budget`, `firefly_iii_list_budget_limit_by_currency`, `firefly_iii_store_budget`, `firefly_iii_store_budget_limit`, `firefly_iii_update_budget`, `firefly_iii_update_budget_limit` |
+| manage categories | `firefly_iii_delete_category`, `firefly_iii_get_category`, `firefly_iii_list_category`, `firefly_iii_store_category`, `firefly_iii_update_category` |
+| manage currencies | `firefly_iii_delete_currency`, `firefly_iii_delete_specific_currency_exchange_rate`, `firefly_iii_delete_specific_currency_exchange_rate_on_date`, `firefly_iii_delete_specific_currency_exchange_rates`, `firefly_iii_disable_currency`, `firefly_iii_enable_currency`, `firefly_iii_get_currency`, `firefly_iii_get_primary_currency`, `firefly_iii_list_currency`, `firefly_iii_list_currency_exchange_rates`, `firefly_iii_list_specific_currency_exchange_rate`, `firefly_iii_list_specific_currency_exchange_rate_on_date`, `firefly_iii_list_specific_currency_exchange_rates`, `firefly_iii_primary_currency`, `firefly_iii_store_currency`, `firefly_iii_store_currency_exchange_rate`, `firefly_iii_store_currency_exchange_rates_by_date`, `firefly_iii_store_currency_exchange_rates_by_pair`, `firefly_iii_update_currency`, `firefly_iii_update_currency_exchange_rate`, `firefly_iii_update_currency_exchange_rate_by_date` |
+| manage recurring transactions | `firefly_iii_delete_recurrence`, `firefly_iii_get_recurrence`, `firefly_iii_list_recurrence`, `firefly_iii_list_recurrence_by_currency`, `firefly_iii_list_transaction_by_recurrence`, `firefly_iii_store_recurrence`, `firefly_iii_trigger_recurrence_recurrence`, `firefly_iii_update_recurrence` |
+| manage savings goals | `firefly_iii_delete_piggy_bank`, `firefly_iii_get_piggy_bank`, `firefly_iii_list_event_by_piggy_bank`, `firefly_iii_list_piggy_bank`, `firefly_iii_list_piggy_bank_by_account`, `firefly_iii_list_piggy_bank_by_object_group`, `firefly_iii_store_piggy_bank`, `firefly_iii_update_piggy_bank` |
+| manage tags | `firefly_iii_delete_tag`, `firefly_iii_get_tag`, `firefly_iii_list_tag`, `firefly_iii_store_tag`, `firefly_iii_update_tag` |
+| manage webhooks | `firefly_iii_delete_webhook`, `firefly_iii_delete_webhook_message`, `firefly_iii_delete_webhook_message_attempt`, `firefly_iii_get_single_webhook_message`, `firefly_iii_get_single_webhook_message_attempt`, `firefly_iii_get_webhook`, `firefly_iii_get_webhook_message_attempts`, `firefly_iii_get_webhook_messages`, `firefly_iii_list_webhook`, `firefly_iii_store_webhook`, `firefly_iii_submit_webhook`, `firefly_iii_trigger_transaction_webhook`, `firefly_iii_update_webhook` |
+| record transactions | `firefly_iii_bulk_update_transactions`, `firefly_iii_delete_link_type`, `firefly_iii_delete_transaction`, `firefly_iii_delete_transaction_journal`, `firefly_iii_delete_transaction_link`, `firefly_iii_finish_batch`, `firefly_iii_get_link_type`, `firefly_iii_get_transaction`, `firefly_iii_get_transaction_by_journal`, `firefly_iii_get_transaction_link`, `firefly_iii_list_event_by_transaction`, `firefly_iii_list_link_type`, `firefly_iii_list_links_by_journal`, `firefly_iii_list_transaction`, `firefly_iii_list_transaction_by_account`, `firefly_iii_list_transaction_by_bill`, `firefly_iii_list_transaction_by_budget`, `firefly_iii_list_transaction_by_budget_limit`, `firefly_iii_list_transaction_by_category`, `firefly_iii_list_transaction_by_currency`, `firefly_iii_list_transaction_by_link_type`, `firefly_iii_list_transaction_by_tag`, `firefly_iii_list_transaction_link`, `firefly_iii_list_transaction_without_budget`, `firefly_iii_store_link_type`, `firefly_iii_store_transaction`, `firefly_iii_store_transaction_link`, `firefly_iii_update_link_type`, `firefly_iii_update_transaction`, `firefly_iii_update_transaction_link` |
 
-Full documentation is published to the GitHub Pages site and mirrored under `docs/`:
-
-- [Documentation site](https://knuckles-team.github.io/firefly-iii-mcp/)
-- [Overview](docs/overview.md)
-- [Installation](docs/installation.md)
-- [Configuration, Trust, and Privacy](docs/configuration.md)
-- [Usage](docs/usage.md)
-- [Deployment](docs/deployment.md)
-- [Platform](docs/platform.md)
-- [Concept Registry](docs/concepts.md)
-
-
-
-<!-- GOVERNED-CAPABILITY:START -->
-## Governed capability contract
-
-This package owns the complete release-generated schema-v2 capability bundle:
-`connector_manifest.yml`, exact local MCP schema fingerprints, the neutral finance
-ontology, SHACL shapes, source mappings and fixtures, the migration ledger, and an
-offline source attestation. Release tooling derives and signs these artifacts from the
-current sources; they are not hand-authored and do not claim external-live
-certification.
-
-Runtime endpoints, credentials, certificate trust, identity, tenant/ACL policy,
-retention, and observability destinations are deployment inputs and are never packaged
-values. See [Configuration, trust, and privacy](docs/configuration.md) before enabling
-a network transport, Arbora delegation, source synchronization, or trace export.
-<!-- GOVERNED-CAPABILITY:END -->
+---
 
 ## Environment Variables
 
@@ -476,3 +351,155 @@ a network transport, Arbora delegation, source synchronization, or trace export.
 
 _36 package + 18 inherited variable(s). Auto-generated from `.env.example` + the shared scion-sdk set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
+
+---
+
+## Installation
+
+Pick the extra that matches what the operator want to run:
+
+| Extra | Installs | Use when |
+|-------|----------|----------|
+| `firefly-iii-mcp[mcp]` | MCP server (`scion-sdk`) plus the mandatory full medulla base runtime | The operator run the **MCP server** |
+| `firefly-iii-mcp[all]` | MCP + test tooling | Development |
+
+### Install with `uvx` (no install — run on demand)
+
+```bash
+uvx --from "firefly-iii-mcp[mcp]" firefly-iii-mcp      # MCP server
+```
+
+### Install with `pip` / `uv`
+
+```bash
+# MCP server only (recommended for tool hosting)
+uv pip install "firefly-iii-mcp[mcp]"
+
+# Everything (development)
+uv pip install "firefly-iii-mcp[all]"      # or: python -m pip install "firefly-iii-mcp[all]"
+```
+
+### Container images (`:mcp`)
+
+One multi-stage `docker/Dockerfile` builds the MCP-only image (`--target mcp`):
+
+| Image tag | Build target | Contents | Entrypoint |
+|-----------|--------------|----------|------------|
+| `firefly-iii-mcp:mcp` | `--target mcp` | MCP server plus the mandatory full medulla base dependency | `firefly-iii-mcp` |
+
+```bash
+docker build --target mcp -t firefly-iii-mcp:mcp -f docker/Dockerfile .
+```
+
+agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
+
+### Knowledge-graph database (`medulla`)
+
+Every install receives `medulla[full]` through the current Scion SDK base
+dependency. The connector does not open an insecure engine listener or silently select a
+machine-specific engine. Deployment topology and identity are resolved by AgentConfig. For a
+shared production authority, follow the
+[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
+
+### Console scripts
+
+After installation the following entry points are available on the operator's `PATH`:
+
+| Command | Description |
+|---------|-------------|
+| `firefly-iii-mcp` | Start the MCP server |
+
+
+```bash
+python -m pip install firefly-iii-mcp
+```
+
+---
+
+## Usage
+
+### As a Python API client
+
+```python
+from firefly_iii_mcp.auth import get_client
+
+client = get_client()
+try:
+    print(client.get_about())
+finally:
+    client.close()
+```
+
+### As an MCP server (CLI)
+
+```bash
+# Local stdio (for IDEs)
+firefly-iii-mcp
+
+# Networked streamable-http
+firefly-iii-mcp --transport streamable-http --host 127.0.0.1 --port 8000
+```
+
+### Calling an MCP tool
+
+Tools are action-routed — pass an `action` plus a JSON `params_json` string:
+
+```json
+{
+  "tool": "about_operations",
+  "arguments": {
+    "action": "get_about",
+    "params_json": "{}"
+  }
+}
+```
+
+---
+
+## Documentation
+
+Full documentation is published to the GitHub Pages site and mirrored under `docs/`:
+
+- [Documentation site](https://knuckles-team.github.io/firefly-iii-mcp/)
+- [Overview](docs/overview.md)
+- [Installation](docs/installation.md)
+- [Configuration, Trust, and Privacy](docs/configuration.md)
+- [Usage](docs/usage.md)
+- [Deployment](docs/deployment.md)
+- [Platform](docs/platform.md)
+- [Concept Registry](docs/concepts.md)
+
+---
+
+## Repository Owners
+
+<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=example&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
+
+![GitHub followers](https://img.shields.io/github/followers/example)
+![GitHub User's stars](https://img.shields.io/github/stars/example)
+
+---
+
+## Contribute
+
+Contributions are welcome! Please ensure code quality by running local checks before submitting pull requests:
+- Format code using `ruff format .`
+- Lint code using `ruff check .`
+- Validate type-safety with `mypy .`
+- Run test suites using `pytest`
+
+<!-- GOVERNED-CAPABILITY:START -->
+## Governed capability contract
+
+This package owns the complete release-generated schema-v2 capability bundle:
+`connector_manifest.yml`, exact local MCP schema fingerprints, the neutral finance
+ontology, SHACL shapes, source mappings and fixtures, the migration ledger, and an
+offline source attestation. Release tooling derives and signs these artifacts from the
+current sources; they are not hand-authored and do not claim external-live
+certification.
+
+Runtime endpoints, credentials, certificate trust, identity, tenant/ACL policy,
+retention, and observability destinations are deployment inputs and are never packaged
+values. See [Configuration, trust, and privacy](docs/configuration.md) before enabling
+a network transport, Arbora delegation, source synchronization, or trace export.
+<!-- GOVERNED-CAPABILITY:END -->
